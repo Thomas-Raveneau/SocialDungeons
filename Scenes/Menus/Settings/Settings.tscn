@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scenes/Menus/Settings/Settings.gd" type="Script" id=1]
+
+[node name="Settings" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 100
+custom_constants/margin_top = 100
+custom_constants/margin_left = 100
+custom_constants/margin_bottom = 100
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+margin_left = 100.0
+margin_top = 100.0
+margin_right = 1820.0
+margin_bottom = 980.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="BackHomeButton" type="Button" parent="CenterContainer"]
+margin_left = 792.0
+margin_top = 430.0
+margin_right = 928.0
+margin_bottom = 450.0
+text = "Back to main menu"
+
+[connection signal="pressed" from="CenterContainer/BackHomeButton" to="." method="_on_BackHomeButton_pressed"]
