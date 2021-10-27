@@ -9,7 +9,7 @@
 [ext_resource path="res://Scenes/Player/Assets/knight_m_idle_anim_f3.png" type="Texture" id=7]
 [ext_resource path="res://Scenes/Player/Assets/knight_m_idle_anim_f1.png" type="Texture" id=8]
 [ext_resource path="res://Scenes/Player/Assets/knight_m_idle_anim_f0.png" type="Texture" id=9]
-[ext_resource path="res://Scenes/Player/Character.gd" type="Script" id=10]
+[ext_resource path="res://Scenes/Player/Player.gd" type="Script" id=10]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -18,22 +18,22 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 6 ), ExtResource( 4 ) ],
-"loop": true,
-"name": "run",
-"speed": 10.0
-}, {
 "frames": [ ExtResource( 1 ) ],
 "loop": true,
 "name": "hit",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 6 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "run",
+"speed": 10.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 7.2726
 height = 5.85442
 
-[node name="Character" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D"]
 scale = Vector2( 5, 5 )
 script = ExtResource( 10 )
 

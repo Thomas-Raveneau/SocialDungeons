@@ -3,8 +3,8 @@ extends KinematicBody2D
 ################################################################################
 
 # MOVEMENTS CONSTANTS
-const SPEED: int = 3 * 10000
-const DASH_SPEED: int = 10 * 10000
+const SPEED: int = 3 * 100
+const DASH_SPEED: int = 10 * 100
 
 # TIMERS
 const DASH_DURATION: float = 0.1
@@ -73,7 +73,7 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	handle_inputs()
 	handle_animations()
-	velocity = move_and_slide(velocity * delta)
+	velocity = move_and_slide(velocity)
 
 # SIGNALS
 func _on_DashDuration_timeout() -> void:
