@@ -9,7 +9,7 @@ func _ready():
 func _on_ContinueButton_pressed():
 	print("Continue button pressed")
 
-func _on_NewGameButton_pressed():
+func _on_PlayButton_pressed():
 	get_tree().change_scene(WORLD_SCENE)
 
 func _on_SettingsButton_pressed():
@@ -17,4 +17,7 @@ func _on_SettingsButton_pressed():
 
 func _on_QuitButton_pressed() -> void:
 	get_tree().quit()
+
+
+
 

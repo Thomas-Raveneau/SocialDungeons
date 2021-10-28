@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scenes/Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Maps/Main.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/Mobs/Monster.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Mobs/Archer.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/Maps/Castle/Castle.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Systems/Timer.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Maps/Castle/Castle.tscn" type="PackedScene" id=6]
 
 [sub_resource type="SegmentShape2D" id=1]
 b = Vector2( 0, 1080 )
@@ -49,8 +50,6 @@ position = Vector2( 1861.52, 68.7393 )
 scale = Vector2( 0.3, 0.3 )
 z_index = 1
 
-[node name="Castle" parent="YSort" instance=ExtResource( 5 )]
-
 [node name="Border" type="StaticBody2D" parent="YSort"]
 
 [node name="Left" type="CollisionShape2D" parent="YSort/Border"]
@@ -64,3 +63,11 @@ shape = SubResource( 3 )
 
 [node name="Bottom" type="CollisionShape2D" parent="YSort/Border"]
 shape = SubResource( 4 )
+
+[node name="Castle" parent="YSort" instance=ExtResource( 6 )]
+
+[node name="RichTextLabel" parent="." instance=ExtResource( 5 )]
+margin_left = 770.0
+margin_top = 19.0
+margin_right = 1064.0
+margin_bottom = 71.0
