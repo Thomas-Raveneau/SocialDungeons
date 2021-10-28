@@ -29,9 +29,8 @@ animations = [ {
 "speed": 10.0
 } ]
 
-[sub_resource type="CapsuleShape2D" id=2]
-radius = 7.2726
-height = 5.85442
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 6.75959, 4 )
 
 [node name="Player" type="KinematicBody2D"]
 scale = Vector2( 5, 5 )
@@ -41,10 +40,12 @@ script = ExtResource( 10 )
 position = Vector2( 0, -5.2 )
 frames = SubResource( 1 )
 animation = "run"
+offset = Vector2( 0, -6 )
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
-position = Vector2( -0.351697, -2.12822 )
+position = Vector2( 0.503235, -1.91448 )
 shape = SubResource( 2 )
+one_way_collision_margin = 0.0
 
 [node name="DashDuration" type="Timer" parent="."]
 one_shot = true
