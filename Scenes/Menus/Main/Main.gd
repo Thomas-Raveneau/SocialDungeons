@@ -14,3 +14,8 @@ func _on_NewGameButton_pressed():
 
 func _on_SettingsButton_pressed():
 	get_tree().change_scene(SETTINGS_MENU_SCENE)
+
+
+func _on_QuitButton_pressed() -> void:
+	get_tree().quit()
+
