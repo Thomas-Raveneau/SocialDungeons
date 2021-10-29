@@ -34,9 +34,8 @@ func next_room() -> int:
 	else:
 		return -1 # No more room
 
-func _process(delta: float):
-	if (Input.is_action_just_pressed("debug_button")):
-		current_room_instance.open_door()
+func _process(_delta: float):
+	pass
 
 func _ready():
 	if current_room_id < 0 or current_room_id > 1:

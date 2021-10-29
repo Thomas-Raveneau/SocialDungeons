@@ -1,9 +1,22 @@
 extends Node2D
 
+################################################################################
+
+# NODES
 onready var spawn = $Spawn
 onready var player = $Player
 onready var castle = $Castle
 onready var player_visibility = $Player/VisibilityNotifier2D
+
+################################################################################
+
+func _ready() -> void:
+	set_player_to_spawn()
+
+func _process(_delta: float) -> void:
+	handle_player_room_exit()
+	if (Input.is_action_just_pressed("debug_button")):
+		player.damage(10)
 
 func set_player_to_spawn() -> void:
 	player.position = spawn.position
@@ -14,9 +27,3 @@ func handle_player_room_exit() -> void:
 	if (!player_visibility.is_on_screen()):
 		castle.next_room()
 		set_player_to_spawn()
-
-func _process(_delta: float) -> void:
-	handle_player_room_exit()
-
-func _ready() -> void:
-	set_player_to_spawn()
