@@ -101,7 +101,7 @@ script = ExtResource( 31 )
 [node name="Animation" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "idle"
-frame = 10
+frame = 5
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -119,3 +119,10 @@ shape = SubResource( 4 )
 
 [node name="DashTimer" type="Timer" parent="."]
 wait_time = 5.0
+
+[connection signal="animation_finished" from="Animation" to="." method="_on_Animation_animation_finished"]
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_DetectionArea_body_entered"]
+[connection signal="body_exited" from="DetectionArea" to="." method="_on_DetectionArea_body_exited"]
+[connection signal="body_entered" from="RangeArea" to="." method="_on_RangeArea_body_entered"]
+[connection signal="body_exited" from="RangeArea" to="." method="_on_RangeArea_body_exited"]
+[connection signal="timeout" from="DashTimer" to="." method="_on_DashTimer_timeout"]
