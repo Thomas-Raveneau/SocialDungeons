@@ -88,6 +88,7 @@ playing = true
 shape = SubResource( 2 )
 
 [node name="DodgeArea" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DodgeArea"]
 shape = SubResource( 3 )

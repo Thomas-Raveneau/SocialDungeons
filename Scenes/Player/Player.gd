@@ -3,7 +3,7 @@ extends KinematicBody2D
 ################################################################################
 
 # MOVEMENTS CONSTANTS
-const SPEED: int = 3 * 100
+const SPEED: int = 6 * 100
 const DASH_SPEED: int = 10 * 100
 
 # TIMERS

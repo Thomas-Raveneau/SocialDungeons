@@ -5,6 +5,7 @@
 [node name="RichTextLabel" type="RichTextLabel"]
 margin_right = 40.0
 margin_bottom = 40.0
+rect_scale = Vector2( 1.95782, 1.66605 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
