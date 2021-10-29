@@ -69,11 +69,6 @@ animations = [ {
 "name": "idle",
 "speed": 11.0
 }, {
-"frames": [ ExtResource( 16 ), ExtResource( 13 ), ExtResource( 27 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 29 ), ExtResource( 23 ), ExtResource( 24 ), ExtResource( 17 ), ExtResource( 20 ), ExtResource( 28 ), ExtResource( 14 ), ExtResource( 21 ), ExtResource( 26 ), ExtResource( 15 ), ExtResource( 22 ), ExtResource( 30 ), ExtResource( 25 ) ],
-"loop": false,
-"name": "taunt",
-"speed": 17.0
-}, {
 "frames": [ ExtResource( 47 ), ExtResource( 43 ), ExtResource( 53 ), ExtResource( 41 ), ExtResource( 48 ), ExtResource( 42 ), ExtResource( 35 ), ExtResource( 46 ), ExtResource( 45 ), ExtResource( 32 ), ExtResource( 50 ), ExtResource( 49 ), ExtResource( 51 ), ExtResource( 34 ), ExtResource( 33 ), ExtResource( 52 ), ExtResource( 44 ), ExtResource( 36 ) ],
 "loop": true,
 "name": "walk",
@@ -82,7 +77,12 @@ animations = [ {
 "frames": [ ExtResource( 37 ), ExtResource( 38 ), ExtResource( 39 ), ExtResource( 40 ), ExtResource( 59 ), ExtResource( 57 ), ExtResource( 55 ), ExtResource( 56 ), ExtResource( 58 ), ExtResource( 54 ), ExtResource( 61 ), ExtResource( 60 ) ],
 "loop": false,
 "name": "attack",
-"speed": 11.0
+"speed": 22.0
+}, {
+"frames": [ ExtResource( 16 ), ExtResource( 13 ), ExtResource( 27 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 29 ), ExtResource( 23 ), ExtResource( 24 ), ExtResource( 17 ), ExtResource( 20 ), ExtResource( 28 ), ExtResource( 14 ), ExtResource( 21 ), ExtResource( 26 ), ExtResource( 15 ), ExtResource( 22 ), ExtResource( 30 ), ExtResource( 25 ) ],
+"loop": false,
+"name": "taunt",
+"speed": 17.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=2]
@@ -97,11 +97,14 @@ radius = 791.144
 
 [node name="Warrior" type="KinematicBody2D"]
 script = ExtResource( 31 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Animation" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
-animation = "idle"
-frame = 5
+animation = "attack"
+frame = 11
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -119,6 +122,7 @@ shape = SubResource( 4 )
 
 [node name="DashTimer" type="Timer" parent="."]
 wait_time = 5.0
+autostart = true
 
 [connection signal="animation_finished" from="Animation" to="." method="_on_Animation_animation_finished"]
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_DetectionArea_body_entered"]
