@@ -9,12 +9,12 @@ export var MAX_HEALTH: int = 100
 export var HEALTH: int = 100
 export var DEFENSE: int = 5
 export var ATTACK = 10
-export var KNOCKBACK_FORCE = 5
+export var KNOCKBACK_FORCE = 3
 
 # DAMAGE PARTICLE UTILS
-var travel = Vector2(0, -25)
-var duration = 0.5
-var spread = PI/2
+var damage_particle_dir = Vector2(0, -25)
+var damage_particle_duration = 1
+var damage_particle_spread = PI/2
 
 # TIMERS
 const DASH_DURATION: float = 0.1
@@ -65,7 +65,7 @@ func _dash() -> void:
 	dash_duration_timer.start()
 
 func _handle_movement_inputs() -> void:
-	velocity = Vector2()
+	
 	if Input.is_action_pressed("move_right"):
 		velocity.x += 1
 	if Input.is_action_pressed("move_left"):
@@ -83,6 +83,7 @@ func _handle_movement_inputs() -> void:
 		velocity = velocity.normalized() * SPEED
 
 func _handle_inputs() -> void:
+	velocity = Vector2()
 	if (is_alive and !is_taking_damage):
 		_handle_movement_inputs()
 
@@ -120,7 +121,10 @@ func _handle_damage_animation(damage_amount: int, damage_dir: Vector2) -> void:
 	
 	var damage_particle_node = damage_particle.instance()
 	add_child(damage_particle_node)
-	damage_particle_node.show_value(str(damage_amount), travel, duration, spread, false)
+	damage_particle_node.show_value(str(damage_amount), 
+	damage_particle_dir, 
+	damage_particle_duration, 
+	damage_particle_spread, false)
 
 func _handle_invicibility() -> void:
 	invicibility_timer.start()

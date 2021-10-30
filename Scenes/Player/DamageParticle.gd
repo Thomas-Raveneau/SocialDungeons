@@ -1,5 +1,8 @@
 extends Label
 
+func _ready():
+	rect_position.y -= 15
+
 func show_value(value, travel, duration, spread, crit=false):
 	text = value
 	# For scaling, set the pivot offset to the center.
