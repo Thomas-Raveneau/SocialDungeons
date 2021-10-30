@@ -44,7 +44,6 @@ animation = "run"
 offset = Vector2( 0, -6 )
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2( 0.811353, -5.28589 )
 shape = SubResource( 2 )
 one_way_collision_margin = 0.0
@@ -63,7 +62,6 @@ wait_time = 0.1
 one_shot = true
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
-visible = false
 position = Vector2( 0.283154, -11.7984 )
 scale = Vector2( 0.509186, 0.518624 )
 

@@ -35,6 +35,7 @@ onready var damage_sound: AudioStreamPlayer = $DamageSound
 
 ################################################################################
 
+### PRIVATE ###
 func _ready() -> void:
 	dash_duration_timer.wait_time = DASH_DURATION
 	dash_cooldown_timer.wait_time = DASH_COOLDOWN
@@ -111,11 +112,16 @@ func _handle_invicibility() -> void:
 	invicibility_timer.start()
 	is_invicible = true
 
+func _handle_damage_sound():
+	damage_sound.play()
+
+### PUBLIC ###
 func damage(damage_amount: int, damage_dir: Vector2) -> bool: 
-	if (is_invicible):
+	if (is_invicible or !is_alive):
 		return false
 	
-	damage_sound.play()
+	_handle_damage_animation(damage_dir)
+	_handle_damage_sound()
 	
 	if (HEALTH - damage_amount <= 0):
 		HEALTH = 0
@@ -124,7 +130,6 @@ func damage(damage_amount: int, damage_dir: Vector2) -> bool:
 	else:
 		HEALTH -= damage_amount
 		is_taking_damage = true
-		_handle_damage_animation(damage_dir)
 		_handle_invicibility()
 		return false
 
