@@ -1,11 +1,13 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scenes/Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Maps/Main.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/Mobs/Warrior.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Mobs/Mage.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Systems/Timer.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Maps/Castle/Castle.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/Menus/Main/Assets/Font/pixelmix_bold.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://Scenes/Mobs/WalkingMan.tscn" type="PackedScene" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 size = 25
@@ -42,4 +44,16 @@ custom_fonts/normal_font = SubResource( 1 )
 
 [node name="Warrior" parent="." instance=ExtResource( 3 )]
 position = Vector2( 164.111, 142.705 )
+scale = Vector2( 0.3, 0.3 )
+
+[node name="Archer" parent="." instance=ExtResource( 4 )]
+position = Vector2( 1750.51, 133.191 )
+scale = Vector2( 0.3, 0.3 )
+
+[node name="WalkingMan" parent="." instance=ExtResource( 8 )]
+position = Vector2( 653.899, 355.298 )
+scale = Vector2( 5, 5 )
+
+[node name="Mage" parent="." instance=ExtResource( 4 )]
+position = Vector2( 137.844, 967.906 )
 scale = Vector2( 0.3, 0.3 )
