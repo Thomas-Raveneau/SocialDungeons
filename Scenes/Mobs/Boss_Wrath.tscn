@@ -87,15 +87,15 @@ animations = [ {
 "name": "walk",
 "speed": 11.0
 }, {
-"frames": [ ExtResource( 51 ), ExtResource( 42 ), ExtResource( 32 ), ExtResource( 56 ), ExtResource( 43 ), ExtResource( 55 ), ExtResource( 45 ), ExtResource( 33 ), ExtResource( 57 ), ExtResource( 46 ), ExtResource( 47 ), ExtResource( 29 ), ExtResource( 48 ), ExtResource( 35 ), ExtResource( 49 ), ExtResource( 50 ), ExtResource( 53 ), ExtResource( 28 ) ],
-"loop": true,
-"name": "taunt",
-"speed": 17.0
-}, {
 "frames": [ ExtResource( 3 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 8 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 12 ), ExtResource( 11 ) ],
 "loop": true,
 "name": "attack",
 "speed": 11.0
+}, {
+"frames": [ ExtResource( 51 ), ExtResource( 42 ), ExtResource( 32 ), ExtResource( 56 ), ExtResource( 43 ), ExtResource( 55 ), ExtResource( 45 ), ExtResource( 33 ), ExtResource( 57 ), ExtResource( 46 ), ExtResource( 47 ), ExtResource( 29 ), ExtResource( 48 ), ExtResource( 35 ), ExtResource( 49 ), ExtResource( 50 ), ExtResource( 53 ), ExtResource( 28 ) ],
+"loop": true,
+"name": "taunt",
+"speed": 17.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=2]
@@ -115,7 +115,7 @@ collision_mask = 5
 [node name="Animated" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "walk"
-frame = 4
+frame = 3
 playing = true
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
