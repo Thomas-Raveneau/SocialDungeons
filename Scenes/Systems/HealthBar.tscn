@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/Systems/HealthBar.gd" type="Script" id=1]
+[ext_resource path="res://healthBarTheme.tres" type="Theme" id=2]
+
+[node name="HealthBar" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -2.5199
+margin_top = -2.82843
+margin_right = -2.5199
+margin_bottom = -2.82837
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+margin_left = 151.191
+margin_top = 272.143
+margin_right = 1468.19
+margin_bottom = 354.143
+theme = ExtResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+value = 50.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="HealthBar"]

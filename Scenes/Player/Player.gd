@@ -2,11 +2,14 @@ extends KinematicBody2D
 
 ################################################################################
 
+# SIGNALS
+signal hp_changed(newHpValue)
+
 # STATS
 export var SPEED: int = 6 
 export var DASH_SPEED: int = 10
 export var MAX_HEALTH: int = 100
-export var HEALTH: int = 100
+export var HEALTH: int = 100 setget set_hp
 export var DEFENSE: int = 5
 export var ATTACK = 10
 export var KNOCKBACK_FORCE = 5
@@ -147,6 +150,10 @@ func revive(health_on_revive: int) -> int:
 	is_alive = true
 	
 	return 0
+	
+func set_hp(newHpValue: int) -> void:
+	HEALTH = newHpValue
+	emit_signal("hp_changed", newHpValue)
 
 ### SIGNALS ###
 func _on_DashDuration_timeout() -> void:
