@@ -1,6 +1,9 @@
 extends KinematicBody2D
 
-onready var BULLET = preload("res://Scenes/Mobs/Bullet.tscn")
+################################################################################
+
+# PREFAB
+onready var BULLET = preload("res://Scenes/Mobs/Projectile/Bullet.tscn")
 
 # MOVEMENT
 export var SPEED = 250
@@ -12,6 +15,7 @@ var in_range_of_attack : bool = false
 var can_attack : bool = true
 var is_attacking  : bool = false
 var is_dodging : bool = false
+var is_dying : bool = false
 
 onready var attack_cooldown : Timer = $Attack_Cooldown
 
@@ -23,16 +27,19 @@ onready var players_list = get_tree().get_nodes_in_group("player")
 onready var animation : AnimatedSprite = $Animation
 onready var spawn_point : Node2D = $SpawnPoint
 
+################################################################################
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	attack_cooldown.start()
 	pass # Replace with function body.
 
-func _physics_process(delta):
-	handle_movement()
-	handle_animation()
-	handle_flip()
-	handle_attack()
+func _physics_process(_delta):
+	if !is_dying:
+		handle_movement()
+		handle_animation()
+		handle_flip()
+		handle_attack()
 
 func handle_movement():
 	velocity = Vector2.ZERO
@@ -55,10 +62,10 @@ func handle_animation():
 		if (velocity == Vector2(0, 0)):
 			animation.play("idle")
 		else:
-			animation.play("walking")
+			animation.play("walk")
 
 func handle_flip():
-	if (target):
+	if target:
 		var orientation = position.direction_to(target.position)
 		orientation.x = orientation.x * -1 if is_dodging else orientation.x
 		if (orientation.x < 0 and !animation.flip_h):
@@ -67,6 +74,10 @@ func handle_flip():
 		if (orientation.x > 0 and animation.flip_h):
 			animation.flip_h = false
 			spawn_point.position.x = spawn_point.position.x * -1
+
+func death():
+	is_dying = true
+	animation.play("death")
 
 func fire():
 		var bullet = BULLET.instance()
@@ -105,3 +116,5 @@ func _on_Animation_animation_finished():
 	is_attacking = false
 	if animation.get_animation() == "attack":
 		fire()
+	elif animation.get_animation() == "death":
+		queue_free()

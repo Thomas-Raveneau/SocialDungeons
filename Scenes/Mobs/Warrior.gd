@@ -15,6 +15,8 @@ var is_attacking : bool = false
 var dash_vector : Vector2 = Vector2.ZERO
 var is_dashing : bool = false
 
+var is_dying : bool = false
+
 onready var attack_cooldown : Timer = $DashTimer
 
 # TARGET
@@ -27,10 +29,11 @@ onready var animation : AnimatedSprite = $Animation
 ################################################################################
 
 func _physics_process(_delta) -> void:
-	handle_movement()
-	handle_animation()
-	handle_flip()
-	handle_attack()
+	if !is_dying:
+		handle_movement()
+		handle_animation()
+		handle_flip()
+		handle_attack()
 
 func handle_movement() -> void:
 	velocity = Vector2.ZERO
@@ -61,6 +64,10 @@ func handle_attack() -> void:
 		dash_vector = position.direction_to(target.position).normalized()
 		animation.play("taunt")
 
+func death() -> void:
+	is_dying = true
+	animation.play("death")
+
 func _on_DetectionArea_body_entered(body) -> void:
 	if players_list.has(body):
 		target = players_list[players_list.find(body)]
@@ -88,3 +95,5 @@ func _on_Animation_animation_finished() -> void:
 		is_dashing = false
 		is_attacking = false
 		attack_cooldown.start()
+	elif animation.get_animation() == "death":
+		queue_free()
