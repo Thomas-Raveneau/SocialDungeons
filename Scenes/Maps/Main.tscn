@@ -4,7 +4,7 @@
 [ext_resource path="res://Scenes/Maps/Main.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/Systems/Timer.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Maps/Castle/Castle.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scenes/Menus/Main/Assets/Font/pixelmix_bold.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://Fonts/pixelmix_bold.ttf" type="DynamicFontData" id=7]
 
 [sub_resource type="DynamicFont" id=1]
 size = 25
