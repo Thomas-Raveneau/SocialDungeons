@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/take_damage.mp3-ede23d0e7949a2aa8cf58611bb39122e.mp3str"
+
+[deps]
+
+source_file="res://Scenes/Player/Sounds/take_damage.mp3"
+dest_files=[ "res://.import/take_damage.mp3-ede23d0e7949a2aa8cf58611bb39122e.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

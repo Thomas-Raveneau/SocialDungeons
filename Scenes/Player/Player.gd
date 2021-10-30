@@ -9,22 +9,29 @@ export var MAX_HEALTH: int = 100
 export var HEALTH: int = 100
 export var DEFENSE: int = 5
 export var ATTACK = 10
+export var KNOCKBACK_FORCE = 5
 
 # TIMERS
 const DASH_DURATION: float = 0.1
 const DASH_COOLDOWN: float = 1.0
 
 # UTILS
+var is_alive: bool = true
 var can_dash: bool = true
 var is_dashing: bool = false
-var is_alive: bool = true
+var is_invicible: bool = false
+var is_taking_damage: bool = false
 var velocity: Vector2 = Vector2()
+var knockback: Vector2 = Vector2()
 
 # NODES
 onready var skin: AnimatedSprite = $Skin
 onready var hitbox: CollisionShape2D = $Hitbox
+onready var invicibility_timer: Timer = $Invicibility
 onready var dash_duration_timer: Timer = $DashDuration
 onready var dash_cooldown_timer: Timer = $DashCooldown
+onready var damage_animation_timer: Timer = $DamageAnimation
+onready var damage_sound: AudioStreamPlayer = $DamageSound
 
 ################################################################################
 
@@ -38,8 +45,11 @@ func _process(_delta: float) -> void:
 func _physics_process(_delta: float) -> void:
 	_handle_inputs()
 	_handle_animations()
-	velocity = move_and_slide(velocity * 100)
-
+	if (!is_taking_damage):
+		velocity = move_and_slide(velocity * 100)
+	else:
+		velocity = move_and_slide(knockback * 100)
+		
 func _dash() -> void:
 	can_dash = false
 	is_dashing = true
@@ -64,7 +74,7 @@ func _handle_movement_inputs() -> void:
 		velocity = velocity.normalized() * SPEED
 
 func _handle_inputs() -> void:
-	if (is_alive):
+	if (is_alive and !is_taking_damage):
 		_handle_movement_inputs()
 
 func _handle_player_flip() -> void:
@@ -86,19 +96,36 @@ func _handle_death() -> int:
 	if (is_alive):
 		is_alive = false
 		skin.stop()
-		rotation_degrees = -90
+		rotation_degrees = 90
 		
 		return 0
 	else:
 		return -1
 
-func damage(damage_amount: int) -> bool:
+func _handle_damage_animation(damage_dir: Vector2) -> void:
+	damage_animation_timer.start()
+	skin.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
+	knockback = damage_dir.normalized() * KNOCKBACK_FORCE
+
+func _handle_invicibility() -> void:
+	invicibility_timer.start()
+	is_invicible = true
+
+func damage(damage_amount: int, damage_dir: Vector2) -> bool: 
+	if (is_invicible):
+		return false
+	
+	damage_sound.play()
+	
 	if (HEALTH - damage_amount <= 0):
 		HEALTH = 0
 		_handle_death()
 		return true
 	else:
 		HEALTH -= damage_amount
+		is_taking_damage = true
+		_handle_damage_animation(damage_dir)
+		_handle_invicibility()
 		return false
 
 func heal(heal_amount: int) -> int:
@@ -128,3 +155,10 @@ func _on_DashDuration_timeout() -> void:
 
 func _on_DashCooldown_timeout() -> void:
 	can_dash = true
+
+func _on_Invicibility_timeout():
+	is_invicible = false
+
+func _on_DamageAnimation_timeout():
+	skin.self_modulate = Color(1, 1, 1)
+	is_taking_damage = false
