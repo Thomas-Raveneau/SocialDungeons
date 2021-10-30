@@ -11,6 +11,11 @@ export var DEFENSE: int = 5
 export var ATTACK = 10
 export var KNOCKBACK_FORCE = 5
 
+# DAMAGE PARTICLE UTILS
+var travel = Vector2(0, -25)
+var duration = 0.5
+var spread = PI/2
+
 # TIMERS
 const DASH_DURATION: float = 0.1
 const DASH_COOLDOWN: float = 1.0
@@ -32,6 +37,9 @@ onready var dash_duration_timer: Timer = $DashDuration
 onready var dash_cooldown_timer: Timer = $DashCooldown
 onready var damage_animation_timer: Timer = $DamageAnimation
 onready var damage_sound: AudioStreamPlayer = $DamageSound
+
+# SCENES
+var damage_particle = preload("res://Scenes/Player/DamageParticle.tscn")
 
 ################################################################################
 
@@ -88,7 +96,9 @@ func _handle_animations() -> void:
 	if (is_alive):
 		_handle_player_flip()
 		
-		if (velocity == Vector2(0, 0)):
+		if (is_taking_damage):
+			skin.play('hit')
+		elif (velocity == Vector2(0, 0)):
 			skin.play('idle')
 		else:
 			skin.play('run')
@@ -97,16 +107,20 @@ func _handle_death() -> int:
 	if (is_alive):
 		is_alive = false
 		skin.stop()
-		rotation_degrees = 90
+		skin.rotation_degrees = 90
 		
 		return 0
 	else:
 		return -1
 
-func _handle_damage_animation(damage_dir: Vector2) -> void:
+func _handle_damage_animation(damage_amount: int, damage_dir: Vector2) -> void:
 	damage_animation_timer.start()
 	skin.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
 	knockback = damage_dir.normalized() * KNOCKBACK_FORCE
+	
+	var damage_particle_node = damage_particle.instance()
+	add_child(damage_particle_node)
+	damage_particle_node.show_value(str(damage_amount), travel, duration, spread, false)
 
 func _handle_invicibility() -> void:
 	invicibility_timer.start()
@@ -120,7 +134,7 @@ func damage(damage_amount: int, damage_dir: Vector2) -> bool:
 	if (is_invicible or !is_alive):
 		return false
 	
-	_handle_damage_animation(damage_dir)
+	_handle_damage_animation(damage_amount, damage_dir)
 	_handle_damage_sound()
 	
 	if (HEALTH - damage_amount <= 0):
