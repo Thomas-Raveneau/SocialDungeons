@@ -1,7 +1,12 @@
 extends MarginContainer
 
+################################################################################
+
+# SCENE PATHS
 const WORLD_SCENE = "res://Scenes/Maps/Main.tscn"
 const SETTINGS_MENU_SCENE = "res://Scenes/Menus/Settings/Settings.tscn"
+
+################################################################################
 
 func _ready():
 	pass
