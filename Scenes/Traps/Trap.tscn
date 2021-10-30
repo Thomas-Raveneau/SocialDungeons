@@ -18,7 +18,6 @@ animations = [ {
 extents = Vector2( 31.502, 31.989 )
 
 [node name="Trap" type="Area2D"]
-position = Vector2( 177.289, 159.025 )
 collision_layer = 16384
 script = ExtResource( 1 )
 __meta__ = {

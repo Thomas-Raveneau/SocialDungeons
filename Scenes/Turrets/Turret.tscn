@@ -17,6 +17,7 @@ height = 4.07539
 
 [node name="Turret" type="Area2D"]
 position = Vector2( 84.2273, 79.4597 )
+rotation = 1.5708
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
