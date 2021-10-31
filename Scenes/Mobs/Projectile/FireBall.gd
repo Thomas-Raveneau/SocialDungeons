@@ -29,7 +29,6 @@ func handle_collision():
 	var slide_count = get_slide_count()
 	for i in slide_count:
 		var node = get_slide_collision(i)
-		print(node.collider.name)
 		if get_tree().get_nodes_in_group("player").has(node.collider):
 			queue_free()
 
