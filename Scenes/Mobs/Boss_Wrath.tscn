@@ -1,0 +1,139 @@
+[gd_scene load_steps=75 format=2]
+
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Attacking/Wraith_03_Attack_006.png" type="Texture" id=1]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Attacking/Wraith_03_Attack_007.png" type="Texture" id=2]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Attacking/Wraith_03_Attack_000.png" type="Texture" id=3]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Attacking/Wraith_03_Attack_008.png" type="Texture" id=4]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Attacking/Wraith_03_Attack_004.png" type="Texture" id=5]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Attacking/Wraith_03_Attack_003.png" type="Texture" id=6]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Attacking/Wraith_03_Attack_009.png" type="Texture" id=7]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Attacking/Wraith_03_Attack_005.png" type="Texture" id=8]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Attacking/Wraith_03_Attack_001.png" type="Texture" id=9]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Attacking/Wraith_03_Attack_002.png" type="Texture" id=10]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Attacking/Wraith_03_Attack_011.png" type="Texture" id=11]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Attacking/Wraith_03_Attack_010.png" type="Texture" id=12]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Dying/Wraith_03_Dying_007.png" type="Texture" id=13]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Dying/Wraith_03_Dying_012.png" type="Texture" id=14]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Dying/Wraith_03_Dying_010.png" type="Texture" id=15]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Dying/Wraith_03_Dying_002.png" type="Texture" id=16]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Dying/Wraith_03_Dying_008.png" type="Texture" id=17]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Dying/Wraith_03_Dying_009.png" type="Texture" id=18]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Dying/Wraith_03_Dying_001.png" type="Texture" id=19]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Dying/Wraith_03_Dying_004.png" type="Texture" id=20]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Dying/Wraith_03_Dying_013.png" type="Texture" id=21]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Dying/Wraith_03_Dying_005.png" type="Texture" id=22]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Dying/Wraith_03_Dying_011.png" type="Texture" id=23]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Dying/Wraith_03_Dying_014.png" type="Texture" id=24]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Dying/Wraith_03_Dying_006.png" type="Texture" id=25]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Dying/Wraith_03_Dying_003.png" type="Texture" id=26]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Dying/Wraith_03_Dying_000.png" type="Texture" id=27]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Taunt/Wraith_03_Taunt_017.png" type="Texture" id=28]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Taunt/Wraith_03_Taunt_011.png" type="Texture" id=29]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Idle/Wraith_03_Idle_004.png" type="Texture" id=30]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Idle/Wraith_03_Idle_003.png" type="Texture" id=31]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Taunt/Wraith_03_Taunt_002.png" type="Texture" id=32]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Taunt/Wraith_03_Taunt_007.png" type="Texture" id=33]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Idle/Wraith_03_Idle_002.png" type="Texture" id=34]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Taunt/Wraith_03_Taunt_013.png" type="Texture" id=35]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Idle/Wraith_03_Idle_005.png" type="Texture" id=36]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Idle/Wraith_03_Idle_008.png" type="Texture" id=37]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Idle/Wraith_03_Idle_009.png" type="Texture" id=38]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Idle/Wraith_03_Idle_001.png" type="Texture" id=39]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Idle/Wraith_03_Idle_000.png" type="Texture" id=40]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Idle/Wraith_03_Idle_010.png" type="Texture" id=41]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Taunt/Wraith_03_Taunt_001.png" type="Texture" id=42]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Taunt/Wraith_03_Taunt_004.png" type="Texture" id=43]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Idle/Wraith_03_Idle_007.png" type="Texture" id=44]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Taunt/Wraith_03_Taunt_006.png" type="Texture" id=45]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Taunt/Wraith_03_Taunt_009.png" type="Texture" id=46]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Taunt/Wraith_03_Taunt_010.png" type="Texture" id=47]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Taunt/Wraith_03_Taunt_012.png" type="Texture" id=48]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Taunt/Wraith_03_Taunt_014.png" type="Texture" id=49]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Taunt/Wraith_03_Taunt_015.png" type="Texture" id=50]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Taunt/Wraith_03_Taunt_000.png" type="Texture" id=51]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Idle/Wraith_03_Idle_011.png" type="Texture" id=52]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Taunt/Wraith_03_Taunt_016.png" type="Texture" id=53]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Idle/Wraith_03_Idle_006.png" type="Texture" id=54]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Taunt/Wraith_03_Taunt_005.png" type="Texture" id=55]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Taunt/Wraith_03_Taunt_003.png" type="Texture" id=56]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Taunt/Wraith_03_Taunt_008.png" type="Texture" id=57]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Walking/Wraith_03_Moving Forward_010.png" type="Texture" id=58]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Walking/Wraith_03_Moving Forward_007.png" type="Texture" id=59]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Walking/Wraith_03_Moving Forward_008.png" type="Texture" id=60]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Walking/Wraith_03_Moving Forward_009.png" type="Texture" id=61]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Walking/Wraith_03_Moving Forward_011.png" type="Texture" id=62]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Walking/Wraith_03_Moving Forward_001.png" type="Texture" id=63]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Walking/Wraith_03_Moving Forward_002.png" type="Texture" id=64]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Walking/Wraith_03_Moving Forward_003.png" type="Texture" id=65]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Walking/Wraith_03_Moving Forward_004.png" type="Texture" id=66]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Walking/Wraith_03_Moving Forward_005.png" type="Texture" id=67]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Walking/Wraith_03_Moving Forward_000.png" type="Texture" id=68]
+[ext_resource path="res://Scenes/Mobs/Assets/Wrath/Walking/Wraith_03_Moving Forward_006.png" type="Texture" id=69]
+[ext_resource path="res://Scenes/Mobs/Boss_Wrath.gd" type="Script" id=70]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 40 ), ExtResource( 39 ), ExtResource( 34 ), ExtResource( 31 ), ExtResource( 30 ), ExtResource( 36 ), ExtResource( 54 ), ExtResource( 44 ), ExtResource( 37 ), ExtResource( 38 ), ExtResource( 41 ), ExtResource( 52 ) ],
+"loop": true,
+"name": "idle",
+"speed": 11.0
+}, {
+"frames": [ ExtResource( 27 ), ExtResource( 19 ), ExtResource( 16 ), ExtResource( 26 ), ExtResource( 20 ), ExtResource( 22 ), ExtResource( 25 ), ExtResource( 13 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 15 ), ExtResource( 23 ), ExtResource( 14 ), ExtResource( 21 ), ExtResource( 24 ) ],
+"loop": true,
+"name": "death",
+"speed": 14.0
+}, {
+"frames": [ ExtResource( 51 ), ExtResource( 42 ), ExtResource( 32 ), ExtResource( 56 ), ExtResource( 43 ), ExtResource( 55 ), ExtResource( 45 ), ExtResource( 33 ), ExtResource( 57 ), ExtResource( 46 ), ExtResource( 47 ), ExtResource( 29 ), ExtResource( 48 ), ExtResource( 35 ), ExtResource( 49 ), ExtResource( 50 ), ExtResource( 53 ), ExtResource( 28 ) ],
+"loop": true,
+"name": "taunt",
+"speed": 17.0
+}, {
+"frames": [ ExtResource( 68 ), ExtResource( 63 ), ExtResource( 64 ), ExtResource( 65 ), ExtResource( 66 ), ExtResource( 67 ), ExtResource( 69 ), ExtResource( 59 ), ExtResource( 60 ), ExtResource( 61 ), ExtResource( 58 ), ExtResource( 62 ) ],
+"loop": true,
+"name": "walk",
+"speed": 11.0
+}, {
+"frames": [ ExtResource( 3 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 8 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 12 ), ExtResource( 11 ) ],
+"loop": true,
+"name": "attack",
+"speed": 11.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 83.4938
+height = 88.3812
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 3834.86
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 2767.17
+
+[node name="Boss_Wrath" type="KinematicBody2D"]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource( 70 )
+
+[node name="Animated" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "walk"
+frame = 2
+playing = true
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -21.53 )
+shape = SubResource( 2 )
+
+[node name="DetectionArea" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource( 3 )
+
+[node name="RangeArea" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RangeArea"]
+shape = SubResource( 4 )
+
+[node name="AttackCooldown" type="Timer" parent="."]
