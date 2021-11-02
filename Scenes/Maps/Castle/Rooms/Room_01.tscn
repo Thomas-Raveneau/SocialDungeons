@@ -5,7 +5,7 @@
 [ext_resource path="res://Scenes/Maps/Castle/Tilesets/Walls.tres" type="TileSet" id=3]
 [ext_resource path="res://Scenes/Maps/Castle/Rooms/Door.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Maps/Castle/Rooms/Room_01.gd" type="Script" id=5]
-[ext_resource path="res://Scenes/Mobs/Mage.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/Maps/Castle/Traps/FloorSpikes.tscn" type="PackedScene" id=6]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 64, 64, 0, 64, 0, 43.8283, 64, 43.8283 )
@@ -200,14 +200,7 @@ tile_data = PoolIntArray( 983040, 3, 0, 983041, 2, 0, 983042, 2, 0, 983043, 2, 0
 [node name="Door" parent="." instance=ExtResource( 4 )]
 position = Vector2( 960.265, 107.5 )
 
-[node name="Archer" parent="." instance=ExtResource( 6 )]
-position = Vector2( 232.627, 787.943 )
-scale = Vector2( 0.3, 0.3 )
+[node name="Traps" type="Node2D" parent="."]
 
-[node name="Archer2" parent="." instance=ExtResource( 6 )]
-position = Vector2( 987.054, 438.331 )
-scale = Vector2( 0.3, 0.3 )
-
-[node name="Archer3" parent="." instance=ExtResource( 6 )]
-position = Vector2( 1726.15, 668.339 )
-scale = Vector2( 0.3, 0.3 )
+[node name="FloorSpikes" parent="Traps" instance=ExtResource( 6 )]
+position = Vector2( 960, 448 )

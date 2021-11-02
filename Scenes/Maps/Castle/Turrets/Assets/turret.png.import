@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/bullet.png-e25a78515b382b135486f89fa4895424.stex"
+path="res://.import/turret.png-0cdd11f89bd6eda7dce116cce3f072d6.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/Turrets/Assets/bullet.png"
-dest_files=[ "res://.import/bullet.png-e25a78515b382b135486f89fa4895424.stex" ]
+source_file="res://Scenes/Maps/Castle/Turrets/Assets/turret.png"
+dest_files=[ "res://.import/turret.png-0cdd11f89bd6eda7dce116cce3f072d6.stex" ]
 
 [params]
 
