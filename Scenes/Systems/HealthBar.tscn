@@ -1,28 +1,32 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scenes/Systems/HealthBar.gd" type="Script" id=1]
 [ext_resource path="res://healthBarTheme.tres" type="Theme" id=2]
+[ext_resource path="res://Scenes/Systems/Assets/blank-bar.png" type="Texture" id=3]
+[ext_resource path="res://Scenes/Systems/Assets/healthBar.png" type="Texture" id=4]
 
 [node name="HealthBar" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -2.5199
-margin_top = -2.82843
-margin_right = -2.5199
-margin_bottom = -2.82837
+margin_left = -0.738101
+margin_top = -9.22052
+margin_right = -0.738159
+margin_bottom = -9.22046
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HealthBar" type="ProgressBar" parent="."]
-margin_left = 151.191
-margin_top = 272.143
-margin_right = 1468.19
-margin_bottom = 354.143
+[node name="HealthBar" type="TextureProgress" parent="."]
+margin_left = 6.23932
+margin_top = 11.1257
+margin_right = 790.239
+margin_bottom = 127.126
 theme = ExtResource( 2 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-value = 50.0
+value = 17.0
+texture_over = ExtResource( 4 )
+texture_progress = ExtResource( 3 )
+tint_progress = Color( 0.466667, 0.0196078, 0.0196078, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
