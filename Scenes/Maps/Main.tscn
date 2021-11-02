@@ -6,9 +6,8 @@
 [ext_resource path="res://Scenes/Mobs/Mage.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Systems/Timer.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Maps/Castle/Castle.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scenes/Menus/Main/Assets/Font/pixelmix_bold.ttf" type="DynamicFontData" id=7]
-[ext_resource path="res://Scenes/Mobs/WalkingMan.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Fonts/pixelmix_bold.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://Scenes/Mobs/WalkingMan.tscn" type="PackedScene" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 size = 25
