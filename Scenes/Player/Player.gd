@@ -4,7 +4,7 @@ extends KinematicBody2D
 
 # STATS
 export var SPEED: int = 6 
-export var DASH_SPEED: int = 10
+export var DASH_SPEED: int = 15
 export var MAX_HEALTH: int = 100
 export var HEALTH: int = 100
 export var DEFENSE: int = 5
@@ -58,14 +58,24 @@ func _physics_process(_delta: float) -> void:
 		velocity = move_and_slide(velocity * 100)
 	else:
 		velocity = move_and_slide(knockback * 100)
-		
+	
+	_handle_collisions()
+
+func _handle_collisions() -> void :
+	var slide_count = get_slide_count()
+	
+	for i in slide_count:
+		var collided_node = get_slide_collision(i)
+		if (get_tree().get_nodes_in_group("projectile").has(collided_node.collider)):
+			damage(1, collided_node.collider.orientation)
+			collided_node.collider.destroy()
+
 func _dash() -> void:
 	can_dash = false
 	is_dashing = true
 	dash_duration_timer.start()
 
 func _handle_movement_inputs() -> void:
-	
 	if Input.is_action_pressed("move_right"):
 		velocity.x += 1
 	if Input.is_action_pressed("move_left"):

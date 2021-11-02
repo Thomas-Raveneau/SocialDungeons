@@ -33,8 +33,12 @@ animations = [ {
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 6.75959, 5.98453 )
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=[
+"player",
+]]
 scale = Vector2( 5, 5 )
+collision_mask = 8
+collision/safe_margin = 1.0
 script = ExtResource( 10 )
 
 [node name="Skin" type="AnimatedSprite" parent="."]
