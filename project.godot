@@ -58,6 +58,13 @@ debug_button={
  ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="player"
+2d_physics/layer_2="mobs"
+2d_physics/layer_3="player_projectile"
+2d_physics/layer_4="mob_projectile"
+
 [physics]
 
 common/enable_pause_aware_picking=true

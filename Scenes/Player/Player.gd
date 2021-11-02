@@ -130,7 +130,7 @@ func _handle_invicibility() -> void:
 	invicibility_timer.start()
 	is_invicible = true
 
-func _handle_damage_sound():
+func _handle_damage_sound() -> void:
 	damage_sound.play()
 
 ### PUBLIC ###
@@ -179,9 +179,9 @@ func _on_DashDuration_timeout() -> void:
 func _on_DashCooldown_timeout() -> void:
 	can_dash = true
 
-func _on_Invicibility_timeout():
+func _on_Invicibility_timeout() -> void:
 	is_invicible = false
 
-func _on_DamageAnimation_timeout():
+func _on_DamageAnimation_timeout() -> void:
 	skin.self_modulate = Color(1, 1, 1)
 	is_taking_damage = false
