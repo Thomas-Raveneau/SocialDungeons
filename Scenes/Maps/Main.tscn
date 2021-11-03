@@ -5,6 +5,8 @@
 [ext_resource path="res://Scenes/Systems/Timer.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Maps/Castle/Castle.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Fonts/pixelmix_bold.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://Scenes/Mobs/WalkingMan.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/Systems/HealthBar.tscn" type="PackedScene" id=9]
 
 [sub_resource type="DynamicFont" id=1]
 size = 25
@@ -36,3 +38,25 @@ margin_top = 3.54034
 margin_right = 1766.83
 margin_bottom = 55.5403
 custom_fonts/normal_font = SubResource( 1 )
+
+[node name="Warrior" parent="." instance=ExtResource( 3 )]
+position = Vector2( 164.111, 142.705 )
+scale = Vector2( 0.3, 0.3 )
+
+[node name="Archer" parent="." instance=ExtResource( 4 )]
+position = Vector2( 1750.51, 133.191 )
+scale = Vector2( 0.3, 0.3 )
+
+[node name="WalkingMan" parent="." instance=ExtResource( 8 )]
+position = Vector2( 653.899, 355.298 )
+scale = Vector2( 5, 5 )
+
+[node name="Mage" parent="." instance=ExtResource( 4 )]
+position = Vector2( 137.844, 967.906 )
+scale = Vector2( 0.3, 0.3 )
+
+[node name="HealthBar" parent="." instance=ExtResource( 9 )]
+margin_left = 10.0
+margin_top = 20.0
+margin_right = 790.721
+margin_bottom = 142.416
