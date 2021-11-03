@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/floor_spikes_anim_f1.png-456b43adb364361eb086878471a22d3d.stex"
+path="res://.import/floor_spikes_anim_f0.png-0bc02bfd11f21a02096ced559528a231.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/Traps/Assets/floor_spikes_anim_f1.png"
-dest_files=[ "res://.import/floor_spikes_anim_f1.png-456b43adb364361eb086878471a22d3d.stex" ]
+source_file="res://Scenes/Maps/Castle/Traps/Assets/floor_spikes_anim_f0.png"
+dest_files=[ "res://.import/floor_spikes_anim_f0.png-0bc02bfd11f21a02096ced559528a231.stex" ]
 
 [params]
 

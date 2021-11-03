@@ -29,8 +29,11 @@ func handle_collision():
 	var slide_count = get_slide_count()
 	for i in slide_count:
 		var node = get_slide_collision(i)
-		if get_tree().get_nodes_in_group("player").has(node.collider):
-			queue_free()
+		if get_tree().get_nodes_in_group("wall").has(node.collider):
+			destroy()
+
+func destroy(): 
+	queue_free()
 
 func _on_VisibilityNotifier2D_screen_exited() -> void:
 	queue_free()
