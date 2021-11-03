@@ -40,7 +40,7 @@ func _send_damage_to_player() -> void:
 
 ### SIGNALS ###
 func _on_Trap_body_entered(body: Node) -> void:
-	if (is_cooldown_available and is_activated):
+	if (is_activated):
 		if (get_tree().get_nodes_in_group("player").has(body)):
 			is_player_in_trap = true
 			player_node = body
