@@ -5,16 +5,26 @@
 [ext_resource path="res://Scenes/Systems/Timer.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Maps/Castle/Castle.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Fonts/pixelmix_bold.ttf" type="DynamicFontData" id=7]
-[ext_resource path="res://Scenes/Mobs/WalkingMan.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Scenes/Systems/HealthBar.tscn" type="PackedScene" id=9]
 
 [sub_resource type="DynamicFont" id=1]
-size = 25
-outline_color = Color( 0.164706, 0.0235294, 0.0235294, 1 )
+size = 24
+use_filter = true
 font_data = ExtResource( 7 )
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 2 )
+
+[node name="Castle" parent="." instance=ExtResource( 6 )]
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 962.58, 498.929 )
+
+[node name="Timer" parent="." instance=ExtResource( 5 )]
+margin_left = 1472.82
+margin_top = 3.54034
+margin_right = 1766.83
+margin_bottom = 55.5403
+custom_fonts/normal_font = SubResource( 1 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 960, 540 )
@@ -24,39 +34,5 @@ limit_top = 0
 limit_right = 1920
 limit_bottom = 1080
 
-[node name="Spawn" type="Node2D" parent="."]
+[node name="PlayerSpawn" type="Position2D" parent="."]
 position = Vector2( 960, 1000 )
-
-[node name="Castle" parent="." instance=ExtResource( 6 )]
-
-[node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 962.291, 541.261 )
-
-[node name="TimerLabel" parent="." instance=ExtResource( 5 )]
-margin_left = 1472.82
-margin_top = 3.54034
-margin_right = 1766.83
-margin_bottom = 55.5403
-custom_fonts/normal_font = SubResource( 1 )
-
-[node name="Warrior" parent="." instance=ExtResource( 3 )]
-position = Vector2( 164.111, 142.705 )
-scale = Vector2( 0.3, 0.3 )
-
-[node name="Archer" parent="." instance=ExtResource( 4 )]
-position = Vector2( 1750.51, 133.191 )
-scale = Vector2( 0.3, 0.3 )
-
-[node name="WalkingMan" parent="." instance=ExtResource( 8 )]
-position = Vector2( 653.899, 355.298 )
-scale = Vector2( 5, 5 )
-
-[node name="Mage" parent="." instance=ExtResource( 4 )]
-position = Vector2( 137.844, 967.906 )
-scale = Vector2( 0.3, 0.3 )
-
-[node name="HealthBar" parent="." instance=ExtResource( 9 )]
-margin_left = 10.0
-margin_top = 20.0
-margin_right = 790.721
-margin_bottom = 142.416

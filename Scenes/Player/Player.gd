@@ -186,7 +186,6 @@ func revive(health_on_revive: int) -> int:
 	
 func set_hp(newHpValue: int) -> void:
 	HEALTH = newHpValue
-	print('IN SET HP')
 	emit_signal("hp_changed", newHpValue)
 
 ### SIGNALS ###
