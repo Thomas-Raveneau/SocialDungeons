@@ -200,7 +200,25 @@ tile_data = PoolIntArray( 983040, 3, 0, 983041, 2, 0, 983042, 2, 0, 983043, 2, 0
 [node name="Door" parent="." instance=ExtResource( 4 )]
 position = Vector2( 960.265, 107.5 )
 
+[node name="MobSpawnDelay" type="Timer" parent="."]
+
 [node name="Traps" type="Node2D" parent="."]
 
 [node name="FloorSpikes" parent="Traps" instance=ExtResource( 6 )]
 position = Vector2( 960, 448 )
+
+[node name="MobsSpawns" type="Node2D" parent="."]
+
+[node name="TopLeft" type="Position2D" parent="MobsSpawns"]
+position = Vector2( 128, 192 )
+
+[node name="TopRight" type="Position2D" parent="MobsSpawns"]
+position = Vector2( 1792, 192 )
+
+[node name="BottomLeft" type="Position2D" parent="MobsSpawns"]
+position = Vector2( 128, 896 )
+
+[node name="BottomRight" type="Position2D" parent="MobsSpawns"]
+position = Vector2( 1792, 896 )
+
+[connection signal="timeout" from="MobSpawnDelay" to="." method="_on_MobSpawnDelay_timeout"]
