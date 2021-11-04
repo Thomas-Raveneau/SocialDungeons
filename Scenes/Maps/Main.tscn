@@ -41,6 +41,14 @@ limit_top = 0
 limit_right = 1920
 limit_bottom = 1080
 
+[node name="Spawn" type="Node2D" parent="."]
+position = Vector2( 960, 1000 )
+
+[node name="Castle" parent="." instance=ExtResource( 6 )]
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 962.58, 498.929 )
+
 [node name="PlayerSpawn" type="Position2D" parent="."]
 position = Vector2( 960, 1000 )
 [node name="HealthBar" parent="." instance=ExtResource( 3 )]
