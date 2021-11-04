@@ -8,12 +8,17 @@ signal killed()
 
 # STATS
 export var SPEED: int = 6 
-export var DASH_SPEED: int = 10
+export var DASH_SPEED: int = 15
 export var MAX_HEALTH: int = 100
 export var HEALTH: int = 100 setget _set_hp
 export var DEFENSE: int = 5
 export var ATTACK = 10
-export var KNOCKBACK_FORCE = 5
+export var KNOCKBACK_FORCE = 3
+
+# DAMAGE PARTICLE UTILS
+var damage_particle_dir = Vector2(0, -25)
+var damage_particle_duration = 1
+var damage_particle_spread = PI/2
 
 # TIMERS
 const DASH_DURATION: float = 0.1
@@ -37,8 +42,12 @@ onready var dash_cooldown_timer: Timer = $DashCooldown
 onready var damage_animation_timer: Timer = $DamageAnimation
 onready var damage_sound: AudioStreamPlayer = $DamageSound
 
+# SCENES
+var damage_particle = preload("res://Scenes/Player/DamageParticle.tscn")
+
 ################################################################################
 
+### PRIVATE ###
 func _ready() -> void:
 	dash_duration_timer.wait_time = DASH_DURATION
 	dash_cooldown_timer.wait_time = DASH_COOLDOWN
@@ -54,14 +63,24 @@ func _physics_process(_delta: float) -> void:
 		velocity = move_and_slide(velocity * 100)
 	else:
 		velocity = move_and_slide(knockback * 100)
-		
+	
+	_handle_collisions()
+
+func _handle_collisions() -> void :
+	var slide_count = get_slide_count()
+	
+	for i in slide_count:
+		var collided_node = get_slide_collision(i)
+		if (get_tree().get_nodes_in_group("projectile").has(collided_node.collider)):
+			damage(1, collided_node.collider.orientation)
+			collided_node.collider.destroy()
+
 func _dash() -> void:
 	can_dash = false
 	is_dashing = true
 	dash_duration_timer.start()
 
 func _handle_movement_inputs() -> void:
-	velocity = Vector2()
 	if Input.is_action_pressed("move_right"):
 		velocity.x += 1
 	if Input.is_action_pressed("move_left"):
@@ -79,6 +98,7 @@ func _handle_movement_inputs() -> void:
 		velocity = velocity.normalized() * SPEED
 
 func _handle_inputs() -> void:
+	velocity = Vector2()
 	if (is_alive and !is_taking_damage):
 		_handle_movement_inputs()
 
@@ -92,7 +112,9 @@ func _handle_animations() -> void:
 	if (is_alive):
 		_handle_player_flip()
 		
-		if (velocity == Vector2(0, 0)):
+		if (is_taking_damage):
+			skin.play('hit')
+		elif (velocity == Vector2(0, 0)):
 			skin.play('idle')
 		else:
 			skin.play('run')
@@ -101,26 +123,38 @@ func _handle_death() -> int:
 	if (is_alive):
 		is_alive = false
 		skin.stop()
-		rotation_degrees = 90
+		skin.rotation_degrees = 90
 		
 		return 0
 	else:
 		return -1
 
-func _handle_damage_animation(damage_dir: Vector2) -> void:
+func _handle_damage_animation(damage_amount: int, damage_dir: Vector2) -> void:
 	damage_animation_timer.start()
 	skin.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
 	knockback = damage_dir.normalized() * KNOCKBACK_FORCE
+	
+	var damage_particle_node = damage_particle.instance()
+	add_child(damage_particle_node)
+	damage_particle_node.show_value(str(damage_amount), 
+	damage_particle_dir, 
+	damage_particle_duration, 
+	damage_particle_spread, false)
 
 func _handle_invicibility() -> void:
 	invicibility_timer.start()
 	is_invicible = true
 
+func _handle_damage_sound() -> void:
+	damage_sound.play()
+
+### PUBLIC ###
 func damage(damage_amount: int, damage_dir: Vector2) -> bool: 
-	if (is_invicible):
+	if (is_invicible or !is_alive):
 		return false
 	
-	damage_sound.play()
+	_handle_damage_animation(damage_amount, damage_dir)
+	_handle_damage_sound()
 	
 	if (HEALTH - damage_amount <= 0):
 		self.HEALTH = 0
@@ -130,7 +164,6 @@ func damage(damage_amount: int, damage_dir: Vector2) -> bool:
 		self.HEALTH -= damage_amount
 		_set_hp(self.HEALTH - damage_amount)
 		is_taking_damage = true
-		_handle_damage_animation(damage_dir)
 		_handle_invicibility()
 		return false
 
@@ -157,7 +190,6 @@ func revive(health_on_revive: int) -> int:
 <<<<<<< Updated upstream
 func set_hp(newHpValue: int) -> void:
 	HEALTH = newHpValue
-	print('IN SET HP')
 	emit_signal("hp_changed", newHpValue)
 =======
 func _set_hp(newHpValue: int) -> void:
@@ -178,9 +210,9 @@ func _on_DashDuration_timeout() -> void:
 func _on_DashCooldown_timeout() -> void:
 	can_dash = true
 
-func _on_Invicibility_timeout():
+func _on_Invicibility_timeout() -> void:
 	is_invicible = false
 
-func _on_DamageAnimation_timeout():
+func _on_DamageAnimation_timeout() -> void:
 	skin.self_modulate = Color(1, 1, 1)
 	is_taking_damage = false

@@ -14,9 +14,9 @@
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 1 ) ],
+"frames": [ ExtResource( 9 ), ExtResource( 8 ), ExtResource( 5 ), ExtResource( 7 ) ],
 "loop": true,
-"name": "hit",
+"name": "idle",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 6 ), ExtResource( 4 ) ],
@@ -24,28 +24,31 @@ animations = [ {
 "name": "run",
 "speed": 10.0
 }, {
-"frames": [ ExtResource( 9 ), ExtResource( 8 ), ExtResource( 5 ), ExtResource( 7 ) ],
+"frames": [ ExtResource( 1 ) ],
 "loop": true,
-"name": "idle",
+"name": "hit",
 "speed": 5.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 6.75959, 5.98453 )
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=[
+"player",
+]]
 scale = Vector2( 5, 5 )
+collision_mask = 8
+collision/safe_margin = 1.0
 script = ExtResource( 10 )
 
 [node name="Skin" type="AnimatedSprite" parent="."]
-position = Vector2( 0.213733, -6.58928 )
+position = Vector2( 0.213733, -4.38928 )
 frames = SubResource( 1 )
 animation = "run"
 offset = Vector2( 0, -6 )
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2( 0.811353, -5.28589 )
+position = Vector2( 0.811353, -3.0859 )
 shape = SubResource( 2 )
 one_way_collision_margin = 0.0
 
@@ -59,12 +62,11 @@ wait_time = 0.2
 one_shot = true
 
 [node name="DamageAnimation" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.2
 one_shot = true
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
-visible = false
-position = Vector2( 0.283154, -11.7984 )
+position = Vector2( 0.283154, -9.5984 )
 scale = Vector2( 0.509186, 0.518624 )
 
 [node name="DamageSound" type="AudioStreamPlayer" parent="."]
