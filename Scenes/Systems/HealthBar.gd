@@ -22,3 +22,7 @@ func _on_Player_hp_changed(newHp: int) -> void:
 
 #func _process(delta: float) -> void:
 #	pass
+
+
+func _on_Player2_hp_changed(health) -> void:
+	pass # Replace with function body.
