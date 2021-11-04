@@ -205,52 +205,52 @@ position = Vector2( 960.265, 107.5 )
 [node name="Traps" type="Node2D" parent="."]
 
 [node name="FloorSpikes" parent="Traps" instance=ExtResource( 6 )]
-position = Vector2( 320, 704 )
+position = Vector2( 352, 736 )
 
 [node name="FloorSpikes2" parent="Traps" instance=ExtResource( 6 )]
-position = Vector2( 448, 704 )
+position = Vector2( 480, 736 )
 
 [node name="FloorSpikes3" parent="Traps" instance=ExtResource( 6 )]
-position = Vector2( 576, 704 )
+position = Vector2( 608, 736 )
 
 [node name="FloorSpikes4" parent="Traps" instance=ExtResource( 6 )]
-position = Vector2( 1536, 704 )
+position = Vector2( 1568, 736 )
 
 [node name="FloorSpikes5" parent="Traps" instance=ExtResource( 6 )]
-position = Vector2( 1408, 704 )
+position = Vector2( 1440, 736 )
 
 [node name="FloorSpikes6" parent="Traps" instance=ExtResource( 6 )]
-position = Vector2( 1280, 704 )
+position = Vector2( 1312, 736 )
 
 [node name="FloorSpikes7" parent="Traps" instance=ExtResource( 6 )]
-position = Vector2( 1536, 384 )
+position = Vector2( 1568, 416 )
 
 [node name="FloorSpikes8" parent="Traps" instance=ExtResource( 6 )]
-position = Vector2( 1408, 384 )
+position = Vector2( 1440, 416 )
 
 [node name="FloorSpikes9" parent="Traps" instance=ExtResource( 6 )]
-position = Vector2( 1280, 384 )
+position = Vector2( 1312, 416 )
 
 [node name="FloorSpikes10" parent="Traps" instance=ExtResource( 6 )]
-position = Vector2( 576, 384 )
+position = Vector2( 608, 416 )
 
 [node name="FloorSpikes11" parent="Traps" instance=ExtResource( 6 )]
-position = Vector2( 448, 384 )
+position = Vector2( 480, 416 )
 
 [node name="FloorSpikes12" parent="Traps" instance=ExtResource( 6 )]
-position = Vector2( 320, 384 )
+position = Vector2( 352, 416 )
 
 [node name="FloorSpikes13" parent="Traps" instance=ExtResource( 6 )]
-position = Vector2( 832, 896 )
+position = Vector2( 864, 928 )
 
 [node name="FloorSpikes14" parent="Traps" instance=ExtResource( 6 )]
-position = Vector2( 1024, 896 )
+position = Vector2( 1056, 928 )
 
 [node name="FloorSpikes15" parent="Traps" instance=ExtResource( 6 )]
-position = Vector2( 1024, 256 )
+position = Vector2( 1056, 288 )
 
 [node name="FloorSpikes16" parent="Traps" instance=ExtResource( 6 )]
-position = Vector2( 832, 256 )
+position = Vector2( 864, 288 )
 
 [node name="MobsSpawns" type="Node2D" parent="."]
 

@@ -6,7 +6,8 @@ extends Node2D
 onready var rooms = [
 	preload("res://Scenes/Maps/Castle/Rooms/Room_01.tscn"), 
 	preload("res://Scenes/Maps/Castle/Rooms/Room_02.tscn"),
-	preload("res://Scenes/Maps/Castle/Rooms/Room_03.tscn")
+	preload("res://Scenes/Maps/Castle/Rooms/Room_03.tscn"),
+	preload("res://Scenes/Maps/Castle/Rooms/Room_04.tscn")
 ]
 
 # UTILS
