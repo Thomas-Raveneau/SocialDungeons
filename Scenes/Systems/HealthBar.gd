@@ -23,7 +23,6 @@ func _updateHealthBar(newHealthValue: int) -> void:
 
 func _on_Player_hp_changed(newHp: int) -> void:
 	var newHealth: int = int(MAX_HEALTH - MIN_HEALTH) * float(newHp) / MAX_HEALTH + MIN_HEALTH
-	print(newHealth)
 	_updateHealthBar(newHealth)
 #func _process(delta: float) -> void:
 #	pass
