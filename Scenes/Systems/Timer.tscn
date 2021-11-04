@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Scenes/Systems/Timer.gd" type="Script" id=1]
 
-[node name="Timer" type="RichTextLabel"]
+[node name="RichTextLabel" type="RichTextLabel"]
 margin_right = 40.0
 margin_bottom = 40.0
 rect_scale = Vector2( 1.95782, 1.66605 )
