@@ -20,16 +20,9 @@ z_index = 2
 
 [node name="HealthBar" parent="Node2D" instance=ExtResource( 3 )]
 margin_left = 561.202
-margin_top = 914.648
+margin_top = 988.648
 margin_right = 561.202
-margin_bottom = 914.648
-
-[node name="Timer" parent="." instance=ExtResource( 5 )]
-margin_left = 1472.82
-margin_top = 3.54034
-margin_right = 1766.83
-margin_bottom = 55.5403
-custom_fonts/normal_font = SubResource( 1 )
+margin_bottom = 988.648
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 960, 540 )
@@ -43,6 +36,13 @@ limit_bottom = 1080
 position = Vector2( 960, 1000 )
 
 [node name="Castle" parent="." instance=ExtResource( 6 )]
+
+[node name="Timer" parent="." instance=ExtResource( 5 )]
+margin_left = 1472.82
+margin_top = 3.54034
+margin_right = 1766.83
+margin_bottom = 55.5403
+custom_fonts/normal_font = SubResource( 1 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 962.58, 498.929 )

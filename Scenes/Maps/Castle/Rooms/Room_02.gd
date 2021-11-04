@@ -62,6 +62,7 @@ func close_door():
 
 ### SIGNALS ###
 func _on_MobSpawnDelay_timeout():
+	print("oui")
 	if (mob_index < MOB_AMOUNT - 1):
 		_spawn_random_mob()
 		mob_index += 1

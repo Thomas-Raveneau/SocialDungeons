@@ -38,8 +38,6 @@ func _shoot_bullet() -> void:
 		bullet.position = Vector2(0 , -texture.get_size().y / 2)
 		
 	add_child(bullet)
-	
-	
 
 ### SIGNALS ###
 func _on_Timer_timeout() -> void:
