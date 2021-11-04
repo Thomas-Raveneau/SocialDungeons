@@ -3,7 +3,7 @@ extends Node2D
 ################################################################################
 
 # NODES
-onready var spawn = $Spawn
+onready var player_spawn = $PlayerSpawn
 onready var player = $Player
 onready var castle = $Castle
 onready var player_visibility = $Player/VisibilityNotifier2D
@@ -19,7 +19,7 @@ func _process(_delta: float) -> void:
 		player.damage(10, Vector2(0, 200))
 
 func set_player_to_spawn() -> void:
-	player.position = spawn.position
+	player.position = player_spawn.position
 
 func handle_player_room_exit() -> void:
 	castle.handle_door_z_index(player.position)

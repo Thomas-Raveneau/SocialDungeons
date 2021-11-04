@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scenes/Mobs/WalkingMan.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Mobs/Assets/knight_m_hit_anim_f0.png" type="Texture" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Scenes/Mobs/Assets/knight_m_idle_anim_f3.png" type="Texture" id=8]
 [ext_resource path="res://Scenes/Mobs/Assets/knight_m_run_anim_f0.png" type="Texture" id=9]
 [ext_resource path="res://Scenes/Mobs/Assets/knight_m_run_anim_f1.png" type="Texture" id=10]
+[ext_resource path="res://Scenes/Mobs/Assets/weapon_knight_sword.png" type="Texture" id=12]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -34,33 +35,48 @@ radius = 7.12934
 height = 7.73712
 
 [sub_resource type="CircleShape2D" id=3]
-radius = 59.6126
+radius = 186.72
 
 [node name="WalkingMan" type="KinematicBody2D" groups=[
 "mobs",
 ]]
+scale = Vector2( 5, 5 )
 collision_layer = 2
 collision_mask = 5
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_group_": true
-}
+SPEED = 250
+DAMAGE = 10
+MAX_HEALTH = 300
+HIT_COOLDOWN = 2
+
+[node name="HitSprite" type="Sprite" parent="."]
+position = Vector2( 9.54092, 1.01022 )
+rotation = 1.5708
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 12 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0, -6 )
 frames = SubResource( 1 )
 animation = "run"
-frame = 2
 playing = true
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
-position = Vector2( -0.15749, 3.30729 )
+visible = false
+position = Vector2( -0.15749, -1.93678 )
 shape = SubResource( 2 )
 
 [node name="DetectionArea" type="Area2D" parent="."]
 visible = false
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+position = Vector2( 0, -3.55848 )
 shape = SubResource( 3 )
+
+[node name="HitTimer" type="Timer" parent="."]
+wait_time = 2.0
 
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_DetectionArea_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_DetectionArea_body_exited"]
+[connection signal="timeout" from="HitTimer" to="." method="_on_HitTimer_timeout"]

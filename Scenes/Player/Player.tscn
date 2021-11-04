@@ -31,20 +31,24 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 6.75959, 5.98453 )
+extents = Vector2( 6.75959, 6.1141 )
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=[
+"player",
+]]
 scale = Vector2( 5, 5 )
+collision_mask = 8
+collision/safe_margin = 1.0
 script = ExtResource( 10 )
 
 [node name="Skin" type="AnimatedSprite" parent="."]
-position = Vector2( 0.213733, -6.58928 )
+position = Vector2( 0.213733, -4.38928 )
 frames = SubResource( 1 )
 animation = "run"
 offset = Vector2( 0, -6 )
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
-position = Vector2( 0.811353, -5.28589 )
+position = Vector2( 0.811353, -3.4859 )
 shape = SubResource( 2 )
 one_way_collision_margin = 0.0
 
@@ -62,7 +66,7 @@ wait_time = 0.2
 one_shot = true
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
-position = Vector2( 0.283154, -11.7984 )
+position = Vector2( 0.283154, -9.5984 )
 scale = Vector2( 0.509186, 0.518624 )
 
 [node name="DamageSound" type="AudioStreamPlayer" parent="."]

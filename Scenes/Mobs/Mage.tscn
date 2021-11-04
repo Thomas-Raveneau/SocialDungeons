@@ -66,15 +66,15 @@ animations = [ {
 "name": "idle",
 "speed": 11.0
 }, {
-"frames": [ ExtResource( 32 ), ExtResource( 33 ), ExtResource( 36 ), ExtResource( 37 ), ExtResource( 38 ), ExtResource( 35 ), ExtResource( 41 ), ExtResource( 40 ), ExtResource( 42 ), ExtResource( 39 ), ExtResource( 31 ), ExtResource( 34 ) ],
-"loop": false,
-"name": "attack",
-"speed": 15.0
-}, {
 "frames": [ ExtResource( 8 ), ExtResource( 26 ), ExtResource( 14 ), ExtResource( 27 ), ExtResource( 23 ), ExtResource( 28 ), ExtResource( 25 ), ExtResource( 20 ), ExtResource( 7 ), ExtResource( 1 ), ExtResource( 21 ), ExtResource( 18 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 12 ), ExtResource( 13 ) ],
 "loop": true,
 "name": "walk",
 "speed": 17.0
+}, {
+"frames": [ ExtResource( 32 ), ExtResource( 33 ), ExtResource( 36 ), ExtResource( 37 ), ExtResource( 38 ), ExtResource( 35 ), ExtResource( 41 ), ExtResource( 40 ), ExtResource( 42 ), ExtResource( 39 ), ExtResource( 31 ), ExtResource( 34 ) ],
+"loop": false,
+"name": "attack",
+"speed": 15.0
 }, {
 "frames": [ ExtResource( 57 ), ExtResource( 58 ), ExtResource( 46 ), ExtResource( 44 ), ExtResource( 47 ), ExtResource( 56 ), ExtResource( 48 ), ExtResource( 49 ), ExtResource( 45 ), ExtResource( 51 ), ExtResource( 50 ), ExtResource( 52 ), ExtResource( 54 ), ExtResource( 53 ), ExtResource( 55 ) ],
 "loop": false,
@@ -98,39 +98,50 @@ radius = 3618.67
 [node name="Mage" type="KinematicBody2D" groups=[
 "mobs",
 ]]
+scale = Vector2( 0.25, 0.25 )
 collision_layer = 2
 collision_mask = 5
 script = ExtResource( 43 )
 __meta__ = {
 "_edit_group_": true
 }
-DODGE_SPEED = 300
+SPEED = 300
+DAMAGE = 20
+MAX_HEALTH = 300
+DODGE_SPEED = 250
+ATTACK_COOLDOWN = 1
 
 [node name="Animation" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
-animation = "attack"
-frame = 11
+animation = "idle"
+frame = 5
 playing = true
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 shape = SubResource( 2 )
 
 [node name="DodgeArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DodgeArea"]
 shape = SubResource( 3 )
 
 [node name="RangeArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RangeArea"]
 shape = SubResource( 4 )
 
 [node name="DetectionArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource( 5 )
 
-[node name="Attack_Cooldown" type="Timer" parent="."]
+[node name="AttackTimer" type="Timer" parent="."]
 
 [node name="SpawnPoint" type="Node2D" parent="."]
 position = Vector2( 149.84, -19.0273 )
@@ -142,4 +153,4 @@ position = Vector2( 149.84, -19.0273 )
 [connection signal="body_exited" from="RangeArea" to="." method="_on_RangeArea_body_exited"]
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_DetectionArea_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_DetectionArea_body_exited"]
-[connection signal="timeout" from="Attack_Cooldown" to="." method="_on_Attack_Cooldown_timeout"]
+[connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]

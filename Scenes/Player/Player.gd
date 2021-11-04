@@ -2,11 +2,15 @@ extends KinematicBody2D
 
 ################################################################################
 
+# SIGNALS
+signal hp_changed(health)
+signal killed()
+
 # STATS
 export var SPEED: int = 6 
-export var DASH_SPEED: int = 10
+export var DASH_SPEED: int = 15
 export var MAX_HEALTH: int = 100
-export var HEALTH: int = 100
+export var HEALTH: int = 100 setget _set_hp
 export var DEFENSE: int = 5
 export var ATTACK = 10
 export var KNOCKBACK_FORCE = 3
@@ -47,7 +51,8 @@ var damage_particle = preload("res://Scenes/Player/DamageParticle.tscn")
 func _ready() -> void:
 	dash_duration_timer.wait_time = DASH_DURATION
 	dash_cooldown_timer.wait_time = DASH_COOLDOWN
-
+	_set_hp(self.HEALTH)
+	
 func _process(_delta: float) -> void:
 	pass
 
@@ -58,14 +63,24 @@ func _physics_process(_delta: float) -> void:
 		velocity = move_and_slide(velocity * 100)
 	else:
 		velocity = move_and_slide(knockback * 100)
-		
+	
+	_handle_collisions()
+
+func _handle_collisions() -> void :
+	var slide_count = get_slide_count()
+	
+	for i in slide_count:
+		var collided_node = get_slide_collision(i)
+		if (get_tree().get_nodes_in_group("projectile").has(collided_node.collider)):
+			damage(1, collided_node.collider.orientation)
+			collided_node.collider.destroy()
+
 func _dash() -> void:
 	can_dash = false
 	is_dashing = true
 	dash_duration_timer.start()
 
 func _handle_movement_inputs() -> void:
-	
 	if Input.is_action_pressed("move_right"):
 		velocity.x += 1
 	if Input.is_action_pressed("move_left"):
@@ -130,7 +145,7 @@ func _handle_invicibility() -> void:
 	invicibility_timer.start()
 	is_invicible = true
 
-func _handle_damage_sound():
+func _handle_damage_sound() -> void:
 	damage_sound.play()
 
 ### PUBLIC ###
@@ -142,11 +157,12 @@ func damage(damage_amount: int, damage_dir: Vector2) -> bool:
 	_handle_damage_sound()
 	
 	if (HEALTH - damage_amount <= 0):
-		HEALTH = 0
+		self.HEALTH = 0
 		_handle_death()
 		return true
 	else:
-		HEALTH -= damage_amount
+		self.HEALTH -= damage_amount
+		_set_hp(self.HEALTH - damage_amount)
 		is_taking_damage = true
 		_handle_invicibility()
 		return false
@@ -156,9 +172,9 @@ func heal(heal_amount: int) -> int:
 		return -1
 	
 	if (HEALTH + heal_amount > MAX_HEALTH):
-		HEALTH = MAX_HEALTH
+		self.HEALTH = MAX_HEALTH
 	else:
-		HEALTH += heal_amount
+		self.HEALTH += heal_amount
 	
 	return 0
 
@@ -170,6 +186,16 @@ func revive(health_on_revive: int) -> int:
 	is_alive = true
 	
 	return 0
+	
+func _set_hp(newHpValue: int) -> void:
+	var prevHealth = HEALTH
+	HEALTH = clamp(newHpValue, 0, MAX_HEALTH)
+	if HEALTH != prevHealth:
+		emit_signal("hp_changed", HEALTH)
+		if HEALTH == 0:
+			emit_signal("killed")
+			
+
 
 ### SIGNALS ###
 func _on_DashDuration_timeout() -> void:
@@ -179,9 +205,9 @@ func _on_DashDuration_timeout() -> void:
 func _on_DashCooldown_timeout() -> void:
 	can_dash = true
 
-func _on_Invicibility_timeout():
+func _on_Invicibility_timeout() -> void:
 	is_invicible = false
 
-func _on_DamageAnimation_timeout():
+func _on_DamageAnimation_timeout() -> void:
 	skin.self_modulate = Color(1, 1, 1)
 	is_taking_damage = false

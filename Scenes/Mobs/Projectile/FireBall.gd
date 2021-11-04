@@ -1,36 +1,20 @@
-extends KinematicBody2D
+extends "res://Scenes/Mobs/Projectile/AProjectile.gd"
 
-################################################################################
-
-# MOVEMENT
-var move : Vector2 = Vector2.ZERO
-var orientation : Vector2 = Vector2.ZERO
-var speed : float = 500
-
-# TARGET
-var target_position : Vector2 = Vector2.ZERO
-
-################################################################################
-
-func _ready() -> void:
-	orientation = target_position - get_global_position()
-	rotation = orientation.angle()
+############################# PRIVATE METHODS ##################################
 
 func _physics_process(delta) -> void:
-	handle_movement(delta)
-	handle_collision()
+	_handle_movement()
+	_handle_collision()
 
-func handle_movement(delta):
-	move = Vector2.ZERO
-	move = orientation.normalized() * speed
-	move = move_and_slide(move)
+func _handle_movement():
+	velocity = Vector2.ZERO
+	velocity = orientation.normalized() * SPEED
+	velocity = move_and_slide(velocity)
 
-func handle_collision():
-	var slide_count = get_slide_count()
-	for i in slide_count:
-		var node = get_slide_collision(i)
-		if get_tree().get_nodes_in_group("player").has(node.collider):
-			queue_free()
+func _handle_collision():
+	._handle_wall_collision()
+
+############################# PRIVATE SIGNALS ##################################
 
 func _on_VisibilityNotifier2D_screen_exited() -> void:
-	queue_free()
+	destroy()
