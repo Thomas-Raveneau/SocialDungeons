@@ -38,8 +38,8 @@ func _process(_delta: float):
 	pass
 
 func _ready():
-	if current_room_id < 0 or current_room_id > 1:
+	if (current_room_id < 0 or current_room_id > 1):
 		current_room_id = 0
 	
-	current_room_instance = rooms[0].instance()
+	current_room_instance = rooms[current_room_id].instance()
 	add_child(current_room_instance)
