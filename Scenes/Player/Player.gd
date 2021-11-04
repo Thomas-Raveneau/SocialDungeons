@@ -3,13 +3,14 @@ extends KinematicBody2D
 ################################################################################
 
 # SIGNALS
-signal hp_changed(newHpValue)
+signal hp_changed(health)
+signal killed()
 
 # STATS
 export var SPEED: int = 6 
 export var DASH_SPEED: int = 10
 export var MAX_HEALTH: int = 100
-export var HEALTH: int = 100 setget set_hp
+export var HEALTH: int = 100 setget _set_hp
 export var DEFENSE: int = 5
 export var ATTACK = 10
 export var KNOCKBACK_FORCE = 5
@@ -41,7 +42,8 @@ onready var damage_sound: AudioStreamPlayer = $DamageSound
 func _ready() -> void:
 	dash_duration_timer.wait_time = DASH_DURATION
 	dash_cooldown_timer.wait_time = DASH_COOLDOWN
-
+	_set_hp(self.HEALTH)
+	
 func _process(_delta: float) -> void:
 	pass
 
@@ -126,6 +128,7 @@ func damage(damage_amount: int, damage_dir: Vector2) -> bool:
 		return true
 	else:
 		self.HEALTH -= damage_amount
+		_set_hp(self.HEALTH - damage_amount)
 		is_taking_damage = true
 		_handle_damage_animation(damage_dir)
 		_handle_invicibility()
@@ -151,10 +154,21 @@ func revive(health_on_revive: int) -> int:
 	
 	return 0
 	
+<<<<<<< Updated upstream
 func set_hp(newHpValue: int) -> void:
 	HEALTH = newHpValue
 	print('IN SET HP')
 	emit_signal("hp_changed", newHpValue)
+=======
+func _set_hp(newHpValue: int) -> void:
+	var prevHealth = HEALTH
+	HEALTH = clamp(newHpValue, 0, MAX_HEALTH)
+	if HEALTH != prevHealth:
+		emit_signal("hp_changed", HEALTH)
+		if HEALTH == 0:
+			emit_signal("killed")
+			
+>>>>>>> Stashed changes
 
 ### SIGNALS ###
 func _on_DashDuration_timeout() -> void:
