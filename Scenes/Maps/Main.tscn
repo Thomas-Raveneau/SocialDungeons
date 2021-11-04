@@ -14,6 +14,17 @@ font_data = ExtResource( 7 )
 [node name="Main" type="Node2D"]
 script = ExtResource( 2 )
 
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 960, 540 )
+current = true
+limit_left = 0
+limit_top = 0
+limit_right = 1920
+limit_bottom = 1080
+
+[node name="Spawn" type="Node2D" parent="."]
+position = Vector2( 960, 1000 )
+
 [node name="Castle" parent="." instance=ExtResource( 6 )]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
@@ -25,6 +36,14 @@ margin_top = 3.54034
 margin_right = 1766.83
 margin_bottom = 55.5403
 custom_fonts/normal_font = SubResource( 1 )
+
+[node name="HealthBar" parent="." instance=ExtResource( 3 )]
+margin_left = 10.0
+margin_top = 20.0
+margin_right = 790.721
+margin_bottom = 142.416
+
+[connection signal="hp_changed" from="Player" to="Node2D/HealthBar" method="_on_Player_hp_changed"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 960, 540 )
