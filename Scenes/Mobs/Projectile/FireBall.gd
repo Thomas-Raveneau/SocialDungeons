@@ -12,28 +12,31 @@ var target_position : Vector2 = Vector2.ZERO
 
 ################################################################################
 
+### PRIVATE ###
 func _ready() -> void:
 	orientation = target_position - get_global_position()
 	rotation = orientation.angle()
 
 func _physics_process(delta) -> void:
-	handle_movement(delta)
-	handle_collision()
+	_handle_movement(delta)
+	_handle_collision()
 
-func handle_movement(delta):
+func _handle_movement(delta):
 	move = Vector2.ZERO
 	move = orientation.normalized() * speed
 	move = move_and_slide(move)
 
-func handle_collision():
+func _handle_collision():
 	var slide_count = get_slide_count()
 	for i in slide_count:
 		var node = get_slide_collision(i)
 		if get_tree().get_nodes_in_group("wall").has(node.collider):
 			destroy()
 
+### PUBLIC ###
 func destroy(): 
 	queue_free()
 
+### SIGNALS ###
 func _on_VisibilityNotifier2D_screen_exited() -> void:
-	queue_free()
+	destroy()

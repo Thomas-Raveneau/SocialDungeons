@@ -15,21 +15,17 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 31.9946, 31.989 )
+extents = Vector2( 26.1503, 19.3297 )
 
 [node name="FloorSpikes" type="Area2D"]
 collision_layer = 0
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="SpikesAnimation" type="AnimatedSprite" parent="."]
-position = Vector2( 32.0851, 32.1734 )
 frames = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 32.0851, 32.1734 )
+visible = false
 shape = SubResource( 2 )
 
 [node name="SpikesCooldown" type="Timer" parent="."]
@@ -41,7 +37,7 @@ wait_time = 0.1
 one_shot = true
 
 [node name="DamageTiming" type="Timer" parent="."]
-wait_time = 0.007
+wait_time = 0.001
 one_shot = true
 
 [connection signal="body_entered" from="." to="." method="_on_Trap_body_entered"]
