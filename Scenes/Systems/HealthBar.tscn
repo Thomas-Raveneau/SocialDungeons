@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scenes/Systems/HealthBar.gd" type="Script" id=1]
-[ext_resource path="res://Scenes/Systems/Assets/healthBar.png" type="Texture" id=2]
+[ext_resource path="res://healthBarTheme.tres" type="Theme" id=2]
 [ext_resource path="res://Scenes/Systems/Assets/blank-bar.png" type="Texture" id=3]
-[ext_resource path="res://healthBarTheme.tres" type="Theme" id=4]
-[ext_resource path="res://Scenes/Systems/Assets/grey-back-bar.png" type="Texture" id=5]
+[ext_resource path="res://Scenes/Systems/Assets/healthBar.png" type="Texture" id=4]
 
 [node name="HealthBar" type="Control"]
 anchor_right = 1.0
@@ -18,34 +17,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HealthBarUnder" type="TextureProgress" parent="."]
+[node name="HealthBar" type="TextureProgress" parent="."]
 margin_left = 6.23932
 margin_top = 11.1257
 margin_right = 790.239
 margin_bottom = 127.126
-rect_clip_content = true
-theme = ExtResource( 4 )
-value = 100.0
-texture_under = ExtResource( 5 )
+theme = ExtResource( 2 )
+value = 17.0
+texture_over = ExtResource( 4 )
 texture_progress = ExtResource( 3 )
 tint_progress = Color( 0.466667, 0.0196078, 0.0196078, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HealthBarOver" type="TextureProgress" parent="."]
-margin_left = 6.23932
-margin_top = 11.1257
-margin_right = 790.239
-margin_bottom = 127.126
-rect_clip_content = true
-theme = ExtResource( 4 )
-value = 100.0
-texture_over = ExtResource( 2 )
-texture_progress = ExtResource( 3 )
-tint_progress = Color( 0.901961, 0.0705882, 0.0705882, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Tween" type="Tween" parent="HealthBarOver"]
+[node name="Tween" type="Tween" parent="HealthBar"]
