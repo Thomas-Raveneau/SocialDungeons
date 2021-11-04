@@ -22,7 +22,7 @@ onready var mobs_spawns = [
 ]
 
 # LEVEL DIFFICULTY
-export var MOB_AMOUNT: int = 12
+export var MOB_AMOUNT: int = 16
 export var SPAWN_DELAY: float = 4.0
 
 # UTILS
@@ -62,7 +62,6 @@ func close_door():
 
 ### SIGNALS ###
 func _on_MobSpawnDelay_timeout():
-	print("oui")
 	if (mob_index < MOB_AMOUNT - 1):
 		_spawn_random_mob()
 		mob_index += 1
