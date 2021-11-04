@@ -5,7 +5,8 @@ extends Node2D
 # ROOMS NODES
 onready var rooms = [
 	preload("res://Scenes/Maps/Castle/Rooms/Room_01.tscn"), 
-	preload("res://Scenes/Maps/Castle/Rooms/Room_02.tscn")
+	preload("res://Scenes/Maps/Castle/Rooms/Room_02.tscn"),
+	preload("res://Scenes/Maps/Castle/Rooms/Room_03.tscn")
 ]
 
 # UTILS
@@ -38,7 +39,7 @@ func _process(_delta: float):
 	pass
 
 func _ready():
-	if (current_room_id < 0 or current_room_id > 1):
+	if (current_room_id < 0 or current_room_id > rooms.size() - 1):
 		current_room_id = 0
 	
 	current_room_instance = rooms[current_room_id].instance()

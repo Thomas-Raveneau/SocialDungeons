@@ -19,6 +19,7 @@ height = 0.897011
 "projectile",
 ]]
 position = Vector2( 59.8597, 54.0326 )
+z_index = 1
 collision_layer = 8
 collision_mask = 16
 script = ExtResource( 2 )
