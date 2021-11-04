@@ -15,20 +15,14 @@ animations = [ {
 radius = 31.0004
 height = 4.07539
 
-[node name="Turret" type="Area2D"]
-position = Vector2( 84.2273, 79.4597 )
-rotation = 1.5708
+[node name="Turret" type="StaticBody2D"]
 script = ExtResource( 2 )
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="TurretSprite" type="AnimatedSprite" parent="."]
-position = Vector2( -0.0104828, 0.153351 )
 frames = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0.529732, 0.529724 )
+visible = false
 shape = SubResource( 2 )
 
 [node name="ShootTimer" type="Timer" parent="."]

@@ -22,7 +22,8 @@ onready var mobs_spawns = [
 ]
 
 # LEVEL DIFFICULTY
-export var MOB_AMOUNT: int = 12
+export var MOB_AMOUNT: int = 20
+
 export var SPAWN_DELAY: float = 4.0
 
 # UTILS
