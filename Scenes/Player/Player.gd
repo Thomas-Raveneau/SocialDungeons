@@ -32,6 +32,7 @@ var is_invicible: bool = false
 var is_taking_damage: bool = false
 var velocity: Vector2 = Vector2()
 var knockback: Vector2 = Vector2()
+var last_step = -1
 
 # NODES
 onready var skin: AnimatedSprite = $Skin
@@ -81,6 +82,17 @@ func _dash() -> void:
 	dash_duration_timer.start()
 
 func _handle_movement_inputs() -> void:
+	if ($Skin.animation == "run"):
+		if ($Skin.get_frame() == 3 && last_step != 3):
+			var particles = step_particles.instance()
+			particles.global_position = Vector2(global_position.x, global_position.y + 12)
+			particles.emitting = true		
+			get_parent().add_child(particles)
+		last_step = $Skin.get_frame()
+		if ($WalkSound.playing == false and is_alive and !is_taking_damage):
+			$WalkSound.play();
+	else:
+		$WalkSound.stop();
 	if Input.is_action_pressed("move_right"):
 		velocity.x += 1
 	if Input.is_action_pressed("move_left"):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scenes/Player/Assets/knight_m_hit_anim_f0.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Player/Assets/knight_m_run_anim_f0.png" type="Texture" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Scenes/Player/Assets/knight_m_idle_anim_f0.png" type="Texture" id=9]
 [ext_resource path="res://Scenes/Player/Player.gd" type="Script" id=10]
 [ext_resource path="res://Scenes/Player/Sounds/take_damage.mp3" type="AudioStream" id=11]
+[ext_resource path="res://Scenes/Player/Sounds/footstep.mp3" type="AudioStream" id=12]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -42,7 +43,6 @@ collision/safe_margin = 1.0
 script = ExtResource( 10 )
 
 [node name="Skin" type="AnimatedSprite" parent="."]
-position = Vector2( 0.213733, -4.38928 )
 frames = SubResource( 1 )
 animation = "run"
 offset = Vector2( 0, -6 )
@@ -71,6 +71,9 @@ scale = Vector2( 0.509186, 0.518624 )
 
 [node name="DamageSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 11 )
+
+[node name="WalkSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 12 )
 
 [connection signal="timeout" from="DashDuration" to="." method="_on_DashDuration_timeout"]
 [connection signal="timeout" from="DashCooldown" to="." method="_on_DashCooldown_timeout"]
