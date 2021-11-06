@@ -44,7 +44,7 @@ onready var damage_sound: AudioStreamPlayer = $DamageSound
 
 # SCENES
 var damage_particle = preload("res://Scenes/Player/DamageParticle.tscn")
-
+var step_particles = preload("res://Scenes/Particles/FootStep.tscn")
 ################################################################################
 
 ### PRIVATE ###
