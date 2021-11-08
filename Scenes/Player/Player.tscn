@@ -20,15 +20,15 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 1 ) ],
-"loop": true,
-"name": "hit",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 6 ), ExtResource( 4 ) ],
 "loop": true,
 "name": "run",
 "speed": 10.0
+}, {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "hit",
+"speed": 5.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -57,9 +57,6 @@ one_way_collision_margin = 0.0
 position = Vector2( 0.283154, -9.5984 )
 scale = Vector2( 0.509186, 0.518624 )
 
-[node name="DamageSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 11 )
-
 [node name="BasicAttackTimer" type="Timer" parent="."]
 one_shot = true
 
@@ -85,6 +82,7 @@ stream = ExtResource( 11 )
 
 [node name="WalkSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 12 )
+volume_db = -44.216
 
 [connection signal="timeout" from="BasicAttackTimer" to="." method="_on_BasicAttackTimer_timeout"]
 [connection signal="timeout" from="DashDuration" to="." method="_on_DashDuration_timeout"]

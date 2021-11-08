@@ -1,14 +1,18 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://Scenes/Maps/Castle/Turrets/Assets/turret.png" type="Texture" id=1]
+[ext_resource path="res://Scenes/Maps/Castle/Turrets/Assets/turret1.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Maps/Castle/Turrets/Turret.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/Maps/Castle/Turrets/Assets/turret3.png" type="Texture" id=3]
+[ext_resource path="res://Scenes/Maps/Castle/Turrets/Assets/turret2.png" type="Texture" id=4]
+[ext_resource path="res://Scenes/Maps/Castle/Turrets/Assets/turret4.png" type="Texture" id=5]
+[ext_resource path="res://Scenes/Maps/Castle/Turrets/Assets/turret0.png" type="Texture" id=6]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 1 ) ],
+"frames": [ ExtResource( 6 ), ExtResource( 1 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 5 ) ],
 "loop": true,
-"name": "default",
-"speed": 5.0
+"name": "shoot",
+"speed": 20.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=2]
@@ -19,12 +23,17 @@ height = 4.07539
 script = ExtResource( 2 )
 
 [node name="TurretSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 18, 0.265 )
+rotation = 1.5708
 frames = SubResource( 1 )
+animation = "shoot"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 shape = SubResource( 2 )
 
 [node name="ShootTimer" type="Timer" parent="."]
+one_shot = true
 
+[connection signal="animation_finished" from="TurretSprite" to="." method="_on_TurretSprite_animation_finished"]
 [connection signal="timeout" from="ShootTimer" to="." method="_on_Timer_timeout"]

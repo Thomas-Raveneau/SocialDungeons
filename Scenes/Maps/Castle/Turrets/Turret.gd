@@ -23,22 +23,15 @@ func _ready() -> void:
 func _shoot_bullet() -> void:
 	var bullet = Bullet.instance()
 	var bullet_dir: Vector2 = Vector2(cos(rotation), sin(rotation))
+	
 	bullet.set_speed_and_dir(BULLET_SPEED, bullet_dir)
-	
-	var texture = sprite.frames.get_frame("default", 0)
-	bullet.rotation = rotation
-	
-	if (int(sprite.rotation_degrees) == 0):
-		bullet.position = Vector2(texture.get_size().x / 2, 0)
-	elif (int(sprite.rotation_degrees) == 180):
-		bullet.position = Vector2(-texture.get_size().x / 2 , 0)
-	elif (int(sprite.rotation_degrees) == 90):
-		bullet.position = Vector2(0 , texture.get_size().y / 2)
-	else:
-		bullet.position = Vector2(0 , -texture.get_size().y / 2)
-		
 	add_child(bullet)
 
 ### SIGNALS ###
 func _on_Timer_timeout() -> void:
+	sprite.play("shoot")
 	_shoot_bullet()
+
+func _on_TurretSprite_animation_finished():
+	sprite.stop()
+	shoot_timer.start()

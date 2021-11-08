@@ -118,7 +118,8 @@ func _handle_movement_inputs() -> void:
 			get_parent().add_child(particles)
 		last_step = $Skin.get_frame()
 		if ($WalkSound.playing == false and is_alive and !is_taking_damage):
-			$WalkSound.play();
+#			$WalkSound.play();
+			pass
 	else:
 		$WalkSound.stop();
 	if Input.is_action_pressed("move_right"):
