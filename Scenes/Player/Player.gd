@@ -43,6 +43,7 @@ var is_invicible: bool = false
 var is_taking_damage: bool = false
 var velocity: Vector2 = Vector2()
 var knockback: Vector2 = Vector2()
+var last_step = -1
 
 # NODES
 onready var skin: AnimatedSprite = $Skin
@@ -55,6 +56,7 @@ onready var damage_sound: AudioStreamPlayer = $DamageSound
 
 # SCENES
 var damage_particle = preload("res://Scenes/Player/DamageParticle.tscn")
+var step_particles = preload("res://Scenes/Particles/FootStep.tscn")
 var basic_attack = preload("res://Scenes/Player/Spells/BasicAttack.tscn")
 
 ################################################################################
@@ -96,6 +98,23 @@ func _dash() -> void:
 	dash_duration_timer.start()
 
 func _handle_movement_inputs() -> void:
+	if ($Skin.animation == "run"):
+		if ($Skin.get_frame() == 3 && last_step != 3):
+			var particles = step_particles.instance()
+			particles.global_position = Vector2(global_position.x, global_position.y + 32)
+			particles.emitting = true
+			if Input.is_action_pressed("move_right"):
+				particles.process_material.direction.x = -1
+			elif Input.is_action_pressed("move_left"):
+				particles.process_material.direction.x = 1
+			else:
+				particles.process_material.direction.x = 0
+			get_parent().add_child(particles)
+		last_step = $Skin.get_frame()
+		if ($WalkSound.playing == false and is_alive and !is_taking_damage):
+			$WalkSound.play();
+	else:
+		$WalkSound.stop();
 	if Input.is_action_pressed("move_right"):
 		velocity.x += 1
 	if Input.is_action_pressed("move_left"):
