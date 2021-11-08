@@ -105,9 +105,15 @@ func _handle_movement_inputs() -> void:
 			particles.emitting = true
 			if Input.is_action_pressed("move_right"):
 				particles.process_material.direction.x = -1
+				particles.process_material.direction.y = -1
 			elif Input.is_action_pressed("move_left"):
 				particles.process_material.direction.x = 1
+				particles.process_material.direction.y = -1
+			elif Input.is_action_pressed("move_up"):
+				particles.process_material.direction.x = 0
+				particles.process_material.direction.y = 1
 			else:
+				particles.process_material.direction.y = -1
 				particles.process_material.direction.x = 0
 			get_parent().add_child(particles)
 		last_step = $Skin.get_frame()
