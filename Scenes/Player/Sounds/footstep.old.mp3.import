@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/footstep.old.mp3-1fbee3b82bd897394b92fc70e3c991af.mp3str"
+
+[deps]
+
+source_file="res://Scenes/Player/Sounds/footstep.old.mp3"
+dest_files=[ "res://.import/footstep.old.mp3-1fbee3b82bd897394b92fc70e3c991af.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
