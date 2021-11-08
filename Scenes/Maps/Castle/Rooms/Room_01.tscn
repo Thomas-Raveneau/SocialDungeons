@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scenes/Maps/Castle/Tilesets/Floor.tres" type="TileSet" id=1]
 [ext_resource path="res://Scenes/Maps/Castle/Assets/tileset_castle.png" type="Texture" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://Scenes/Maps/Castle/Rooms/Door.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Maps/Castle/Rooms/Room_01.gd" type="Script" id=5]
 [ext_resource path="res://Scenes/Maps/Castle/Traps/FloorSpikes.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/Mobs/Boss_Wrath.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Player/Player.tscn" type="PackedScene" id=8]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 64, 64, 0, 64, 0, 43.8283, 64, 43.8283 )
@@ -265,5 +267,11 @@ position = Vector2( 128, 896 )
 
 [node name="BottomRight" type="Position2D" parent="MobsSpawns"]
 position = Vector2( 1792, 896 )
+
+[node name="Boss_Wrath" parent="." instance=ExtResource( 7 )]
+position = Vector2( 228.032, 268.48 )
+
+[node name="Player" parent="." instance=ExtResource( 8 )]
+position = Vector2( 1434.69, 571.988 )
 
 [connection signal="timeout" from="MobSpawnDelay" to="." method="_on_MobSpawnDelay_timeout"]

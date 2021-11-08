@@ -121,9 +121,6 @@ radius = 791.144
 collision_layer = 2
 collision_mask = 5
 script = ExtResource( 31 )
-__meta__ = {
-"_edit_group_": true
-}
 SPEED = 300
 DAMAGE = 20
 MAX_HEALTH = 300
@@ -132,7 +129,7 @@ DASH_SPEED = 750.0
 [node name="Animation" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "idle"
-frame = 10
+frame = 2
 playing = true
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]

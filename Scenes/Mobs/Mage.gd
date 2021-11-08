@@ -78,8 +78,9 @@ func _handle_collision():
 		if hitbox.disabled:
 			return
 		var node = get_slide_collision(i)
-		if get_tree().get_nodes_in_group("player").has(node.collider):
-			node.collider.damage(DAMAGE, position - node.collider.position)
+		if get_tree().get_nodes_in_group("projectile").has(node.collider):
+			take_damage(node.collider.DAMAGE, node.collider.position - position)
+			node.collider.destroy()
 
 func _handle_death_animation() -> void:
 	hitbox.disabled = true
