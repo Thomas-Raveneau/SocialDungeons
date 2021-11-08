@@ -107,14 +107,14 @@ __meta__ = {
 }
 SPEED = 300
 DAMAGE = 20
-MAX_HEALTH = 300
+MAX_HEALTH = 10
 DODGE_SPEED = 250
 ATTACK_COOLDOWN = 1
 
 [node name="Animation" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "idle"
-frame = 8
+frame = 9
 playing = true
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
