@@ -15,6 +15,17 @@ export var DEFENSE: int = 5
 export var ATTACK = 10
 export var KNOCKBACK_FORCE = 3
 
+# SPELLS STATS
+export var BASIC_ATTACK_SPEED: float = 15.0
+export var BASIC_ATTACK_DAMAGE: float = 5.0
+export var BASIC_ATTACK_COOLDOWN: float = 0.1
+
+# SPELLS TIMERS
+onready var basic_attack_timer: Timer = $BasicAttackTimer
+
+# SPELLS UTILS
+var can_basic_attack = true
+
 # DAMAGE PARTICLE UTILS
 var damage_particle_dir = Vector2(0, -25)
 var damage_particle_duration = 1
@@ -46,13 +57,18 @@ onready var damage_sound: AudioStreamPlayer = $DamageSound
 # SCENES
 var damage_particle = preload("res://Scenes/Player/DamageParticle.tscn")
 var step_particles = preload("res://Scenes/Particles/FootStep.tscn")
+var basic_attack = preload("res://Scenes/Player/Spells/BasicAttack.tscn")
+
 ################################################################################
 
 ### PRIVATE ###
 func _ready() -> void:
 	dash_duration_timer.wait_time = DASH_DURATION
 	dash_cooldown_timer.wait_time = DASH_COOLDOWN
-	_set_hp(self.HEALTH)
+	
+	basic_attack_timer.wait_time = BASIC_ATTACK_COOLDOWN
+	
+	_set_hp(HEALTH)
 	
 func _process(_delta: float) -> void:
 	pass
@@ -109,10 +125,28 @@ func _handle_movement_inputs() -> void:
 	else:
 		velocity = velocity.normalized() * SPEED
 
+func _handle_spells_inputs() -> void:
+	if (Input.is_action_just_pressed("action_spell_01")):
+		_basic_attack()
+
+func _basic_attack() -> void:
+	if (!can_basic_attack):
+		return
+	
+	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
+	var attack_dir: Vector2 = (mouse_pos - global_position).normalized()
+	var new_sword = basic_attack.instance()
+	
+	new_sword.init_params(BASIC_ATTACK_DAMAGE, BASIC_ATTACK_SPEED, mouse_pos, global_position)
+	get_parent().add_child(new_sword)
+	can_basic_attack = false
+	basic_attack_timer.start()
+
 func _handle_inputs() -> void:
 	velocity = Vector2()
 	if (is_alive and !is_taking_damage):
 		_handle_movement_inputs()
+		_handle_spells_inputs()
 
 func _handle_player_flip() -> void:
 	if (velocity.x < 0 and !skin.flip_h):
@@ -174,9 +208,10 @@ func damage(damage_amount: int, damage_dir: Vector2) -> bool:
 		return true
 	else:
 		self.HEALTH -= damage_amount
-		_set_hp(self.HEALTH - damage_amount)
+		_set_hp(self.HEALTH)
 		is_taking_damage = true
 		_handle_invicibility()
+		
 		return false
 
 func heal(heal_amount: int) -> int:
@@ -206,8 +241,6 @@ func _set_hp(newHpValue: int) -> void:
 		emit_signal("hp_changed", HEALTH)
 		if HEALTH == 0:
 			emit_signal("killed")
-			
-
 
 ### SIGNALS ###
 func _on_DashDuration_timeout() -> void:
@@ -223,3 +256,6 @@ func _on_Invicibility_timeout() -> void:
 func _on_DamageAnimation_timeout() -> void:
 	skin.self_modulate = Color(1, 1, 1)
 	is_taking_damage = false
+
+func _on_BasicAttackTimer_timeout():
+	can_basic_attack = true
