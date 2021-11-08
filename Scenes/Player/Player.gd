@@ -101,8 +101,14 @@ func _handle_movement_inputs() -> void:
 	if ($Skin.animation == "run"):
 		if ($Skin.get_frame() == 3 && last_step != 3):
 			var particles = step_particles.instance()
-			particles.global_position = Vector2(global_position.x, global_position.y + 12)
-			particles.emitting = true		
+			particles.global_position = Vector2(global_position.x, global_position.y + 32)
+			particles.emitting = true
+			if Input.is_action_pressed("move_right"):
+				particles.process_material.direction.x = -1
+			elif Input.is_action_pressed("move_left"):
+				particles.process_material.direction.x = 1
+			else:
+				particles.process_material.direction.x = 0
 			get_parent().add_child(particles)
 		last_step = $Skin.get_frame()
 		if ($WalkSound.playing == false and is_alive and !is_taking_damage):
