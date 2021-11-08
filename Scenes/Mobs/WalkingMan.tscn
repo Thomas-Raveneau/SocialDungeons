@@ -46,7 +46,7 @@ collision_mask = 5
 script = ExtResource( 1 )
 SPEED = 250
 DAMAGE = 10
-MAX_HEALTH = 300
+MAX_HEALTH = 30
 HIT_COOLDOWN = 2
 
 [node name="HitSprite" type="Sprite" parent="."]
@@ -59,6 +59,7 @@ texture = ExtResource( 12 )
 position = Vector2( 0, -6 )
 frames = SubResource( 1 )
 animation = "run"
+frame = 3
 playing = true
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]

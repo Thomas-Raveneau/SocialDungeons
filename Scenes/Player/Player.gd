@@ -76,12 +76,40 @@ func _process(_delta: float) -> void:
 func _physics_process(_delta: float) -> void:
 	_handle_inputs()
 	_handle_animations()
+	_handle_walking_sound()
+	_generate_particles()
+
 	if (!is_taking_damage):
 		velocity = move_and_slide(velocity * 100)
 	else:
 		velocity = move_and_slide(knockback * 100)
 	
 	_handle_collisions()
+
+func _generate_particles() -> void:
+	if ($Skin.animation == "run"):
+		if ($Skin.get_frame() == 3 && last_step != 3):
+			var particles = step_particles.instance()
+			particles.global_position = Vector2(global_position.x, global_position.y + 32)
+			particles.emitting = true
+
+			if Input.is_action_pressed("move_right"):
+				particles.process_material.direction = Vector3(-1, -1, 0)
+			elif Input.is_action_pressed("move_left"):
+				particles.process_material.direction = Vector3(1, -1, 0)
+			elif Input.is_action_pressed("move_up"):
+				particles.process_material.direction = Vector3(0, 1, 0)
+			else:
+				particles.process_material.direction = Vector3(0, -1, 0)
+			get_parent().add_child(particles)
+		last_step = $Skin.get_frame()
+
+func _handle_walking_sound() -> void:
+	if ($Skin.animation == "run"):
+		if (!$WalkSound.playing and is_alive and !is_taking_damage):
+			$WalkSound.play();
+	else:
+		$WalkSound.stop();
 
 func _handle_collisions() -> void :
 	var slide_count = get_slide_count()
@@ -98,30 +126,6 @@ func _dash() -> void:
 	dash_duration_timer.start()
 
 func _handle_movement_inputs() -> void:
-	if ($Skin.animation == "run"):
-		if ($Skin.get_frame() == 3 && last_step != 3):
-			var particles = step_particles.instance()
-			particles.global_position = Vector2(global_position.x, global_position.y + 32)
-			particles.emitting = true
-			if Input.is_action_pressed("move_right"):
-				particles.process_material.direction.x = -1
-				particles.process_material.direction.y = -1
-			elif Input.is_action_pressed("move_left"):
-				particles.process_material.direction.x = 1
-				particles.process_material.direction.y = -1
-			elif Input.is_action_pressed("move_up"):
-				particles.process_material.direction.x = 0
-				particles.process_material.direction.y = 1
-			else:
-				particles.process_material.direction.y = -1
-				particles.process_material.direction.x = 0
-			get_parent().add_child(particles)
-		last_step = $Skin.get_frame()
-		if ($WalkSound.playing == false and is_alive and !is_taking_damage):
-#			$WalkSound.play();
-			pass
-	else:
-		$WalkSound.stop();
 	if Input.is_action_pressed("move_right"):
 		velocity.x += 1
 	if Input.is_action_pressed("move_left"):
