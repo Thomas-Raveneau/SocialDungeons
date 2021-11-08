@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/blank-bar.png-955993409b16cd7b066d07b9552f6577.stex"
+path="res://.import/selector_sprite2.png-2fb89f438c5d77c3a6a66584b4f625f7.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/Systems/Assets/blank-bar.png"
-dest_files=[ "res://.import/blank-bar.png-955993409b16cd7b066d07b9552f6577.stex" ]
+source_file="res://Scenes/Menus/Level_Selector_Menu/Assets/selector_sprite2.png"
+dest_files=[ "res://.import/selector_sprite2.png-2fb89f438c5d77c3a6a66584b4f625f7.stex" ]
 
 [params]
 

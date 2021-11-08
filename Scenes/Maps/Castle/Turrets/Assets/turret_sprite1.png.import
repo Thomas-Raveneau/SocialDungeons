@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/grey-back-bar.png-12dbaa567e0cf282242cde3643323bdf.stex"
+path="res://.import/turret_sprite1.png-2a24979d8d8f35d8873edd7a9f86ad47.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/Systems/Assets/grey-back-bar.png"
-dest_files=[ "res://.import/grey-back-bar.png-12dbaa567e0cf282242cde3643323bdf.stex" ]
+source_file="res://Scenes/Maps/Castle/Turrets/Assets/turret_sprite1.png"
+dest_files=[ "res://.import/turret_sprite1.png-2a24979d8d8f35d8873edd7a9f86ad47.stex" ]
 
 [params]
 
