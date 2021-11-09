@@ -20,6 +20,7 @@ radius = 31.0004
 height = 4.07539
 
 [node name="Turret" type="StaticBody2D"]
+collision_layer = 32
 script = ExtResource( 2 )
 
 [node name="TurretSprite" type="AnimatedSprite" parent="."]
