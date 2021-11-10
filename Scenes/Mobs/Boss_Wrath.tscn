@@ -84,15 +84,15 @@ animations = [ {
 "name": "walk",
 "speed": 11.0
 }, {
+"frames": [ ExtResource( 3 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 8 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 12 ), ExtResource( 11 ) ],
+"loop": false,
+"name": "attack",
+"speed": 22.0
+}, {
 "frames": [ ExtResource( 27 ), ExtResource( 19 ), ExtResource( 16 ), ExtResource( 26 ), ExtResource( 20 ), ExtResource( 22 ), ExtResource( 25 ), ExtResource( 13 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 15 ), ExtResource( 23 ), ExtResource( 14 ), ExtResource( 21 ), ExtResource( 24 ) ],
 "loop": true,
 "name": "death",
 "speed": 14.0
-}, {
-"frames": [ ExtResource( 3 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 8 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 12 ), ExtResource( 11 ) ],
-"loop": true,
-"name": "attack",
-"speed": 11.0
 }, {
 "frames": [ ExtResource( 51 ), ExtResource( 42 ), ExtResource( 32 ), ExtResource( 56 ), ExtResource( 43 ), ExtResource( 55 ), ExtResource( 45 ), ExtResource( 33 ), ExtResource( 57 ), ExtResource( 46 ), ExtResource( 47 ), ExtResource( 29 ), ExtResource( 48 ), ExtResource( 35 ), ExtResource( 49 ), ExtResource( 50 ), ExtResource( 53 ), ExtResource( 28 ) ],
 "loop": true,
@@ -120,8 +120,8 @@ __meta__ = {
 
 [node name="Animated" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
-animation = "walk"
-frame = 10
+animation = "idle"
+frame = 11
 playing = true
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
@@ -144,10 +144,19 @@ shape = SubResource( 4 )
 [node name="MageSphere" type="Node2D" parent="."]
 position = Vector2( 183.138, 0 )
 script = ExtResource( 71 )
+OUTLINE_COLOR = Color( 1, 0, 0, 1 )
 
 [node name="PatternTimer" type="Timer" parent="."]
-wait_time = 6.0
+wait_time = 15.0
 autostart = true
 
+[node name="CooldownAttack1" type="Timer" parent="."]
+wait_time = 0.3
+
+[connection signal="animation_finished" from="Animated" to="." method="_on_Animated_animation_finished"]
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_DetectionArea_body_entered"]
+[connection signal="body_exited" from="DetectionArea" to="." method="_on_DetectionArea_body_exited"]
+[connection signal="body_entered" from="RangeArea" to="." method="_on_RangeArea_body_entered"]
+[connection signal="body_exited" from="RangeArea" to="." method="_on_RangeArea_body_exited"]
 [connection signal="timeout" from="PatternTimer" to="." method="_on_PatternTimer_timeout"]
+[connection signal="timeout" from="CooldownAttack1" to="." method="_on_CooldownAttack1_timeout"]

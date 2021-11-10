@@ -15,11 +15,17 @@ var in_range_of_attack : bool = false
 var can_attack : bool = false
 var is_attack : bool = false
 
+onready var cooldown_attack_1 : Timer = $CooldownAttack1
+
+# PATTERNS
 var attack_pattern : int = 0
 onready var attack_pattern_timer : Timer = $PatternTimer
 
 # HEALTH
 var is_alive : bool = true
+
+# ANIMATION
+onready var animation : AnimatedSprite = $Animated
 
 # TARGET
 onready var target
@@ -35,6 +41,7 @@ var sphere_distance : float = 150
 func _ready():
 	randomize()
 	attack_pattern = randi() % 3
+	cooldown_attack_1.start()
 
 func _process(delta):
 	pass
@@ -48,26 +55,37 @@ func _physics_process(delta):
 		_handle_sphere()
 
 func _handle_animation():
-	pass
+	if is_attack:
+		animation.play("attack")
+	elif velocity == Vector2.ZERO:
+		animation.play('idle')
+	else:
+		animation.play('run')
 
 func _handle_flip():
-	pass
+	if (velocity.x < 0 and !animation.flip_h):
+		animation.flip_h = true
+	if (velocity.x > 0 and animation.flip_h):
+		animation.flip_h = false
 
 func _handle_movement():
-	velocity = Vector2.ZERO
-	velocity = Vector2(10,10)
-	velocity = move_and_slide(velocity)
+	pass
 
 func _handle_attack():
 	if attack_pattern == 0:
 		_handle_attack_1()
 	elif attack_pattern == 1:
-		_handle_attack_2()
+		_handle_attack_1()
 	elif attack_pattern == 2:
-		_handle_attack_3()
+		_handle_attack_1()
 
 func _handle_attack_1():
-	pass
+	if in_range_of_attack and can_attack and target and !is_attack:
+		is_attack = true
+		can_attack = false
+		cooldown_attack_1.start()
+		animation.play("attack")
+		animation.speed_scale = 2
 
 func _handle_attack_2():
 	pass
@@ -80,14 +98,40 @@ func _handle_sphere():
 		sphere_orientation = (position - target.position).normalized() * -1
 		sphere_node.position = (sphere_orientation * sphere_distance)
 
+func _shoot_fireball():
+		var bullet = FIREBALL.instance()
+		bullet.position = sphere_node.global_position
+		bullet.target_position = target.position
+		bullet.SPEED = 1200
+		get_parent().add_child(bullet)
+
 ##################### PRIVATE SIGNALS ##########################################
 
 func _on_DetectionArea_body_entered(body):
 	if players_list.has(body):
 		target = players_list[players_list.find(body)]
 
+func _on_DetectionArea_body_exited(body):
+	if target == body:
+		target = null
+
+func _on_RangeArea_body_entered(body):
+	if target == body:
+		in_range_of_attack = true
+
+func _on_RangeArea_body_exited(body):
+	if target == body:
+		in_range_of_attack = false
 
 func _on_PatternTimer_timeout():
-	print(attack_pattern)
 	attack_pattern = randi() % 3
 	attack_pattern_timer.start()
+
+func _on_CooldownAttack1_timeout():
+	can_attack = true
+
+func _on_Animated_animation_finished():
+	if animation.get_animation() == "attack":
+		is_attack = false
+		animation.speed_scale = 1
+		_shoot_fireball()
