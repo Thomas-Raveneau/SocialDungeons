@@ -89,7 +89,7 @@ func _handle_death_animation() -> void:
 func _shoot_fireball():
 		var bullet = FIREBALL.instance()
 		bullet.position = spawn_point.get_global_position()
-		bullet.target_position = target.position
+		bullet.orientation = target.position - spawn_point.get_global_position()
 		get_parent().add_child(bullet)
 
 ####################### PUBLIC METHODS #########################################

@@ -16,6 +16,7 @@ var can_attack : bool = false
 var is_attack : bool = false
 
 onready var cooldown_attack_1 : Timer = $CooldownAttack1
+onready var cooldown_attack_2 : Timer = $CooldownAttack2
 
 # PATTERNS
 var attack_pattern : int = 0
@@ -42,6 +43,7 @@ func _ready():
 	randomize()
 	attack_pattern = randi() % 3
 	cooldown_attack_1.start()
+	cooldown_attack_2.start()
 
 func _process(delta):
 	pass
@@ -75,9 +77,9 @@ func _handle_attack():
 	if attack_pattern == 0:
 		_handle_attack_1()
 	elif attack_pattern == 1:
-		_handle_attack_1()
+		_handle_attack_2()
 	elif attack_pattern == 2:
-		_handle_attack_1()
+		_handle_attack_3()
 
 func _handle_attack_1():
 	if in_range_of_attack and can_attack and target and !is_attack:
@@ -88,9 +90,31 @@ func _handle_attack_1():
 		animation.speed_scale = 2
 
 func _handle_attack_2():
-	pass
+	if in_range_of_attack and can_attack and target and !is_attack:
+		is_attack = true
+		can_attack = false
+		cooldown_attack_2.start()
+		animation.play("attack")
 
 func _handle_attack_3():
+	pass
+
+func _handle_attack_execution_1():
+	_shoot_fireball(sphere_node.global_position, (target.position - sphere_node.global_position), 1200)
+
+func _handle_attack_execution_2():
+	var orientation_fire = (target.position - sphere_node.global_position).normalized()
+	_shoot_fireball(sphere_node.global_position, orientation_fire, 800)
+	_shoot_fireball(sphere_node.global_position, orientation_fire.rotated(PI/6), 800)
+	_shoot_fireball(sphere_node.global_position, orientation_fire.rotated(2*PI/6), 800)
+	_shoot_fireball(sphere_node.global_position, orientation_fire.rotated(-2*PI/6), 800)
+	_shoot_fireball(sphere_node.global_position, orientation_fire.rotated(-PI/6), 800)
+#	_shoot_fireball(global_position + (orientation_fire.rotated(PI/6) * sphere_distance), orientation_fire.rotated(PI/6), 800)
+#	_shoot_fireball(global_position + (orientation_fire.rotated(2*PI/6) * sphere_distance), orientation_fire.rotated(2*PI/6), 800)
+#	_shoot_fireball(global_position + (orientation_fire.rotated(-2*PI/6) * sphere_distance), orientation_fire.rotated(-2*PI/6), 800)
+#	_shoot_fireball(global_position + (orientation_fire.rotated(-PI/6) * sphere_distance), orientation_fire.rotated(-PI/6), 800)
+
+func _handle_attack_execution_3():
 	pass
 
 func _handle_sphere():
@@ -98,11 +122,11 @@ func _handle_sphere():
 		sphere_orientation = (position - target.position).normalized() * -1
 		sphere_node.position = (sphere_orientation * sphere_distance)
 
-func _shoot_fireball():
+func _shoot_fireball(spawn_position, orientation, speed):
 		var bullet = FIREBALL.instance()
-		bullet.position = sphere_node.global_position
-		bullet.target_position = target.position
-		bullet.SPEED = 1200
+		bullet.position = spawn_position
+		bullet.orientation = orientation
+		bullet.SPEED = speed
 		get_parent().add_child(bullet)
 
 ##################### PRIVATE SIGNALS ##########################################
@@ -130,8 +154,17 @@ func _on_PatternTimer_timeout():
 func _on_CooldownAttack1_timeout():
 	can_attack = true
 
+func _on_CooldownAttack2_timeout():
+	can_attack = true
+
 func _on_Animated_animation_finished():
 	if animation.get_animation() == "attack":
 		is_attack = false
 		animation.speed_scale = 1
-		_shoot_fireball()
+		if attack_pattern == 0:
+			_handle_attack_execution_1()
+		elif attack_pattern == 1:
+			_handle_attack_execution_2()
+		elif attack_pattern == 2:
+			_handle_attack_execution_3()
+

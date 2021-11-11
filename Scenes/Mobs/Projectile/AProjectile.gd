@@ -14,8 +14,9 @@ export var DAMAGE : int = 10
 ########################## PRIVATE METHODS #####################################
 
 func _ready():
-	orientation = target_position - get_global_position()
-	rotation = orientation.angle()
+#	orientation = target_position - get_global_position()
+#	rotation = orientation.angle()
+	pass
 
 func _handle_wall_collision():
 	var slide_count = get_slide_count()
