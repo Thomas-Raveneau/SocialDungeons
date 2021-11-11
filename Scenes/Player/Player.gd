@@ -58,6 +58,7 @@ onready var damage_sound: AudioStreamPlayer = $DamageSound
 var damage_particle = preload("res://Scenes/Player/DamageParticle.tscn")
 var step_particles = preload("res://Scenes/Particles/FootStep.tscn")
 var basic_attack = preload("res://Scenes/Player/Spells/BasicAttack.tscn")
+var flame_dash = preload("res://Scenes/Mobs/Projectile/Flame.tscn")
 
 ################################################################################
 
@@ -124,6 +125,10 @@ func _dash() -> void:
 	can_dash = false
 	is_dashing = true
 	dash_duration_timer.start()
+	var flame = flame_dash.instance()
+	flame.position = global_position
+	flame.rotate(velocity.angle() + PI)
+	get_parent().add_child(flame)
 
 func _handle_movement_inputs() -> void:
 	if Input.is_action_pressed("move_right"):
@@ -134,7 +139,7 @@ func _handle_movement_inputs() -> void:
 		velocity.y += 1
 	if Input.is_action_pressed("move_up"):
 		velocity.y -= 1
-	if (Input.is_action_just_pressed("action_dash") and can_dash == true):
+	if (Input.is_action_just_pressed("action_dash") and can_dash == true and velocity != Vector2.ZERO):
 		_dash()
 	
 	if (is_dashing):
