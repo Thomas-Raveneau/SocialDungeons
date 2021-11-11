@@ -3,6 +3,8 @@ extends Node2D
 #################### VARIABLES ###############
 
 export var NB_POINT : int = 50
+export var SIZE : int = 20
+export var OUTLINE_SIZE : int = 5
 export var FILL_COLOR : Color = Color(1,1,1,1)
 export var OUTLINE_COLOR : Color = Color(0,1,1,1)
 
@@ -16,8 +18,8 @@ func _process(delta):
 	update()
 
 func _draw():
-	_draw_circle(Vector2.ZERO, 20, FILL_COLOR)
-	_draw_donut(Vector2.ZERO, 20, 5, OUTLINE_COLOR)
+	_draw_circle(Vector2.ZERO, SIZE, FILL_COLOR)
+	_draw_donut(Vector2.ZERO, SIZE, OUTLINE_SIZE, OUTLINE_COLOR)
 
 func _draw_circle(center : Vector2, radius : float, color : Color):
 	var points = PoolVector2Array()

@@ -6,9 +6,9 @@ extends KinematicBody2D
 export var SPEED : float = 450
 var velocity : Vector2 = Vector2.ZERO
 
-# FIREBALL
+# PROJECTILE
 onready var FIREBALL = preload("res://Scenes/Mobs/Projectile/FireBall.tscn")
-onready var spawn_point : Node2D = $SpawnPoint
+onready var NOVA = preload("res://Scenes/Mobs/Projectile/Nova.tscn")
 
 # ATTACK
 var in_range_of_attack : bool = false
@@ -103,16 +103,7 @@ func _handle_attack_execution_1():
 	_shoot_fireball(sphere_node.global_position, (target.position - sphere_node.global_position), 1200)
 
 func _handle_attack_execution_2():
-	var orientation_fire = (target.position - sphere_node.global_position).normalized()
-	_shoot_fireball(sphere_node.global_position, orientation_fire, 800)
-	_shoot_fireball(sphere_node.global_position, orientation_fire.rotated(PI/6), 800)
-	_shoot_fireball(sphere_node.global_position, orientation_fire.rotated(2*PI/6), 800)
-	_shoot_fireball(sphere_node.global_position, orientation_fire.rotated(-2*PI/6), 800)
-	_shoot_fireball(sphere_node.global_position, orientation_fire.rotated(-PI/6), 800)
-#	_shoot_fireball(global_position + (orientation_fire.rotated(PI/6) * sphere_distance), orientation_fire.rotated(PI/6), 800)
-#	_shoot_fireball(global_position + (orientation_fire.rotated(2*PI/6) * sphere_distance), orientation_fire.rotated(2*PI/6), 800)
-#	_shoot_fireball(global_position + (orientation_fire.rotated(-2*PI/6) * sphere_distance), orientation_fire.rotated(-2*PI/6), 800)
-#	_shoot_fireball(global_position + (orientation_fire.rotated(-PI/6) * sphere_distance), orientation_fire.rotated(-PI/6), 800)
+	_shoot_nova(sphere_node.global_position, (target.position - sphere_node.global_position), 100)
 
 func _handle_attack_execution_3():
 	pass
@@ -123,11 +114,18 @@ func _handle_sphere():
 		sphere_node.position = (sphere_orientation * sphere_distance)
 
 func _shoot_fireball(spawn_position, orientation, speed):
-		var bullet = FIREBALL.instance()
-		bullet.position = spawn_position
-		bullet.orientation = orientation
-		bullet.SPEED = speed
-		get_parent().add_child(bullet)
+		var fireball = FIREBALL.instance()
+		fireball.position = spawn_position
+		fireball.orientation = orientation
+		fireball.SPEED = speed
+		get_parent().add_child(fireball)
+
+func _shoot_nova(spawn_position, orientation, speed):
+		var nova = NOVA.instance()
+		nova.position = spawn_position
+		nova.orientation = orientation
+		nova.SPEED = speed
+		get_parent().add_child(nova)
 
 ##################### PRIVATE SIGNALS ##########################################
 
@@ -150,12 +148,16 @@ func _on_RangeArea_body_exited(body):
 func _on_PatternTimer_timeout():
 	attack_pattern = randi() % 3
 	attack_pattern_timer.start()
+	cooldown_attack_1.start()
+	cooldown_attack_2.start()
 
 func _on_CooldownAttack1_timeout():
-	can_attack = true
+	if attack_pattern == 0:
+		can_attack = true
 
 func _on_CooldownAttack2_timeout():
-	can_attack = true
+	if attack_pattern == 1:
+		can_attack = true
 
 func _on_Animated_animation_finished():
 	if animation.get_animation() == "attack":
