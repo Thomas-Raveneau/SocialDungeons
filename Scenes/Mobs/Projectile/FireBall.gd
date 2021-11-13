@@ -2,6 +2,9 @@ extends "res://Scenes/Mobs/Projectile/AProjectile.gd"
 
 ############################# PRIVATE METHODS ##################################
 
+func _ready():
+	rotation = orientation.angle()
+
 func _physics_process(delta) -> void:
 	_handle_movement()
 	_handle_collision()

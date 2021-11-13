@@ -10,14 +10,14 @@ onready var player_visibility = $Player/VisibilityNotifier2D
 
 ################################################################################
 
+### PRIVATE ###
 func _ready() -> void:
 	set_player_to_spawn()
 
 func _process(_delta: float) -> void:
 	handle_player_room_exit()
-	if (Input.is_action_just_pressed("debug_button")):
-		player.damage(10, Vector2(0, 200))
 
+### PUBLIC ###
 func set_player_to_spawn() -> void:
 	player.position = player_spawn.position
 
@@ -27,3 +27,9 @@ func handle_player_room_exit() -> void:
 	if (!player_visibility.is_on_screen()):
 		castle.next_room()
 		set_player_to_spawn()
+
+func get_player():
+	return player
+
+func get_player_pos() -> Vector2:
+	return player.position

@@ -22,11 +22,12 @@ onready var mobs_spawns = [
 ]
 
 # LEVEL DIFFICULTY
-export var MOB_AMOUNT: int = 12
+export var MOB_AMOUNT: int = 0
 export var SPAWN_DELAY: float = 4.0
 
 # UTILS
 var mob_index: int = 0
+var dead_mobs: int = 0
 
 ################################################################################
 
@@ -43,6 +44,9 @@ func _spawn_random_mob() -> void:
 	var spawn_point: Position2D = mobs_spawns[randi() % mobs_spawns.size()]
 	
 	var new_mob = mob_type.instance()
+	
+	new_mob.connect("monster_death", self, "_on_monster_death")
+	
 	new_mob.position = spawn_point.position
 	add_child(new_mob)
 
@@ -62,7 +66,12 @@ func close_door():
 
 ### SIGNALS ###
 func _on_MobSpawnDelay_timeout():
-	print("oui")
-	if (mob_index < MOB_AMOUNT - 1):
+	if (mob_index <= MOB_AMOUNT - 1):
 		_spawn_random_mob()
 		mob_index += 1
+
+func _on_monster_death():
+	dead_mobs += 1
+	
+	if (dead_mobs == MOB_AMOUNT):
+		open_door()
