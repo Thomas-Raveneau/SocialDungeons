@@ -89,7 +89,7 @@ func _handle_death_animation() -> void:
 func _shoot_fireball():
 		var bullet = FIREBALL.instance()
 		bullet.position = spawn_point.get_global_position()
-		bullet.target_position = target.position
+		bullet.orientation = target.position - spawn_point.get_global_position()
 		get_parent().add_child(bullet)
 
 ####################### PUBLIC METHODS #########################################
@@ -97,16 +97,19 @@ func _shoot_fireball():
 ######################## PRIVATE SIGNALS #######################################
 
 func _on_DodgeArea_body_entered(body):
-	if target == body:
+	if players_list.has(body):
 		is_dodging = true
+		in_range_of_attack = true
+		target = players_list[players_list.find(body)]
 
 func _on_DodgeArea_body_exited(body):
 	if target == body:
 		is_dodging = false
 
 func _on_RangeArea_body_entered(body):
-	if target == body:
+	if players_list.has(body):
 		in_range_of_attack = true
+		target = players_list[players_list.find(body)]
 
 func _on_RangeArea_body_exited(body):
 	if target == body:
@@ -124,8 +127,9 @@ func _on_AttackTimer_timeout():
 	can_attack = true
 
 func _on_Animation_animation_finished():
-	is_attacking = false
 	if animation.get_animation() == "attack":
+		is_attacking = false
 		_shoot_fireball()
 	elif animation.get_animation() == "death":
+		is_attacking = false
 		_handle_death()
