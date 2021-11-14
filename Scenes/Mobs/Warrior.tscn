@@ -84,6 +84,16 @@ animations = [ {
 "name": "idle",
 "speed": 11.0
 }, {
+"frames": [ ExtResource( 47 ), ExtResource( 43 ), ExtResource( 53 ), ExtResource( 41 ), ExtResource( 48 ), ExtResource( 42 ), ExtResource( 35 ), ExtResource( 46 ), ExtResource( 45 ), ExtResource( 32 ), ExtResource( 50 ), ExtResource( 49 ), ExtResource( 51 ), ExtResource( 34 ), ExtResource( 33 ), ExtResource( 52 ), ExtResource( 44 ), ExtResource( 36 ) ],
+"loop": true,
+"name": "walk",
+"speed": 17.0
+}, {
+"frames": [ ExtResource( 37 ), ExtResource( 38 ), ExtResource( 39 ), ExtResource( 40 ), ExtResource( 59 ), ExtResource( 57 ), ExtResource( 55 ), ExtResource( 56 ), ExtResource( 58 ), ExtResource( 54 ), ExtResource( 61 ), ExtResource( 60 ) ],
+"loop": false,
+"name": "attack",
+"speed": 22.0
+}, {
 "frames": [ ExtResource( 67 ), ExtResource( 63 ), ExtResource( 75 ), ExtResource( 68 ), ExtResource( 69 ), ExtResource( 71 ), ExtResource( 76 ), ExtResource( 66 ), ExtResource( 70 ), ExtResource( 72 ), ExtResource( 65 ), ExtResource( 62 ), ExtResource( 74 ), ExtResource( 73 ), ExtResource( 64 ) ],
 "loop": false,
 "name": "death",
@@ -93,16 +103,6 @@ animations = [ {
 "loop": false,
 "name": "taunt",
 "speed": 34.0
-}, {
-"frames": [ ExtResource( 37 ), ExtResource( 38 ), ExtResource( 39 ), ExtResource( 40 ), ExtResource( 59 ), ExtResource( 57 ), ExtResource( 55 ), ExtResource( 56 ), ExtResource( 58 ), ExtResource( 54 ), ExtResource( 61 ), ExtResource( 60 ) ],
-"loop": false,
-"name": "attack",
-"speed": 22.0
-}, {
-"frames": [ ExtResource( 47 ), ExtResource( 43 ), ExtResource( 53 ), ExtResource( 41 ), ExtResource( 48 ), ExtResource( 42 ), ExtResource( 35 ), ExtResource( 46 ), ExtResource( 45 ), ExtResource( 32 ), ExtResource( 50 ), ExtResource( 49 ), ExtResource( 51 ), ExtResource( 34 ), ExtResource( 33 ), ExtResource( 52 ), ExtResource( 44 ), ExtResource( 36 ) ],
-"loop": true,
-"name": "walk",
-"speed": 17.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=2]
@@ -119,28 +119,30 @@ radius = 791.144
 "mobs",
 ]]
 collision_layer = 2
-collision_mask = 5
+collision_mask = 37
 script = ExtResource( 31 )
-__meta__ = {
-"_edit_group_": true
-}
+SPEED = 300
+DAMAGE = 20
+MAX_HEALTH = 300
 DASH_SPEED = 750.0
 
 [node name="Animation" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
-animation = "death"
-frame = 14
+animation = "idle"
+frame = 9
 playing = true
 
-[node name="HitBox" type="CollisionShape2D" parent="."]
+[node name="Hitbox" type="CollisionShape2D" parent="."]
 shape = SubResource( 2 )
 
 [node name="DetectionArea" type="Area2D" parent="."]
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource( 3 )
 
 [node name="RangeArea" type="Area2D" parent="."]
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RangeArea"]
 shape = SubResource( 4 )
