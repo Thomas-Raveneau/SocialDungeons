@@ -174,8 +174,3 @@ func set_highscore(new_value):
 #		return false;
 #	file.store_string(final_content);
 #	file.close();
-
-func _on_ResumePauseButton_pressed() -> void:
-	
-
-	pass # Replace with function body.
