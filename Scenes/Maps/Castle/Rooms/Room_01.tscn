@@ -209,7 +209,7 @@ position = Vector2( 960.265, 107.5 )
 [node name="Holes" type="Node2D" parent="."]
 
 [node name="Hole" parent="Holes" instance=ExtResource( 7 )]
-position = Vector2( 1312.02, 608.132 )
+position = Vector2( 1312.65, 608.132 )
 
 [node name="Traps" type="Node2D" parent="."]
 
