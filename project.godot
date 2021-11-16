@@ -14,6 +14,10 @@ config/name="SocialDungeons"
 run/main_scene="res://Scenes/Menus/Main/Main.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Save="*res://Scenes/Systems/Save.gd"
+
 [display]
 
 window/size/width=1920
