@@ -1,0 +1,37 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Scenes/Player/Spells/Assets/portal-spear4.png" type="Texture" id=1]
+[ext_resource path="res://Scenes/Player/Spells/Assets/portal-spear1.png" type="Texture" id=2]
+[ext_resource path="res://Scenes/Player/Spells/Assets/portal-spear5.png" type="Texture" id=3]
+[ext_resource path="res://Scenes/Player/Spells/Assets/portal-spear3.png" type="Texture" id=4]
+[ext_resource path="res://Scenes/Player/Spells/Assets/portal-spear7.png" type="Texture" id=5]
+[ext_resource path="res://Scenes/Player/Spells/Assets/portal-spear6.png" type="Texture" id=6]
+[ext_resource path="res://Scenes/Player/Spells/Assets/portal-spear2.png" type="Texture" id=7]
+[ext_resource path="res://Scenes/Player/Spells/PortalSpear.gd" type="Script" id=8]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 7 ), ExtResource( 4 ), ExtResource( 1 ), ExtResource( 3 ), ExtResource( 6 ), ExtResource( 5 ) ],
+"loop": false,
+"name": "attack",
+"speed": 20.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 0, 0 )
+
+[node name="PortalSpear" type="Area2D"]
+scale = Vector2( 1.5, 1.5 )
+script = ExtResource( 8 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "attack"
+offset = Vector2( 58, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )
+disabled = true
+
+[connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
+[connection signal="frame_changed" from="AnimatedSprite" to="." method="_on_AnimatedSprite_frame_changed"]

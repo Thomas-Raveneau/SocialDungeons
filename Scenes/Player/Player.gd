@@ -43,7 +43,8 @@ var is_invicible: bool = false
 var is_taking_damage: bool = false
 var velocity: Vector2 = Vector2()
 var knockback: Vector2 = Vector2()
-var last_step = -1
+var current_portal_spear_attack = null
+var last_step: int = -1
 
 # NODES
 onready var skin: AnimatedSprite = $Skin
@@ -58,7 +59,7 @@ onready var damage_sound: AudioStreamPlayer = $DamageSound
 var damage_particle = preload("res://Scenes/Player/DamageParticle.tscn")
 var step_particles = preload("res://Scenes/Particles/FootStep.tscn")
 var basic_attack = preload("res://Scenes/Player/Spells/BasicAttack.tscn")
-var flame_dash = preload("res://Scenes/Mobs/Projectile/Flame.tscn")
+var portal_spear_attack = preload("res://Scenes/Player/Spells/PortalSpear.tscn")
 
 ################################################################################
 
@@ -125,10 +126,6 @@ func _dash() -> void:
 	can_dash = false
 	is_dashing = true
 	dash_duration_timer.start()
-	var flame = flame_dash.instance()
-	flame.position = global_position
-	flame.rotate(velocity.angle() + PI)
-	get_parent().add_child(flame)
 
 func _handle_movement_inputs() -> void:
 	if Input.is_action_pressed("move_right"):
@@ -139,7 +136,7 @@ func _handle_movement_inputs() -> void:
 		velocity.y += 1
 	if Input.is_action_pressed("move_up"):
 		velocity.y -= 1
-	if (Input.is_action_just_pressed("action_dash") and can_dash == true and velocity != Vector2.ZERO):
+	if (Input.is_action_just_pressed("action_dash") and can_dash == true):
 		_dash()
 	
 	if (is_dashing):
@@ -150,6 +147,7 @@ func _handle_movement_inputs() -> void:
 func _handle_spells_inputs() -> void:
 	if (Input.is_action_just_pressed("action_spell_01")):
 		_basic_attack()
+	_handle_portal_spear_attack_inputs()
 
 func _basic_attack() -> void:
 	if (!can_basic_attack):
@@ -163,6 +161,35 @@ func _basic_attack() -> void:
 	get_parent().add_child(new_sword)
 	can_basic_attack = false
 	basic_attack_timer.start()
+
+func _handle_portal_spear_attack_inputs() -> void:
+	if (Input.is_action_just_pressed("action_spell_02")):
+		_portal_spear_placing()
+	if (Input.is_action_pressed("action_spell_02")):
+		_portal_spear_orientating()
+	if (Input.is_action_just_released("action_spell_02")):
+		_portal_spear_attacking()
+
+func _portal_spear_placing() -> void :
+	var mouse_pos: Vector2 = get_global_mouse_position()
+	
+	current_portal_spear_attack = portal_spear_attack.instance()
+	current_portal_spear_attack.position = mouse_pos
+	current_portal_spear_attack.z_index = 2
+	
+	get_parent().add_child(current_portal_spear_attack)
+
+func _portal_spear_orientating():
+	var mouse_pos: Vector2 = get_global_mouse_position()
+	var direction: Vector2 = mouse_pos - current_portal_spear_attack.position
+	
+	direction = direction.normalized()
+	
+	current_portal_spear_attack.rotation = direction.angle()
+
+func _portal_spear_attacking():
+	current_portal_spear_attack.attack()
+	current_portal_spear_attack = null
 
 func _handle_inputs() -> void:
 	velocity = Vector2()
