@@ -19,12 +19,17 @@ export var KNOCKBACK_FORCE = 3
 export var BASIC_ATTACK_SPEED: float = 15.0
 export var BASIC_ATTACK_DAMAGE: float = 5.0
 export var BASIC_ATTACK_COOLDOWN: float = 0.1
+export var PORTAL_SPEAR_ATTACK_DAMAGE: float = 5.0
+export var PORTAL_SPEAR_ATTACK_COOLDOWN: float = 1.0
 
 # SPELLS TIMERS
 onready var basic_attack_timer: Timer = $BasicAttackTimer
+onready var portal_spear_attack_timer: Timer = $PortalSpearAttackTimer
 
 # SPELLS UTILS
-var can_basic_attack = true
+var can_basic_attack: bool = true
+var can_portal_spear_attack: bool = true
+var current_portal_spear_attack = null
 
 # DAMAGE PARTICLE UTILS
 var damage_particle_dir = Vector2(0, -25)
@@ -43,7 +48,6 @@ var is_invicible: bool = false
 var is_taking_damage: bool = false
 var velocity: Vector2 = Vector2()
 var knockback: Vector2 = Vector2()
-var current_portal_spear_attack = null
 var last_step: int = -1
 
 # NODES
@@ -69,6 +73,7 @@ func _ready() -> void:
 	dash_cooldown_timer.wait_time = DASH_COOLDOWN
 	
 	basic_attack_timer.wait_time = BASIC_ATTACK_COOLDOWN
+	portal_spear_attack_timer.wait_time = PORTAL_SPEAR_ATTACK_COOLDOWN
 	
 	_set_hp(HEALTH)
 	
@@ -163,11 +168,13 @@ func _basic_attack() -> void:
 	basic_attack_timer.start()
 
 func _handle_portal_spear_attack_inputs() -> void:
+	if (!can_portal_spear_attack):
+		return
 	if (Input.is_action_just_pressed("action_spell_02")):
 		_portal_spear_placing()
-	if (Input.is_action_pressed("action_spell_02")):
+	if (Input.is_action_pressed("action_spell_02") and current_portal_spear_attack != null):
 		_portal_spear_orientating()
-	if (Input.is_action_just_released("action_spell_02")):
+	if (Input.is_action_just_released("action_spell_02") and current_portal_spear_attack != null):
 		_portal_spear_attacking()
 
 func _portal_spear_placing() -> void :
@@ -189,6 +196,8 @@ func _portal_spear_orientating():
 
 func _portal_spear_attacking():
 	current_portal_spear_attack.attack()
+	can_portal_spear_attack = false
+	portal_spear_attack_timer.start()
 	current_portal_spear_attack = null
 
 func _handle_inputs() -> void:
@@ -308,3 +317,6 @@ func _on_DamageAnimation_timeout() -> void:
 
 func _on_BasicAttackTimer_timeout():
 	can_basic_attack = true
+
+func _on_PortalSpearAttackTimer_timeout():
+	can_portal_spear_attack = true
