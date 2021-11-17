@@ -8,7 +8,7 @@ enum HIGHSCORE {
 	dungeonTimer = 2
 }
 
-var saveFilename = "res://save.txt";
+var saveFilename = "res://Saves/save.txt";
 var trigger = true;
 	
 func _ready() -> void:
@@ -21,6 +21,7 @@ func load_highscores():
 		return
 	file.open(saveFilename, File.READ)
 	currentHighScore = file.get_var()
+	print(currentHighScore)
 	file.close()
 	pass
 

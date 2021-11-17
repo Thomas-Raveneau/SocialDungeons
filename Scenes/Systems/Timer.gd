@@ -15,7 +15,7 @@ func _process(delta):
 		var milliseconds: float = fmod(time, 1)* 1000
 
 		text = "%02d : %02d : %03d" % [minutes, seconds, milliseconds]
-		set_score(int(minutes * 10))
+		set_score(int(minutes + seconds + milliseconds)) # set une condition de victoire pour trigger le score au bon moment plus tard
 
 func set_score(new_value):
 	score = new_value
