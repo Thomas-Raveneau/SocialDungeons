@@ -41,7 +41,7 @@ var sphere_distance : float = 150
 
 func _ready():
 	randomize()
-	attack_pattern = randi() % 3
+	attack_pattern = 1
 	cooldown_attack_1.start()
 	cooldown_attack_2.start()
 
