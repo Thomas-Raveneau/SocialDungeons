@@ -52,6 +52,7 @@ var last_step: int = -1
 
 # NODES
 onready var skin: AnimatedSprite = $Skin
+onready var camera: Camera2D = get_parent().get_node('CameraScene')
 onready var hitbox: CollisionShape2D = $Hitbox
 onready var invicibility_timer: Timer = $Invicibility
 onready var dash_duration_timer: Timer = $DashDuration
@@ -90,6 +91,7 @@ func _physics_process(_delta: float) -> void:
 		velocity = move_and_slide(velocity * 100)
 	else:
 		velocity = move_and_slide(knockback * 100)
+		camera.add_trauma(0.05)
 	
 	_handle_collisions()
 
