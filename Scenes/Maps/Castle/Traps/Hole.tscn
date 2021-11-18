@@ -4,7 +4,7 @@
 [ext_resource path="res://Scenes/Maps/Castle/Traps/Hole.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 3.36013, 6.94516 )
+extents = Vector2( 1.97557, 6.94516 )
 
 [node name="Hole" type="Area2D"]
 script = ExtResource( 2 )

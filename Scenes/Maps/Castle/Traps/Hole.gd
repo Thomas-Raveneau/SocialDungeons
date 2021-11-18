@@ -1,8 +1,5 @@
 extends Area2D
 
-# STATS
-export var DAMAGE: float = 20
-
 # UTILS
 var player: Node = null
 var player_size: Vector2 = Vector2.ZERO
@@ -15,8 +12,9 @@ func _physics_process(_delta):
 		is_player_inside()
 
 func is_player_inside() -> void:
-	if (player.position.y + player_size.y < position.y):
-		player.fall()
+	if (player.position.y + player_size.y < position.y and
+		abs(player.position.x - position.x) < player_size.x):
+		player.fall(self.position)
 		player = null
 
 func _on_Hole_body_entered(body):

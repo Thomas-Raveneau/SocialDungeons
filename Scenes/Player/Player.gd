@@ -50,6 +50,7 @@ var velocity: Vector2 = Vector2()
 var knockback: Vector2 = Vector2()
 var last_step = -1
 var is_falling: bool = false
+onready var player_size: Vector2 = $Skin.get_sprite_frames().get_frame("idle", 0).get_size()
 
 # NODES
 onready var skin: AnimatedSprite = $Skin
@@ -98,15 +99,16 @@ func _physics_process(_delta: float) -> void:
 	
 	_handle_collisions()
 
-func fall() -> void:
+func fall(hole: Vector2) -> void:
 	$FallDuration.start()
 	is_falling = true
+	position = Vector2(hole.x, hole.y - player_size.y)
 
 func _handle_fall_animation() -> void:
 	if (is_falling and is_alive):
 		self.scale = Vector2(self.scale.x - 0.04, self.scale.y - 0.04)
-		self.rotation_degrees -= 0.2
-		self.position.y += 0.2
+		self.rotation_degrees -= 0.5
+		self.position.y += 0.35
 
 func _generate_particles() -> void:
 	if ($Skin.animation == "run"):
