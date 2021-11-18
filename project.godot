@@ -14,6 +14,10 @@ config/name="SocialDungeons"
 run/main_scene="res://Scenes/Menus/Main/Main.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Save="*res://Scenes/Systems/Save.gd"
+
 [display]
 
 window/size/width=1920
@@ -57,11 +61,6 @@ debug_button={
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":39,"unicode":0,"echo":false,"script":null)
  ]
 }
-action_spell_01={
-"deadzone": 0.5,
-"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
- ]
-}
 ui_pause={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":80,"unicode":0,"echo":false,"script":null)
@@ -75,6 +74,16 @@ move={
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"unicode":0,"echo":false,"script":null)
  ]
 }
+action_spell_01={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+action_spell_02={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":65,"unicode":0,"echo":false,"script":null)
+ ]
+}
 
 [layer_names]
 
@@ -83,6 +92,7 @@ move={
 2d_physics/layer_3="player_projectile"
 2d_physics/layer_4="mob_projectile"
 2d_physics/layer_5="wall"
+2d_physics/layer_6="props"
 
 [physics]
 

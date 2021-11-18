@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scenes/Menus/Level_Selector_Menu/Assets/selector_sprite_selected2.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Menus/Level_Selector_Menu/Assets/selector_sprite_selected1.png" type="Texture" id=2]
@@ -6,6 +6,12 @@
 [ext_resource path="res://Scenes/Menus/Main/Assets/backgroundMenu.jpg" type="Texture" id=4]
 [ext_resource path="res://Scenes/Menus/Main/Assets/button-return2.png" type="Texture" id=5]
 [ext_resource path="res://Scenes/Menus/Main/Assets/button-return1.png" type="Texture" id=6]
+[ext_resource path="res://Scenes/Menus/Level_Selector_Menu/Level1Selector.gd" type="Script" id=7]
+[ext_resource path="res://Fonts/pixelmix_bold.ttf" type="DynamicFontData" id=8]
+
+[sub_resource type="DynamicFont" id=1]
+size = 12
+font_data = ExtResource( 8 )
 
 [node name="LevelSelector" type="Control"]
 anchor_right = 1.0
@@ -48,6 +54,17 @@ margin_bottom = 300.0
 texture_normal = ExtResource( 2 )
 texture_hover = ExtResource( 1 )
 stretch_mode = 1
+script = ExtResource( 7 )
+
+[node name="Label" type="Label" parent="VBoxContainer/Level1Selector"]
+margin_left = 27.6375
+margin_top = 59.0269
+margin_right = 187.637
+margin_bottom = 188.027
+custom_fonts/font = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Level2Selector" type="TextureButton" parent="VBoxContainer"]
 margin_left = 450.0

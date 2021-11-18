@@ -1,12 +1,17 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scenes/Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Maps/Main.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/UI/HealthBar.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scenes/UI/Pause.gd" type="Script" id=4]
-[ext_resource path="res://Scenes/UI/Timer.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Systems/Pause.gd" type="Script" id=4]
+[ext_resource path="res://Scenes/Systems/Timer.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Maps/Castle/Castle.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Fonts/pixelmix_bold.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://Scenes/Menus/Main/Assets/button-ui-quit2.png" type="Texture" id=8]
+[ext_resource path="res://Scenes/Menus/Main/Assets/button-ui-quit1.png" type="Texture" id=9]
+[ext_resource path="res://Scenes/Menus/Main/Assets/button-ui-state0.png" type="Texture" id=10]
+[ext_resource path="res://Scenes/Menus/Main/Assets/button-ui-state1.png" type="Texture" id=11]
+[ext_resource path="res://Scenes/Systems/FX/CameraShake.gd" type="Script" id=12]
 
 [sub_resource type="DynamicFont" id=1]
 size = 24
@@ -30,13 +35,14 @@ margin_top = 492.146
 margin_right = 118.794
 margin_bottom = 492.146
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="CameraScene" type="Camera2D" parent="."]
 position = Vector2( 960, 540 )
 current = true
 limit_left = 0
 limit_top = 0
 limit_right = 1920
 limit_bottom = 1080
+script = ExtResource( 12 )
 
 [node name="Spawn" type="Node2D" parent="."]
 position = Vector2( 960, 1000 )
@@ -77,4 +83,26 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Pause"]
+margin_left = 850.0
+margin_top = 500.0
+margin_right = 1056.0
+margin_bottom = 694.0
+
+[node name="ResumePauseButton" type="TextureButton" parent="CanvasLayer/Pause/VBoxContainer"]
+margin_right = 128.0
+margin_bottom = 128.0
+texture_normal = ExtResource( 10 )
+texture_pressed = ExtResource( 11 )
+
+[node name="QuitPauseButton" type="TextureButton" parent="CanvasLayer/Pause/VBoxContainer"]
+margin_left = 820.0
+margin_top = 500.0
+margin_right = 1026.0
+margin_bottom = 562.0
+texture_normal = ExtResource( 9 )
+texture_pressed = ExtResource( 8 )
+
 [connection signal="hp_changed" from="Player" to="Node2D/HealthBar" method="_on_Player_hp_changed"]
+[connection signal="pressed" from="CanvasLayer/Pause/VBoxContainer/ResumePauseButton" to="CanvasLayer/Pause" method="_on_ResumePauseButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/Pause/VBoxContainer/QuitPauseButton" to="CanvasLayer/Pause" method="_on_QuitPauseButton_pressed"]

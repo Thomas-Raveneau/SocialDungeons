@@ -326,7 +326,7 @@ tile_data = PoolIntArray( 0, 4, 65537, 1, 2, 0, 2, 2, 0, 3, 2, 0, 4, 2, 0, 5, 2,
 [node name="BottomWalls" type="TileMap" parent="." groups=[
 "wall",
 ]]
-z_index = 1
+z_index = 2
 tile_set = SubResource( 11 )
 cell_tile_origin = 2
 cell_y_sort = true

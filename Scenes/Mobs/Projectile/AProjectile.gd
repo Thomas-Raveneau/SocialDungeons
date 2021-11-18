@@ -6,7 +6,6 @@ extends KinematicBody2D
 export var SPEED : int = 200
 var velocity : Vector2 = Vector2.ZERO
 var orientation : Vector2 = Vector2.ZERO
-var target_position : Vector2 = Vector2.ZERO
 
 # DAMAGE
 export var DAMAGE : int = 10
@@ -14,8 +13,8 @@ export var DAMAGE : int = 10
 ########################## PRIVATE METHODS #####################################
 
 func _ready():
-	orientation = target_position - get_global_position()
-	rotation = orientation.angle()
+
+	pass
 
 func _handle_wall_collision():
 	var slide_count = get_slide_count()

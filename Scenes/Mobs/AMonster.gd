@@ -1,6 +1,5 @@
 extends KinematicBody2D
 
-
 ################################### VARIABLES ##################################
 
 # MOVEMENT

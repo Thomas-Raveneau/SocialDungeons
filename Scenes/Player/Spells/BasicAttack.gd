@@ -19,8 +19,11 @@ var direction_state: String = "toward_target"
 func _physics_process(_delta: float) -> void:
 	_handle_spell_levels()
 
-func _get_dir_to_player():
+func _get_dir_to_player() -> Vector2:
 	return (get_parent().get_player_pos() - global_position).normalized()
+
+func _get_distance_to_player() -> float:
+	return (position.distance_to(get_parent().get_player_pos()))
 
 func _handle_spell_levels() -> void:
 	if (SPELL_LEVEL == 0):
@@ -47,10 +50,10 @@ func _handle_collision_level_1() -> void:
 func _handle_spell_level_2() -> void:
 	_handle_movement_level_2()
 	_handle_collision_level_2()
+	_handle_destroy_level_2()
 
 func _handle_movement_level_2() -> void:
 	var distance_to_point: float = global_position.distance_to(attack_point)
-	
 	
 	if (direction_state == "toward_player"):
 		orientation = _get_dir_to_player()
@@ -76,7 +79,7 @@ func _handle_movement_level_2() -> void:
 
 func _handle_collision_level_2() -> void:
 	var slide_count = get_slide_count()
-	
+
 	for i in slide_count:
 		var node = get_slide_collision(i)
 		
@@ -84,6 +87,10 @@ func _handle_collision_level_2() -> void:
 			destroy()
 		elif get_tree().get_nodes_in_group("player").has(node.collider) and direction_state == "toward_player":
 			destroy()
+
+func _handle_destroy_level_2() -> void:
+	if _get_distance_to_player() < 50.0 and direction_state == "toward_player":
+		destroy()
 
 ### PUBLIC ###
 func init_params(axe_damage: float, axe_speed: float, attack_pos: Vector2, axe_pos: Vector2) -> void:

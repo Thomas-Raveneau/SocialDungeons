@@ -9,7 +9,6 @@ var currentHealth: int = 0
 onready var player: KinematicBody2D = get_parent().get_parent().get_node("Player")
 onready var healthBarOver: TextureProgress = get_node("HealthBarOver")
 onready var healthBarUnder: TextureProgress = get_node("HealthBarUnder")
-onready var healthBarTween: Tween = get_node("HealthBar/Tween")
 
 func _updateHealthBar(newHealthValue: int) -> void:
 	healthBarOver.value = newHealthValue
