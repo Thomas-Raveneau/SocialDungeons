@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Scenes/Maps/Castle/Tilesets/Floor.tres" type="TileSet" id=1]
 [ext_resource path="res://Scenes/Maps/Castle/Assets/tileset_castle.png" type="Texture" id=2]
@@ -21,9 +21,15 @@ points = PoolVector2Array( 0, 108.061, 64, 108.061, 64, 128, 0, 128 )
 points = PoolVector2Array( 0, 108.062, 64, 108.156, 64, 128, 0, 128 )
 
 [sub_resource type="ConvexPolygonShape2D" id=5]
+points = PoolVector2Array( 0, 0, 19.9539, 0, 19.9539, 128, 0, 128 )
+
+[sub_resource type="ConvexPolygonShape2D" id=6]
 points = PoolVector2Array( 64, 128, 44.0569, 128, 44.0569, 0, 64, 0 )
 
-[sub_resource type="TileSet" id=6]
+[sub_resource type="ConvexPolygonShape2D" id=7]
+points = PoolVector2Array( 0, 107.989, 64, 107.989, 64, 128, 0, 128 )
+
+[sub_resource type="TileSet" id=8]
 0/name = "Banners"
 0/texture = ExtResource( 2 )
 0/tex_offset = Vector2( 0, 0 )
@@ -137,6 +143,12 @@ points = PoolVector2Array( 64, 128, 44.0569, 128, 44.0569, 0, 64, 0 )
 "one_way_margin": 1.0,
 "shape": SubResource( 4 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 5 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 3/z_index = 0
 4/name = "Full Corner Right"
@@ -149,20 +161,26 @@ points = PoolVector2Array( 64, 128, 44.0569, 128, 44.0569, 0, 64, 0 )
 4/navigation_offset = Vector2( 0, 0 )
 4/shape_offset = Vector2( 0, 0 )
 4/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-4/shape = SubResource( 5 )
+4/shape = SubResource( 6 )
 4/shape_one_way = false
 4/shape_one_way_margin = 1.0
 4/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 5 ),
+"shape": SubResource( 6 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 5 ),
+"shape": SubResource( 6 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 7 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 4/z_index = 0
@@ -193,7 +211,7 @@ __meta__ = {
 "wall",
 ]]
 z_index = 2
-tile_set = SubResource( 6 )
+tile_set = SubResource( 8 )
 cell_tile_origin = 2
 cell_y_sort = true
 collision_layer = 16
