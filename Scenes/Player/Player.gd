@@ -160,10 +160,10 @@ func _basic_attack() -> void:
 	
 	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
 	var attack_dir: Vector2 = (mouse_pos - global_position).normalized()
-	var new_sword = basic_attack.instance()
+	var new_axe = basic_attack.instance()
 	
-	new_sword.init_params(BASIC_ATTACK_DAMAGE, BASIC_ATTACK_SPEED, mouse_pos, global_position)
-	get_parent().add_child(new_sword)
+	new_axe.init_params(BASIC_ATTACK_DAMAGE, BASIC_ATTACK_SPEED, mouse_pos, global_position)
+	get_parent().add_child(new_axe)
 	can_basic_attack = false
 	basic_attack_timer.start()
 
@@ -181,8 +181,7 @@ func _portal_spear_placing() -> void :
 	var mouse_pos: Vector2 = get_global_mouse_position()
 	
 	current_portal_spear_attack = portal_spear_attack.instance()
-	current_portal_spear_attack.position = mouse_pos
-	current_portal_spear_attack.z_index = 2
+	current_portal_spear_attack.init_params(PORTAL_SPEAR_ATTACK_DAMAGE, mouse_pos)
 	
 	get_parent().add_child(current_portal_spear_attack)
 

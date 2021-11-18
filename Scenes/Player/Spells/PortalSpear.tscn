@@ -21,6 +21,7 @@ animations = [ {
 extents = Vector2( 0, 0 )
 
 [node name="PortalSpear" type="Area2D"]
+position = Vector2( 148.188, 164.234 )
 scale = Vector2( 1.5, 1.5 )
 script = ExtResource( 8 )
 
@@ -30,6 +31,28 @@ animation = "attack"
 offset = Vector2( 58, 0 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )
+disabled = true
+
+[node name="AnimatedSpriteDown" type="AnimatedSprite" parent="."]
+position = Vector2( 0, 40 )
+frames = SubResource( 1 )
+animation = "attack"
+offset = Vector2( 58, 0 )
+
+[node name="CollisionShape2DDown" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 40 )
+shape = SubResource( 2 )
+disabled = true
+
+[node name="AnimatedSpriteUp" type="AnimatedSprite" parent="."]
+position = Vector2( 0, -40.0001 )
+frames = SubResource( 1 )
+animation = "attack"
+offset = Vector2( 58, 0 )
+
+[node name="CollisionShape2DUp" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -40.0001 )
 shape = SubResource( 2 )
 disabled = true
 
