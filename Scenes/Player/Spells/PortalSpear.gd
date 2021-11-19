@@ -4,7 +4,7 @@ extends Area2D
 
 # STATS
 var SPELL_LEVEL: int = 1
-var DAMAGE: float = 0.0
+var DAMAGE: float = 5.0
 
 # NODES
 onready var animated_sprite = $AnimatedSprite
@@ -27,6 +27,7 @@ const frames_size = [
 const offset_x: int = 59
 const offset_y_level_2_up = -40
 const offset_y_level_2_down = 40
+var direction: Vector2 = Vector2.ZERO
 
 ################################################################################
 
@@ -116,3 +117,8 @@ func _on_AnimatedSprite_frame_changed():
 
 func _on_AnimatedSprite_animation_finished():
 	destroy()
+
+func _on_PortalSpear_body_entered(body):
+	if (get_tree().get_nodes_in_group("mobs").has(body)):
+		print("DAMAZGE")
+		body.take_damage(DAMAGE, direction)

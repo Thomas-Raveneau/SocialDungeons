@@ -18,7 +18,8 @@ func _process(delta):
 		set_score(int(minutes * 10))
 
 func set_score(new_value):
+	return
 	score = new_value
-	if score > Save.currentHighScore:	
+	if score > Save.currentHighScore:
 		Save.currentHighScore = score
 	

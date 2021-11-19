@@ -194,6 +194,7 @@ func _portal_spear_orientating():
 	direction = direction.normalized()
 	
 	current_portal_spear_attack.rotation = direction.angle()
+	current_portal_spear_attack.direction = direction
 
 func _portal_spear_attacking():
 	current_portal_spear_attack.attack()
