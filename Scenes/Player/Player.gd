@@ -48,7 +48,9 @@ var is_invicible: bool = false
 var is_taking_damage: bool = false
 var velocity: Vector2 = Vector2()
 var knockback: Vector2 = Vector2()
-var last_step: int = -1
+var last_step = -1
+var is_falling: bool = false
+onready var player_size: Vector2 = $Skin.get_sprite_frames().get_frame("idle", 0).get_size()
 
 # NODES
 onready var skin: AnimatedSprite = $Skin
@@ -72,12 +74,14 @@ var portal_spear_attack = preload("res://Scenes/Player/Spells/PortalSpear.tscn")
 func _ready() -> void:
 	dash_duration_timer.wait_time = DASH_DURATION
 	dash_cooldown_timer.wait_time = DASH_COOLDOWN
-	
+	dash_cooldown_timer.wait_time = DASH_COOLDOWN
+
 	basic_attack_timer.wait_time = BASIC_ATTACK_COOLDOWN
+
 	portal_spear_attack_timer.wait_time = PORTAL_SPEAR_ATTACK_COOLDOWN
 	
 	_set_hp(HEALTH)
-	
+
 func _process(_delta: float) -> void:
 	pass
 
@@ -86,7 +90,7 @@ func _physics_process(_delta: float) -> void:
 	_handle_animations()
 	_handle_walking_sound()
 	_generate_particles()
-
+	
 	if (!is_taking_damage):
 		velocity = move_and_slide(velocity * 100)
 	else:
@@ -94,6 +98,17 @@ func _physics_process(_delta: float) -> void:
 		camera.add_trauma(0.05)
 	
 	_handle_collisions()
+
+func fall(hole: Vector2) -> void:
+	$FallDuration.start()
+	is_falling = true
+	position = Vector2(hole.x, hole.y - player_size.y)
+
+func _handle_fall_animation() -> void:
+	if (is_falling and is_alive):
+		self.scale = Vector2(self.scale.x - 0.04, self.scale.y - 0.04)
+		self.rotation_degrees -= 0.5
+		self.position.y += 0.35
 
 func _generate_particles() -> void:
 	if ($Skin.animation == "run"):
@@ -145,7 +160,7 @@ func _handle_movement_inputs() -> void:
 		velocity.y -= 1
 	if (Input.is_action_just_pressed("action_dash") and can_dash == true):
 		_dash()
-	
+
 	if (is_dashing):
 		velocity = velocity.normalized() * DASH_SPEED
 	else:
@@ -204,7 +219,7 @@ func _portal_spear_attacking():
 
 func _handle_inputs() -> void:
 	velocity = Vector2()
-	if (is_alive and !is_taking_damage):
+	if (is_alive and !is_taking_damage and !is_falling):
 		_handle_movement_inputs()
 		_handle_spells_inputs()
 
@@ -215,6 +230,8 @@ func _handle_player_flip() -> void:
 		skin.flip_h = false
 
 func _handle_animations() -> void:
+	_handle_fall_animation()
+	
 	if (is_alive):
 		_handle_player_flip()
 		
@@ -256,7 +273,7 @@ func _handle_damage_sound() -> void:
 
 ### PUBLIC ###
 func damage(damage_amount: int, damage_dir: Vector2) -> bool: 
-	if (is_invicible or !is_alive):
+	if (is_invicible or !is_alive or is_falling):
 		return false
 	
 	_handle_damage_animation(damage_amount, damage_dir)
@@ -293,7 +310,7 @@ func revive(health_on_revive: int) -> int:
 	is_alive = true
 	
 	return 0
-	
+
 func _set_hp(newHpValue: int) -> void:
 	var prevHealth = HEALTH
 	HEALTH = clamp(newHpValue, 0, MAX_HEALTH)
@@ -319,6 +336,12 @@ func _on_DamageAnimation_timeout() -> void:
 
 func _on_BasicAttackTimer_timeout():
 	can_basic_attack = true
+
+func _on_FallDuration_timeout():
+	is_falling = false
+	self.rotation_degrees = 0
+	self.scale = Vector2(5, 5)
+	self.damage(MAX_HEALTH, Vector2.ZERO)
 
 func _on_PortalSpearAttackTimer_timeout():
 	can_portal_spear_attack = true

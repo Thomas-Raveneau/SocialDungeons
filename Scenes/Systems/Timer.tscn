@@ -2,8 +2,6 @@
 
 [ext_resource path="res://Scenes/Systems/Timer.gd" type="Script" id=1]
 
-
-
 [node name="Timer" type="RichTextLabel"]
 margin_right = 40.0
 margin_bottom = 40.0

@@ -22,4 +22,3 @@ func set_score(new_value):
 	score = new_value
 	if score > Save.currentHighScore:
 		Save.currentHighScore = score
-	
