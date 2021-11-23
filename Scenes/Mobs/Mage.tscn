@@ -114,7 +114,7 @@ ATTACK_COOLDOWN = 1
 [node name="Animation" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "idle"
-frame = 9
+frame = 7
 playing = true
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]

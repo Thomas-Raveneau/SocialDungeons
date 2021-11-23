@@ -95,7 +95,7 @@ func _physics_process(_delta: float) -> void:
 		velocity = move_and_slide(velocity * 100)
 	else:
 		velocity = move_and_slide(knockback * 100)
-		camera.add_trauma(0.05)
+		camera.add_trauma(0.03)
 	
 	_handle_collisions()
 

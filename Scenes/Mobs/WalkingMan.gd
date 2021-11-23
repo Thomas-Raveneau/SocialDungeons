@@ -28,7 +28,6 @@ func _physics_process(_delta):
 		_handle_collision()
 
 func _handle_movement():
-	velocity = Vector2.ZERO
 	if target:
 		velocity = position.direction_to(target.position) * SPEED
 	velocity = move_and_slide(velocity)

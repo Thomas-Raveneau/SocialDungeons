@@ -39,7 +39,6 @@ func _physics_process(_delta):
 		_handle_collision()
 
 func _handle_movement():
-	velocity = Vector2.ZERO
 	if target:
 		if !in_range_of_attack:
 			velocity = position.direction_to(target.position) * SPEED

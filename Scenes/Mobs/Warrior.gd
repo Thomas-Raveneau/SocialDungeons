@@ -35,7 +35,6 @@ func _physics_process(_delta) -> void:
 		_handle_collision()
 
 func _handle_movement() -> void:
-	velocity = Vector2.ZERO
 	if target and !is_attacking:
 		velocity = position.direction_to(target.position) * SPEED
 	elif is_dashing:
