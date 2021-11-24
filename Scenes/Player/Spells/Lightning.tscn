@@ -19,7 +19,7 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 32.1675, 6.02195 )
+extents = Vector2( 31.1035, 4.96128 )
 
 [node name="Lightning" type="Area2D"]
 script = ExtResource( 9 )
@@ -28,9 +28,9 @@ script = ExtResource( 9 )
 position = Vector2( 32, 0 )
 frames = SubResource( 1 )
 animation = "attack"
-frame = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 32, 0 )
 shape = SubResource( 2 )
 

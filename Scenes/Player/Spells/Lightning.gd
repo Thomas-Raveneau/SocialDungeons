@@ -3,7 +3,7 @@ extends Area2D
 ################################################################################
 
 # STATS
-var SPELL_LEVEL: int = 0
+var SPELL_LEVEL: int = 1
 var DAMAGE: float = 5.0
 
 # NODES
@@ -17,6 +17,9 @@ var orientation : Vector2 = Vector2.ZERO
 
 ### PRIVATE ###
 func _ready():
+	if (SPELL_LEVEL == 1):
+		animated_sprite.self_modulate = Color(246/255.0, 26/255.0, 35/255.0)
+		DAMAGE *= 2
 	animated_sprite.play("attack")
 
 func _physics_process(_delta: float) -> void:
