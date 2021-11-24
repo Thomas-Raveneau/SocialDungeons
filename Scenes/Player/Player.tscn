@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scenes/Player/Assets/knight_m_hit_anim_f0.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Player/Assets/knight_m_run_anim_f0.png" type="Texture" id=2]
@@ -12,6 +12,8 @@
 [ext_resource path="res://Scenes/Player/Player.gd" type="Script" id=10]
 [ext_resource path="res://Scenes/Player/Sounds/take_damage.mp3" type="AudioStream" id=11]
 [ext_resource path="res://Scenes/Player/Sounds/footstep.mp3" type="AudioStream" id=12]
+[ext_resource path="res://Scenes/Player/Sounds/mixkit-player-losing-or-failing-2042.wav" type="AudioStream" id=13]
+[ext_resource path="res://Scenes/Player/Sounds/axe.wav" type="AudioStream" id=14]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -92,6 +94,12 @@ stream = ExtResource( 11 )
 [node name="WalkSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 12 )
 volume_db = -44.216
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 13 )
+
+[node name="ThrowAxe" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 14 )
 
 [connection signal="timeout" from="BasicAttackTimer" to="." method="_on_BasicAttackTimer_timeout"]
 [connection signal="timeout" from="PortalSpearAttackTimer" to="." method="_on_PortalSpearAttackTimer_timeout"]

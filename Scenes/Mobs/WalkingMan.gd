@@ -64,6 +64,7 @@ func _handle_attack(node):
 	hit_sprite.visible = false
 
 func _handle_death_animation() -> void:
+	$DeathSound.play()
 	_handle_death()
 
 ######################### PRIVATE SIGNALS ######################################
