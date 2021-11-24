@@ -20,19 +20,19 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 6 ), ExtResource( 4 ) ],
-"loop": true,
-"name": "run",
-"speed": 10.0
-}, {
 "frames": [ ExtResource( 1 ) ],
 "loop": true,
 "name": "hit",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 6 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "run",
+"speed": 10.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 6.75959, 6.1141 )
+extents = Vector2( 6.37277, 7.32046 )
 
 [node name="Player" type="KinematicBody2D" groups=[
 "player",
@@ -49,7 +49,7 @@ animation = "run"
 offset = Vector2( 0, -6 )
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
-position = Vector2( 0.811353, -3.4859 )
+position = Vector2( 0.937345, -0.966059 )
 shape = SubResource( 2 )
 one_way_collision_margin = 0.0
 
@@ -58,6 +58,9 @@ position = Vector2( 0.283154, -9.5984 )
 scale = Vector2( 0.509186, 0.518624 )
 
 [node name="BasicAttackTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="PortalSpearAttackTimer" type="Timer" parent="."]
 one_shot = true
 
 [node name="DashDuration" type="Timer" parent="."]
@@ -73,6 +76,9 @@ one_shot = true
 wait_time = 0.2
 one_shot = true
 
+[node name="FallDuration" type="Timer" parent="."]
+one_shot = true
+
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
 position = Vector2( 0.283154, -9.5984 )
 scale = Vector2( 0.509186, 0.518624 )
@@ -85,7 +91,9 @@ stream = ExtResource( 12 )
 volume_db = -44.216
 
 [connection signal="timeout" from="BasicAttackTimer" to="." method="_on_BasicAttackTimer_timeout"]
+[connection signal="timeout" from="PortalSpearAttackTimer" to="." method="_on_PortalSpearAttackTimer_timeout"]
 [connection signal="timeout" from="DashDuration" to="." method="_on_DashDuration_timeout"]
 [connection signal="timeout" from="DashCooldown" to="." method="_on_DashCooldown_timeout"]
 [connection signal="timeout" from="Invicibility" to="." method="_on_Invicibility_timeout"]
 [connection signal="timeout" from="DamageAnimation" to="." method="_on_DamageAnimation_timeout"]
+[connection signal="timeout" from="FallDuration" to="." method="_on_FallDuration_timeout"]

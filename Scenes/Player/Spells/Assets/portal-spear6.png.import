@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/portal-spear6.png-1d763421f022823cbbdb17e5c63dc771.stex"
+path="res://.import/portal-spear6.png-c299b1e6974a03b5f9c78f9b454bfc2d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/portal-spear6.png"
-dest_files=[ "res://.import/portal-spear6.png-1d763421f022823cbbdb17e5c63dc771.stex" ]
+source_file="res://Scenes/Player/Spells/Assets/portal-spear6.png"
+dest_files=[ "res://.import/portal-spear6.png-c299b1e6974a03b5f9c78f9b454bfc2d.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
