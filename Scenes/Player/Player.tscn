@@ -22,15 +22,15 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 1 ) ],
-"loop": true,
-"name": "hit",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 6 ), ExtResource( 4 ) ],
 "loop": true,
 "name": "run",
 "speed": 10.0
+}, {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "hit",
+"speed": 5.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -63,6 +63,9 @@ scale = Vector2( 0.509186, 0.518624 )
 one_shot = true
 
 [node name="PortalSpearAttackTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="LightningAttackTimer" type="Timer" parent="."]
 one_shot = true
 
 [node name="DashDuration" type="Timer" parent="."]
@@ -100,6 +103,7 @@ stream = ExtResource( 14 )
 
 [connection signal="timeout" from="BasicAttackTimer" to="." method="_on_BasicAttackTimer_timeout"]
 [connection signal="timeout" from="PortalSpearAttackTimer" to="." method="_on_PortalSpearAttackTimer_timeout"]
+[connection signal="timeout" from="LightningAttackTimer" to="." method="_on_LightningAttackTimer_timeout"]
 [connection signal="timeout" from="DashDuration" to="." method="_on_DashDuration_timeout"]
 [connection signal="timeout" from="DashCooldown" to="." method="_on_DashCooldown_timeout"]
 [connection signal="timeout" from="Invicibility" to="." method="_on_Invicibility_timeout"]
