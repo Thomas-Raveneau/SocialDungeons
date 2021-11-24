@@ -183,6 +183,7 @@ func _basic_attack() -> void:
 	get_parent().add_child(new_axe)
 	can_basic_attack = false
 	basic_attack_timer.start()
+	$ThrowAxe.play()
 
 func _handle_portal_spear_attack_inputs() -> void:
 	if (!can_portal_spear_attack):
@@ -247,7 +248,7 @@ func _handle_death() -> int:
 		is_alive = false
 		skin.stop()
 		skin.rotation_degrees = 90
-		
+		$DeathSound.play()
 		return 0
 	else:
 		return -1
