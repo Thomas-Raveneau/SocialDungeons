@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/lightning5.png-67575aba6f74d4999f81fc448f9b40ff.stex"
+path="res://.import/lightning5.png-78da8d32a347c05254d64860c182f308.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/lightning5.png"
-dest_files=[ "res://.import/lightning5.png-67575aba6f74d4999f81fc448f9b40ff.stex" ]
+source_file="res://Scenes/Player/Spells/Assets/lightning5.png"
+dest_files=[ "res://.import/lightning5.png-78da8d32a347c05254d64860c182f308.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

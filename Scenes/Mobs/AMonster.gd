@@ -30,6 +30,7 @@ func _ready() -> void:
 
 func _handle_death() -> void:
 	emit_signal("monster_death")
+	
 	queue_free()
 
 func _handle_death_animation() -> void:

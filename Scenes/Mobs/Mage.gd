@@ -85,6 +85,7 @@ func _handle_collision():
 
 func _handle_death_animation() -> void:
 	hitbox.disabled = true
+	$DeathSound.play()	
 	animation.play("death")
 
 func _shoot_fireball():

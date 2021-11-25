@@ -21,15 +21,19 @@ export var BASIC_ATTACK_DAMAGE: float = 5.0
 export var BASIC_ATTACK_COOLDOWN: float = 0.1
 export var PORTAL_SPEAR_ATTACK_DAMAGE: float = 5.0
 export var PORTAL_SPEAR_ATTACK_COOLDOWN: float = 1.0
+export var LIGHTNING_ATTACK_DAMAGE: float = 5.0
+export var LIGHTNING_ATTACK_COOLDOWN: float = 1.0
 
 # SPELLS TIMERS
 onready var basic_attack_timer: Timer = $BasicAttackTimer
 onready var portal_spear_attack_timer: Timer = $PortalSpearAttackTimer
+onready var lightning_attack_timer: Timer = $LightningAttackTimer
 
 # SPELLS UTILS
 var can_basic_attack: bool = true
 var can_portal_spear_attack: bool = true
 var current_portal_spear_attack = null
+var can_lightning_attack: bool = true
 
 # DAMAGE PARTICLE UTILS
 var damage_particle_dir = Vector2(0, -25)
@@ -67,6 +71,7 @@ var damage_particle = preload("res://Scenes/Player/DamageParticle.tscn")
 var step_particles = preload("res://Scenes/Particles/FootStep.tscn")
 var basic_attack = preload("res://Scenes/Player/Spells/BasicAttack.tscn")
 var portal_spear_attack = preload("res://Scenes/Player/Spells/PortalSpear.tscn")
+var lightning_attack = preload("res://Scenes/Player/Spells/Lightning.tscn")
 
 ################################################################################
 
@@ -77,8 +82,8 @@ func _ready() -> void:
 	dash_cooldown_timer.wait_time = DASH_COOLDOWN
 
 	basic_attack_timer.wait_time = BASIC_ATTACK_COOLDOWN
-
 	portal_spear_attack_timer.wait_time = PORTAL_SPEAR_ATTACK_COOLDOWN
+	lightning_attack_timer.wait_time = LIGHTNING_ATTACK_COOLDOWN
 	
 	_set_hp(HEALTH)
 
@@ -170,6 +175,8 @@ func _handle_spells_inputs() -> void:
 	if (Input.is_action_just_pressed("action_spell_01")):
 		_basic_attack()
 	_handle_portal_spear_attack_inputs()
+	if (Input.is_action_just_pressed("action_spêll_03")):
+		_lightning_attack()
 
 func _basic_attack() -> void:
 	if (!can_basic_attack):
@@ -183,6 +190,7 @@ func _basic_attack() -> void:
 	get_parent().add_child(new_axe)
 	can_basic_attack = false
 	basic_attack_timer.start()
+	$ThrowAxe.play()
 
 func _handle_portal_spear_attack_inputs() -> void:
 	if (!can_portal_spear_attack):
@@ -217,6 +225,21 @@ func _portal_spear_attacking():
 	portal_spear_attack_timer.start()
 	current_portal_spear_attack = null
 
+func _lightning_attack():
+	if (!can_lightning_attack):
+		return
+	
+	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
+	var lightning_dir: Vector2 = (mouse_pos - global_position).normalized()
+	var new_lightning = lightning_attack.instance()
+	
+	new_lightning.init_params(LIGHTNING_ATTACK_DAMAGE, Vector2.ZERO, lightning_dir)
+	add_child(new_lightning)
+	
+	can_lightning_attack = false
+	lightning_attack_timer.start()
+	
+
 func _handle_inputs() -> void:
 	velocity = Vector2()
 	if (is_alive and !is_taking_damage and !is_falling):
@@ -247,7 +270,7 @@ func _handle_death() -> int:
 		is_alive = false
 		skin.stop()
 		skin.rotation_degrees = 90
-		
+		$DeathSound.play()
 		return 0
 	else:
 		return -1
@@ -345,3 +368,6 @@ func _on_FallDuration_timeout():
 
 func _on_PortalSpearAttackTimer_timeout():
 	can_portal_spear_attack = true
+
+func _on_LightningAttackTimer_timeout():
+	can_lightning_attack = true

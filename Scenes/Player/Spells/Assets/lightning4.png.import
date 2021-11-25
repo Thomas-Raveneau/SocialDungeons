@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/lightning4.png-30b2d29186b0879723d7c80c42c479f2.stex"
+path="res://.import/lightning4.png-00b6ffcb3105fadf3a3f344f440778b4.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/lightning4.png"
-dest_files=[ "res://.import/lightning4.png-30b2d29186b0879723d7c80c42c479f2.stex" ]
+source_file="res://Scenes/Player/Spells/Assets/lightning4.png"
+dest_files=[ "res://.import/lightning4.png-00b6ffcb3105fadf3a3f344f440778b4.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
