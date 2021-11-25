@@ -1,8 +1,9 @@
 extends "res://Scenes/Mobs/AMonster.gd"
 
-############################# VARIABLES ########################################
+### VARIABLES ###
 
 # MOVEMENT
+var velocity : Vector2 = Vector2.ZERO
 export var DODGE_SPEED = 200
 
 # ACTION
@@ -21,10 +22,10 @@ onready var hitbox : CollisionShape2D = $Hitbox
 onready var animation : AnimatedSprite = $Animation
 
 # PROJECTILE
-onready var FIREBALL = preload("res://Scenes/Mobs/Projectile/FireBall.tscn")
+onready var FIREBALL = preload("res://Scenes/Projectile/FireBall.tscn")
 onready var spawn_point : Node2D = $SpawnPoint
 
-######################## PRIVATE METHODS #######################################
+### PRIVATE METHODS ###
 
 func _ready():
 	attack_timer.wait_time = ATTACK_COOLDOWN
@@ -40,11 +41,11 @@ func _physics_process(_delta):
 
 func _handle_movement():
 	velocity = Vector2.ZERO
-	if target:
+	if player:
 		if !in_range_of_attack:
-			velocity = position.direction_to(target.position) * SPEED
+			velocity = position.direction_to(player.position) * SPEED
 		elif is_dodging:
-			velocity = position.direction_to(target.position) * DODGE_SPEED * -1
+			velocity = position.direction_to(player.position) * DODGE_SPEED * -1
 	velocity = move_and_slide(velocity)
 
 func _handle_attack():
@@ -62,8 +63,8 @@ func _handle_animation():
 			animation.play("walk")
 
 func _handle_flip():
-	if target:
-		var orientation = position.direction_to(target.position)
+	if player:
+		var orientation = position.direction_to(player.position)
 		orientation.x = orientation.x * -1 if is_dodging else orientation.x
 		if (orientation.x < 0 and !animation.flip_h):
 			animation.flip_h = true
@@ -89,39 +90,42 @@ func _handle_death_animation() -> void:
 func _shoot_fireball():
 		var bullet = FIREBALL.instance()
 		bullet.position = spawn_point.get_global_position()
-		bullet.orientation = target.position - spawn_point.get_global_position()
+		bullet.orientation = player.position - spawn_point.get_global_position()
 		get_parent().add_child(bullet)
+
+func _handle_death() -> void:
+	queue_free()
 
 ####################### PUBLIC METHODS #########################################
 
 ######################## PRIVATE SIGNALS #######################################
 
 func _on_DodgeArea_body_entered(body):
-	if players_list.has(body):
+	if players.has(body):
 		is_dodging = true
 		in_range_of_attack = true
-		target = players_list[players_list.find(body)]
+		player = players[players.find(body)]
 
 func _on_DodgeArea_body_exited(body):
-	if target == body:
+	if player == body:
 		is_dodging = false
 
 func _on_RangeArea_body_entered(body):
-	if players_list.has(body):
+	if players.has(body):
 		in_range_of_attack = true
-		target = players_list[players_list.find(body)]
+		player = players[players.find(body)]
 
 func _on_RangeArea_body_exited(body):
-	if target == body:
+	if player == body:
 		in_range_of_attack = false
 
 func _on_DetectionArea_body_entered(body):
-	if players_list.has(body):
-		target = players_list[players_list.find(body)]
+	if players.has(body):
+		player = players[players.find(body)]
 
 func _on_DetectionArea_body_exited(body):
-	if target == body:
-		target = null
+	if player == body:
+		player = null
 
 func _on_AttackTimer_timeout():
 	can_attack = true
