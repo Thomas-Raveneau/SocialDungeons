@@ -37,7 +37,8 @@ func _handle_death_animation() -> void:
 	_handle_death()
 
 func _handle_damage_animation(damage_orientation : Vector2) -> void:
-	move_and_slide(damage_orientation.normalized() * KNOCKBACK_FORCE)
+	velocity = move_and_slide(damage_orientation.normalized() * 100)
+	pass
 
 ############################# PUBLIC METHODS ###################################
 

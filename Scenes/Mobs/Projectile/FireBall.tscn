@@ -63,13 +63,12 @@ scale = Vector2( 0.3, 0.3 )
 collision_layer = 8
 collision_mask = 17
 script = ExtResource( 8 )
-SPEED = 500
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( -25.8567, 12.9065 )
 frames = SubResource( 7 )
 animation = "Sprite"
-frame = 2
+frame = 4
 playing = true
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]

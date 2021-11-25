@@ -10,7 +10,7 @@
 [ext_resource path="res://Scenes/Mobs/Projectile/Assets/Orbe/Orb-sprite1.png" type="Texture" id=8]
 [ext_resource path="res://Scenes/Mobs/Projectile/Orbe.gd" type="Script" id=9]
 
-[sub_resource type="SpriteFrames" id=2]
+[sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 8 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 5 ) ],
 "loop": true,
@@ -23,7 +23,7 @@ animations = [ {
 "speed": 7.0
 } ]
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="CircleShape2D" id=2]
 radius = 47.8165
 
 [node name="Orbe" type="KinematicBody2D"]
@@ -33,9 +33,10 @@ script = ExtResource( 9 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 3.07807, -4.26733 )
-frames = SubResource( 2 )
+frames = SubResource( 1 )
 animation = "idle"
+frame = 5
 playing = true
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
+shape = SubResource( 2 )
