@@ -53,6 +53,8 @@ func _handle_collision():
 		if get_tree().get_nodes_in_group("player").has(node.collider) and can_hit:
 			_handle_attack(node)
 		if get_tree().get_nodes_in_group("projectile").has(node.collider):
+			$DamageTimer.start()
+			animation.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
 			take_damage(node.collider.DAMAGE, node.collider.orientation)
 			node.collider.destroy()
 
@@ -79,3 +81,7 @@ func _on_DetectionArea_body_exited(body):
 func _on_HitTimer_timeout():
 	can_hit = true
 	hit_sprite.visible = true
+
+func _on_DamageTimer_timeout() -> void:
+	animation.self_modulate = Color(1, 1, 1)
+

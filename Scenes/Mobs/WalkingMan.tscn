@@ -75,8 +75,12 @@ position = Vector2( 0, -3.55848 )
 shape = SubResource( 3 )
 
 [node name="HitTimer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 0.2
+
+[node name="DamageTimer" type="Timer" parent="."]
+wait_time = 0.2
 
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_DetectionArea_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_DetectionArea_body_exited"]
 [connection signal="timeout" from="HitTimer" to="." method="_on_HitTimer_timeout"]
+[connection signal="timeout" from="DamageTimer" to="." method="_on_DamageTimer_timeout"]

@@ -114,7 +114,7 @@ ATTACK_COOLDOWN = 1
 [node name="Animation" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "idle"
-frame = 7
+frame = 2
 playing = true
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
@@ -141,6 +141,9 @@ shape = SubResource( 5 )
 
 [node name="AttackTimer" type="Timer" parent="."]
 
+[node name="DamageTimer" type="Timer" parent="."]
+wait_time = 0.2
+
 [node name="SpawnPoint" type="Node2D" parent="."]
 position = Vector2( 149.84, -19.0273 )
 
@@ -152,3 +155,4 @@ position = Vector2( 149.84, -19.0273 )
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_DetectionArea_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_DetectionArea_body_exited"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]
+[connection signal="timeout" from="DamageTimer" to="." method="_on_DamageTimer_timeout"]

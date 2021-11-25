@@ -78,6 +78,8 @@ func _handle_collision():
 		if hitbox.disabled or !node:
 			continue
 		if get_tree().get_nodes_in_group("projectile").has(node.collider):
+			$DamageTimer.start()
+			animation.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
 			take_damage(node.collider.DAMAGE, node.collider.orientation)
 			node.collider.destroy()
 
@@ -89,6 +91,7 @@ func _shoot_fireball():
 		var bullet = FIREBALL.instance()
 		bullet.position = spawn_point.get_global_position()
 		bullet.orientation = target.position - spawn_point.get_global_position()
+		
 		get_parent().add_child(bullet)
 
 ####################### PUBLIC METHODS #########################################
@@ -132,3 +135,8 @@ func _on_Animation_animation_finished():
 	elif animation.get_animation() == "death":
 		is_attacking = false
 		_handle_death()
+
+
+func _on_DamageTimer_timeout() -> void:
+	animation.self_modulate = Color(1, 1, 1)
+	pass # Replace with function body.

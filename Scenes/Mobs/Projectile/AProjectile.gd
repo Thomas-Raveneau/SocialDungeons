@@ -3,7 +3,7 @@ extends KinematicBody2D
 ########################## VARIABLE ############################################
 
 # MOVEMENT
-export var SPEED : int = 200
+export var SPEED : int = 800
 var velocity : Vector2 = Vector2.ZERO
 var orientation : Vector2 = Vector2.ZERO
 
