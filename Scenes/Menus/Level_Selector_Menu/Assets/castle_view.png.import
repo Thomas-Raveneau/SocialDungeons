@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/selector_sprite1.png-7ac487b9b8ab4b96803d5ebb212e95e6.stex"
+path="res://.import/castle_view.png-8ea0632430a49cbd00c16ce1f16fa8ba.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/Menus/Level_Selector_Menu/Assets/selector_sprite1.png"
-dest_files=[ "res://.import/selector_sprite1.png-7ac487b9b8ab4b96803d5ebb212e95e6.stex" ]
+source_file="res://Scenes/Menus/Level_Selector_Menu/Assets/castle_view.png"
+dest_files=[ "res://.import/castle_view.png-8ea0632430a49cbd00c16ce1f16fa8ba.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

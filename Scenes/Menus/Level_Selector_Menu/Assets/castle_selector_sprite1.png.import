@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/button-ui-state0.png-dff76b5623a24ee61b712df820d8d7cd.stex"
+path="res://.import/castle_selector_sprite1.png-94e2b1deda1af445bb92e6a051140f26.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/Menus/Main/Assets/button-ui-state0.png"
-dest_files=[ "res://.import/button-ui-state0.png-dff76b5623a24ee61b712df820d8d7cd.stex" ]
+source_file="res://Scenes/Menus/Level_Selector_Menu/Assets/castle_selector_sprite1.png"
+dest_files=[ "res://.import/castle_selector_sprite1.png-94e2b1deda1af445bb92e6a051140f26.stex" ]
 
 [params]
 
