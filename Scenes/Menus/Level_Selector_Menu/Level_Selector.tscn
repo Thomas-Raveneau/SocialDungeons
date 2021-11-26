@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scenes/Menus/Level_Selector_Menu/Assets/selector_sprite_selected2.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Menus/Level_Selector_Menu/Assets/selector_sprite_selected1.png" type="Texture" id=2]
@@ -8,9 +8,15 @@
 [ext_resource path="res://Scenes/Menus/Main/Assets/button-return1.png" type="Texture" id=6]
 [ext_resource path="res://Scenes/Menus/Level_Selector_Menu/Level1Selector.gd" type="Script" id=7]
 [ext_resource path="res://Fonts/pixelmix_bold.ttf" type="DynamicFontData" id=8]
+[ext_resource path="res://Scenes/Menus/Level_Selector_Menu/Assets/castle_selector_sprite2.png" type="Texture" id=9]
+[ext_resource path="res://Scenes/Menus/Level_Selector_Menu/Assets/castle_selector_sprite1.png" type="Texture" id=10]
 
 [sub_resource type="DynamicFont" id=1]
 size = 12
+font_data = ExtResource( 8 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 25
 font_data = ExtResource( 8 )
 
 [node name="LevelSelector" type="Control"]
@@ -51,8 +57,8 @@ __meta__ = {
 [node name="Level1Selector" type="TextureButton" parent="VBoxContainer"]
 margin_right = 420.0
 margin_bottom = 300.0
-texture_normal = ExtResource( 2 )
-texture_hover = ExtResource( 1 )
+texture_normal = ExtResource( 10 )
+texture_hover = ExtResource( 9 )
 stretch_mode = 1
 script = ExtResource( 7 )
 
@@ -74,6 +80,18 @@ texture_normal = ExtResource( 2 )
 texture_hover = ExtResource( 1 )
 stretch_mode = 1
 
+[node name="Label" type="Label" parent="VBoxContainer/Level2Selector"]
+self_modulate = Color( 0.345098, 0.341176, 0.341176, 1 )
+margin_left = 211.529
+margin_top = 255.669
+margin_right = 389.529
+margin_bottom = 280.669
+custom_fonts/font = SubResource( 2 )
+text = "Incoming..."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Level3Selector" type="TextureButton" parent="VBoxContainer"]
 margin_left = 900.0
 margin_right = 1320.0
@@ -81,6 +99,18 @@ margin_bottom = 300.0
 texture_normal = ExtResource( 2 )
 texture_hover = ExtResource( 1 )
 stretch_mode = 1
+
+[node name="Label2" type="Label" parent="VBoxContainer/Level3Selector"]
+self_modulate = Color( 0.345098, 0.341176, 0.341176, 1 )
+margin_left = 210.862
+margin_top = 255.661
+margin_right = 388.862
+margin_bottom = 280.661
+custom_fonts/font = SubResource( 2 )
+text = "Incoming..."
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="ReturnButton" type="TextureButton" parent="."]
 margin_left = 1787.35

@@ -187,6 +187,7 @@ points = PoolVector2Array( 0, 107.989, 64, 107.989, 64, 128, 0, 128 )
 
 [node name="Room_01" type="Node2D"]
 script = ExtResource( 5 )
+MOB_AMOUNT = 0
 
 [node name="Floor" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )

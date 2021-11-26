@@ -65,6 +65,7 @@ onready var dash_duration_timer: Timer = $DashDuration
 onready var dash_cooldown_timer: Timer = $DashCooldown
 onready var damage_animation_timer: Timer = $DamageAnimation
 onready var damage_sound: AudioStreamPlayer = $DamageSound
+onready var damage_particles: CPUParticles2D = $DamageParticles
 
 # SCENES
 var damage_particle = preload("res://Scenes/Player/DamageParticle.tscn")
@@ -286,6 +287,8 @@ func _handle_damage_animation(damage_amount: int, damage_dir: Vector2) -> void:
 	damage_particle_dir, 
 	damage_particle_duration, 
 	damage_particle_spread, false)
+	
+	damage_particles.emitting = true
 
 func _handle_invicibility() -> void:
 	invicibility_timer.start()
