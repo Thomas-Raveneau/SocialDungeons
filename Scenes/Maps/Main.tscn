@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Scenes/Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Maps/Main.gd" type="Script" id=2]
@@ -13,6 +13,84 @@
 [ext_resource path="res://Scenes/Menus/Main/Assets/button-ui-state1.png" type="Texture" id=11]
 [ext_resource path="res://Scenes/Systems/FX/CameraShake.gd" type="Script" id=12]
 
+[sub_resource type="Animation" id=3]
+resource_name = "fade_to_black"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Node2D/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "fade_to_normal"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Node2D/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "fade_to_normal_start"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Node2D/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "start_count"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Node2D/CountingStart:custom_fonts/font:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5, 2, 2.5, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 1, 150, 1, 150, 1, 150, 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Node2D/CountingStart:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1, 2, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 2,
+"values": [ "3", "2", "1", "" ]
+}
+
+[sub_resource type="DynamicFont" id=5]
+size = 1
+font_data = ExtResource( 7 )
+
 [sub_resource type="DynamicFont" id=1]
 size = 24
 use_filter = true
@@ -21,8 +99,16 @@ font_data = ExtResource( 7 )
 [node name="Main" type="Node2D"]
 script = ExtResource( 2 )
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/fade_to_black = SubResource( 3 )
+anims/fade_to_normal = SubResource( 2 )
+anims/fade_to_normal_start = SubResource( 9 )
+
+[node name="StartCountingAnimation" type="AnimationPlayer" parent="."]
+anims/start_count = SubResource( 8 )
+
 [node name="Node2D" type="Node2D" parent="."]
-position = Vector2( 950, 630.739 )
+position = Vector2( 950, 630 )
 z_index = 3
 
 [node name="HealthBar" parent="Node2D" instance=ExtResource( 3 )]
@@ -34,6 +120,29 @@ margin_left = 118.794
 margin_top = 492.146
 margin_right = 118.794
 margin_bottom = 492.146
+
+[node name="ColorRect" type="ColorRect" parent="Node2D"]
+margin_left = -950.0
+margin_top = -630.739
+margin_right = 970.0
+margin_bottom = 449.261
+mouse_filter = 2
+color = Color( 0, 0, 0, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CountingStart" type="Label" parent="Node2D"]
+margin_left = -950.0
+margin_top = -630.0
+margin_right = 970.0
+margin_bottom = 450.0
+custom_fonts/font = SubResource( 5 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="CameraScene" type="Camera2D" parent="."]
 position = Vector2( 960, 540 )
@@ -103,6 +212,8 @@ margin_bottom = 562.0
 texture_normal = ExtResource( 9 )
 texture_pressed = ExtResource( 8 )
 
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="animation_finished" from="StartCountingAnimation" to="." method="_on_StartCountingAnimation_animation_finished"]
 [connection signal="hp_changed" from="Player" to="Node2D/HealthBar" method="_on_Player_hp_changed"]
 [connection signal="pressed" from="CanvasLayer/Pause/VBoxContainer/ResumePauseButton" to="CanvasLayer/Pause" method="_on_ResumePauseButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/Pause/VBoxContainer/QuitPauseButton" to="CanvasLayer/Pause" method="_on_QuitPauseButton_pressed"]

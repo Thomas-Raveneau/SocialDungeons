@@ -16,6 +16,17 @@ var current_room_instance
 
 ################################################################################
 
+func _ready():
+	if (current_room_id < 0 or current_room_id > rooms.size() - 1):
+		current_room_id = 0
+	
+	current_room_instance = rooms[current_room_id].instance()
+	add_child(current_room_instance)
+
+func _process(_delta: float):
+	if (Input.is_action_just_pressed("debug_button")):
+		current_room_instance.open_door()
+
 func handle_door_z_index(player_pos: Vector2) -> void:
 	var player_y = player_pos.y
 	var door = current_room_instance.get_node("Door")
@@ -35,14 +46,3 @@ func next_room() -> int:
 		return 0
 	else:
 		return -1 # No more room
-
-func _process(_delta: float):
-	if (Input.is_action_just_pressed("debug_button")):
-		current_room_instance.open_door()
-
-func _ready():
-	if (current_room_id < 0 or current_room_id > rooms.size() - 1):
-		current_room_id = 0
-	
-	current_room_instance = rooms[current_room_id].instance()
-	add_child(current_room_instance)
