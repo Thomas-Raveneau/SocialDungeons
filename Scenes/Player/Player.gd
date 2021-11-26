@@ -269,9 +269,10 @@ func _handle_animations() -> void:
 func _handle_death() -> int:
 	if (is_alive):
 		is_alive = false
-		skin.stop()
-		skin.rotation_degrees = 90
+		skin.play("death")
+#		skin.rotation_degrees = 90
 		$DeathSound.play()
+		$WalkSound.stop()
 		return 0
 	else:
 		return -1
@@ -374,3 +375,8 @@ func _on_PortalSpearAttackTimer_timeout():
 
 func _on_LightningAttackTimer_timeout():
 	can_lightning_attack = true
+
+func _on_Skin_animation_finished():
+	if (skin.animation == "death"):
+		skin.frame = 5
+		skin.stop()
