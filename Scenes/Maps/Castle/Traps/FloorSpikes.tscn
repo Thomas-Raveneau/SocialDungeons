@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scenes/Maps/Castle/Traps/FloorSpikes.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Maps/Castle/Traps/Assets/floor_spikes_anim_f0.png" type="Texture" id=2]
 [ext_resource path="res://Scenes/Maps/Castle/Traps/Assets/floor_spikes_anim_f2.png" type="Texture" id=3]
 [ext_resource path="res://Scenes/Maps/Castle/Traps/Assets/floor_spikes_anim_f1.png" type="Texture" id=4]
 [ext_resource path="res://Scenes/Maps/Castle/Traps/Assets/floor_spikes_anim_f3.png" type="Texture" id=5]
+[ext_resource path="res://Scenes/Maps/Castle/Traps/Sounds/spike-trap-sound-effect.mp3" type="AudioStream" id=6]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -39,6 +40,10 @@ one_shot = true
 [node name="DamageTiming" type="Timer" parent="."]
 wait_time = 0.001
 one_shot = true
+
+[node name="SpikesSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -20.0
 
 [connection signal="body_entered" from="." to="." method="_on_Trap_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_FloorSpikes_body_exited"]
