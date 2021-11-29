@@ -10,7 +10,6 @@ func _ready():
 	time_label.hide()
 	$Sweep.value = 0
 	$Sweep.texture_progress = texture_normal
-	$Timer.wait_time = cooldown
 	set_process(false)
 
 
@@ -25,8 +24,10 @@ func _on_Timer_timeout():
 	time_label.hide()
 	set_process(false)
 
-func _on_spell():
+func _on_spell(spellCooldown: float):
 	disabled = true
 	set_process(true)
+	$Timer.wait_time = spellCooldown
+	cooldown = spellCooldown
 	$Timer.start()
 	time_label.show()

@@ -5,7 +5,7 @@ extends KinematicBody2D
 # SIGNALS
 signal hp_changed(health)
 signal killed()
-signal spell(spell_num)
+signal spell(spell_num, cooldown)
 
 # STATS
 export var SPEED: int = 6 
@@ -170,7 +170,7 @@ func _handle_movement_inputs() -> void:
 func _handle_spells_inputs() -> void:
 	if (Input.is_action_just_pressed("action_spell_01")):
 		_basic_attack()
-		emit_signal("spell", 1);
+		emit_signal("spell", 1, BASIC_ATTACK_COOLDOWN);
 	_handle_portal_spear_attack_inputs()
 
 func _basic_attack() -> void:
@@ -195,6 +195,7 @@ func _handle_portal_spear_attack_inputs() -> void:
 		_portal_spear_orientating()
 	if (Input.is_action_just_released("action_spell_02") and current_portal_spear_attack != null):
 		_portal_spear_attacking()
+		emit_signal("spell", 2, PORTAL_SPEAR_ATTACK_COOLDOWN);
 
 func _portal_spear_placing() -> void :
 	var mouse_pos: Vector2 = get_global_mouse_position()
@@ -275,12 +276,10 @@ func _handle_damage_sound() -> void:
 
 func _input(event):
 	if event is InputEventKey and event.pressed:
-		if event.scancode == KEY_A:
-			emit_signal("spell", 2);
 		if event.scancode == KEY_E:
-			emit_signal("spell", 3);
+			emit_signal("spell", 3, 10);
 		if event.scancode == KEY_R:
-			emit_signal("spell", 4);
+			emit_signal("spell", 4, 5);
 
 ### PUBLIC ###
 func damage(damage_amount: int, damage_dir: Vector2) -> bool: 
