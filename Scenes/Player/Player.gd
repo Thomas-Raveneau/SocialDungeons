@@ -5,6 +5,7 @@ extends KinematicBody2D
 # SIGNALS
 signal hp_changed(health)
 signal killed()
+signal spell(spell_num)
 
 # STATS
 export var SPEED: int = 6 
@@ -169,6 +170,7 @@ func _handle_movement_inputs() -> void:
 func _handle_spells_inputs() -> void:
 	if (Input.is_action_just_pressed("action_spell_01")):
 		_basic_attack()
+		emit_signal("spell", 1);
 	_handle_portal_spear_attack_inputs()
 
 func _basic_attack() -> void:
@@ -270,6 +272,15 @@ func _handle_invicibility() -> void:
 
 func _handle_damage_sound() -> void:
 	damage_sound.play()
+
+func _input(event):
+	if event is InputEventKey and event.pressed:
+		if event.scancode == KEY_A:
+			emit_signal("spell", 2);
+		if event.scancode == KEY_E:
+			emit_signal("spell", 3);
+		if event.scancode == KEY_R:
+			emit_signal("spell", 4);
 
 ### PUBLIC ###
 func damage(damage_amount: int, damage_dir: Vector2) -> bool: 
