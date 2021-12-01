@@ -72,12 +72,9 @@ onready var damage_particles: CPUParticles2D = $DamageParticles
 var damage_particle = preload("res://Scenes/Player/DamageParticle.tscn")
 var step_particles = preload("res://Scenes/Particles/FootStep.tscn")
 var basic_attack = preload("res://Scenes/Player/Spells/BasicAttack.tscn")
-<<<<<<< HEAD
 var flame_dash = preload("res://Scenes/Projectile/Flame.tscn")
-=======
 var portal_spear_attack = preload("res://Scenes/Player/Spells/PortalSpear.tscn")
 var lightning_attack = preload("res://Scenes/Player/Spells/Lightning.tscn")
->>>>>>> master
 
 ################################################################################
 
