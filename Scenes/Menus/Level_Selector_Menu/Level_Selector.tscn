@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Scenes/Menus/Level_Selector_Menu/Assets/selector_sprite_selected2.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Menus/Level_Selector_Menu/Assets/selector_sprite_selected1.png" type="Texture" id=2]
@@ -11,11 +11,45 @@
 [ext_resource path="res://Scenes/Menus/Level_Selector_Menu/Assets/castle_selector_sprite2.png" type="Texture" id=9]
 [ext_resource path="res://Scenes/Menus/Level_Selector_Menu/Assets/castle_selector_sprite1.png" type="Texture" id=10]
 
-[sub_resource type="DynamicFont" id=1]
-size = 12
+[sub_resource type="Animation" id=1]
+resource_name = "fade_to_black"
+tracks/0/type = "value"
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "fade_to_normal"
+tracks/0/type = "value"
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
+}
+
+[sub_resource type="DynamicFont" id=3]
+size = 18
 font_data = ExtResource( 8 )
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=4]
+size = 40
+font_data = ExtResource( 8 )
+
+[sub_resource type="DynamicFont" id=5]
 size = 25
 font_data = ExtResource( 8 )
 
@@ -30,6 +64,10 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/fade_to_black = SubResource( 1 )
+anims/fade_to_normal = SubResource( 2 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
 margin_top = -5.0
@@ -62,12 +100,24 @@ texture_hover = ExtResource( 9 )
 stretch_mode = 1
 script = ExtResource( 7 )
 
-[node name="Label" type="Label" parent="VBoxContainer/Level1Selector"]
-margin_left = 27.6375
-margin_top = 59.0269
-margin_right = 187.637
-margin_bottom = 188.027
-custom_fonts/font = SubResource( 1 )
+[node name="Score" type="Label" parent="VBoxContainer/Level1Selector"]
+margin_left = 30.0316
+margin_top = 259.146
+margin_right = 103.032
+margin_bottom = 279.146
+custom_fonts/font = SubResource( 3 )
+text = "2:25:05"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DungeonName" type="Label" parent="VBoxContainer/Level1Selector"]
+margin_left = 27.1293
+margin_top = 213.84
+margin_right = 212.129
+margin_bottom = 253.84
+custom_fonts/font = SubResource( 4 )
+text = "Castle"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -86,7 +136,7 @@ margin_left = 211.529
 margin_top = 255.669
 margin_right = 389.529
 margin_bottom = 280.669
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 5 )
 text = "Incoming..."
 __meta__ = {
 "_edit_use_anchors_": false
@@ -106,7 +156,7 @@ margin_left = 210.862
 margin_top = 255.661
 margin_right = 388.862
 margin_bottom = 280.661
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 5 )
 text = "Incoming..."
 __meta__ = {
 "_edit_use_anchors_": false
@@ -123,6 +173,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="pressed" from="VBoxContainer/Level1Selector" to="." method="_on_Level1Selector_pressed"]
 [connection signal="pressed" from="VBoxContainer/Level2Selector" to="." method="_on_Level2Selector_pressed"]
 [connection signal="pressed" from="VBoxContainer/Level3Selector" to="." method="_on_Level3Selector_pressed"]

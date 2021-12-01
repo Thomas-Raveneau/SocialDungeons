@@ -54,6 +54,7 @@ var velocity: Vector2 = Vector2()
 var knockback: Vector2 = Vector2()
 var last_step = -1
 var is_falling: bool = false
+var hole_damage: int = 10
 onready var player_size: Vector2 = $Skin.get_sprite_frames().get_frame("idle", 0).get_size()
 
 # NODES
@@ -269,9 +270,10 @@ func _handle_animations() -> void:
 func _handle_death() -> int:
 	if (is_alive):
 		is_alive = false
-		skin.stop()
-		skin.rotation_degrees = 90
+		skin.play("death")
+#		skin.rotation_degrees = 90
 		$DeathSound.play()
+		$WalkSound.stop()
 		return 0
 	else:
 		return -1
@@ -367,10 +369,17 @@ func _on_FallDuration_timeout():
 	is_falling = false
 	self.rotation_degrees = 0
 	self.scale = Vector2(5, 5)
-	self.damage(MAX_HEALTH, Vector2.ZERO)
+	self.damage(hole_damage, Vector2.ZERO)
+	print(get_viewport().get_visible_rect().size)
+	position = Vector2(get_viewport().get_visible_rect().size.x / 2, get_viewport().get_visible_rect().size.y / 1.15)
 
 func _on_PortalSpearAttackTimer_timeout():
 	can_portal_spear_attack = true
 
 func _on_LightningAttackTimer_timeout():
 	can_lightning_attack = true
+
+func _on_Skin_animation_finished():
+	if (skin.animation == "death"):
+		skin.frame = 5
+		skin.stop()

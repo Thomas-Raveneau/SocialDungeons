@@ -4,8 +4,10 @@ var timer_state: bool = false
 var time: float = 0
 var score = 0 setget set_score
 
+### PRIVATE ###
 func _ready():
-	timer_state = true
+	timer_state = false
+	text = "00 : 00 : 00"
 
 func _process(delta):
 	if (timer_state == true):
@@ -16,6 +18,10 @@ func _process(delta):
 
 		text = "%02d : %02d : %03d" % [minutes, seconds, milliseconds]
 		set_score(int(minutes * 10))
+
+### PUBLIC ###
+func start():
+	timer_state = true
 
 func set_score(new_value):
 	return
