@@ -54,6 +54,7 @@ var velocity: Vector2 = Vector2()
 var knockback: Vector2 = Vector2()
 var last_step = -1
 var is_falling: bool = false
+var hole_damage: int = 10
 onready var player_size: Vector2 = $Skin.get_sprite_frames().get_frame("idle", 0).get_size()
 
 # NODES
@@ -368,7 +369,9 @@ func _on_FallDuration_timeout():
 	is_falling = false
 	self.rotation_degrees = 0
 	self.scale = Vector2(5, 5)
-	self.damage(MAX_HEALTH, Vector2.ZERO)
+	self.damage(hole_damage, Vector2.ZERO)
+	print(get_viewport().get_visible_rect().size)
+	position = Vector2(get_viewport().get_visible_rect().size.x / 2, get_viewport().get_visible_rect().size.y / 1.15)
 
 func _on_PortalSpearAttackTimer_timeout():
 	can_portal_spear_attack = true
