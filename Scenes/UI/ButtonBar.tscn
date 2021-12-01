@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scenes/UI/AbilityButton.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/UI/Assets/icons/fire-ring.png" type="Texture" id=2]
@@ -6,6 +6,79 @@
 [ext_resource path="res://Scenes/UI/Assets/icons/grasping-claws.png" type="Texture" id=4]
 [ext_resource path="res://Scenes/UI/ButtonBar.gd" type="Script" id=5]
 [ext_resource path="res://Scenes/UI/Assets/spellBar.png" type="Texture" id=6]
+[ext_resource path="res://Scenes/UI/Assets/flash.png" type="Texture" id=7]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform float range : hint_range(0.0, 1.0);
+
+void fragment() {
+	COLOR.a = clamp(texture(TEXTURE, UV).a - (range / 1.0), 0.0, 1.0);
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/range = 1.0
+
+[sub_resource type="Animation" id=3]
+resource_name = "spellFlash"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:shader_range")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "update_shader_range"
+}, {
+"args": [  ],
+"method": "update_shader_range"
+}, {
+"args": [  ],
+"method": "update_shader_range"
+}, {
+"args": [  ],
+"method": "update_shader_range"
+}, {
+"args": [  ],
+"method": "update_shader_range"
+}, {
+"args": [  ],
+"method": "update_shader_range"
+}, {
+"args": [  ],
+"method": "update_shader_range"
+}, {
+"args": [  ],
+"method": "update_shader_range"
+}, {
+"args": [  ],
+"method": "update_shader_range"
+}, {
+"args": [  ],
+"method": "update_shader_range"
+}, {
+"args": [  ],
+"method": "update_shader_range"
+} ]
+}
 
 [node name="ButtonBar" type="HBoxContainer"]
 anchor_left = 0.5
@@ -30,6 +103,11 @@ margin_right = 133.0
 texture_normal = ExtResource( 3 )
 cooldown = 5.0
 
+[node name="FirstSpellFlash" type="Sprite" parent="."]
+material = SubResource( 2 )
+position = Vector2( 101.5, 30 )
+texture = ExtResource( 7 )
+
 [node name="SecondSpellButton" parent="." instance=ExtResource( 1 )]
 margin_left = 138.0
 margin_right = 202.0
@@ -46,6 +124,10 @@ cooldown = 0.5
 position = Vector2( 136.25, 30 )
 scale = Vector2( 0.930645, 1 )
 texture = ExtResource( 6 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+reset_on_save = false
+anims/spellFlash = SubResource( 3 )
 
 [connection signal="autohit" from="." to="AutohitButton" method="_on_spell"]
 [connection signal="first_spell" from="." to="FirstSpellButton" method="_on_spell"]
