@@ -1,6 +1,8 @@
 extends Node2D
 
 ################################################################################
+# SIGNALS
+signal room_cleared()
 
 # ROOMS NODES
 onready var rooms = [
@@ -39,6 +41,7 @@ func handle_door_z_index(player_pos: Vector2) -> void:
 
 func next_room() -> int:
 	if (current_room_id + 1 < rooms.size()):
+		emit_signal("room_cleared")
 		current_room_instance.queue_free()
 		current_room_id += 1
 		current_room_instance = rooms[current_room_id].instance()

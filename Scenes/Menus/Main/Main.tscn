@@ -131,7 +131,7 @@ margin_top = 100.0
 margin_right = 2020.0
 margin_bottom = 1176.0
 mouse_filter = 2
-color = Color( 0, 0, 0, 1 )
+color = Color( 0, 0, 0, 0 )
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="pressed" from="HBoxContainer/CenterContainerLeft/VBoxContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
