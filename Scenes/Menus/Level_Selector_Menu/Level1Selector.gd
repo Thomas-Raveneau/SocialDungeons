@@ -7,7 +7,7 @@ extends TextureButton
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	get_node("Label").set_text('Current highscore for Dungeon1: ' + str(Save.currentHighScore))
+#	$Score.set_text(str(Save.currentHighScore))
 	pass # Replace with function body.
 
 

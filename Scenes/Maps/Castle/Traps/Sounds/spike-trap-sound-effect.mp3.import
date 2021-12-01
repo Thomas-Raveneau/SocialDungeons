@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/spike-trap-sound-effect.mp3-1422a31e185b701aa95081623d8a4c4c.mp3str"
+
+[deps]
+
+source_file="res://Scenes/Maps/Castle/Traps/Sounds/spike-trap-sound-effect.mp3"
+dest_files=[ "res://.import/spike-trap-sound-effect.mp3-1422a31e185b701aa95081623d8a4c4c.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Scenes/Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Maps/Main.gd" type="Script" id=2]
@@ -11,17 +11,122 @@
 [ext_resource path="res://Scenes/Menus/Main/Assets/button-ui-quit1.png" type="Texture" id=9]
 [ext_resource path="res://Scenes/Menus/Main/Assets/button-ui-state0.png" type="Texture" id=10]
 [ext_resource path="res://Scenes/Menus/Main/Assets/button-ui-state1.png" type="Texture" id=11]
+[ext_resource path="res://Scenes/Systems/FX/CameraShake.gd" type="Script" id=12]
+[ext_resource path="res://Scenes/Systems/UpgradeSkill.gd" type="Script" id=13]
+[ext_resource path="res://Scenes/Menus/Level_Selector_Menu/Assets/selector_sprite_selected1.png" type="Texture" id=14]
+[ext_resource path="res://Scenes/Menus/Level_Selector_Menu/Assets/selector_sprite_selected2.png" type="Texture" id=15]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="Animation" id=1]
+resource_name = "fade_to_black"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Node2D/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "fade_to_normal"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Node2D/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "fade_to_normal_start"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Node2D/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "start_count"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Node2D/CountingStart:custom_fonts/font:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5, 2, 2.5, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 1, 150, 1, 150, 1, 150, 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Node2D/CountingStart:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1, 2, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 2,
+"values": [ "3", "2", "1", "" ]
+}
+
+[sub_resource type="DynamicFont" id=5]
+size = 1
+font_data = ExtResource( 7 )
+
+[sub_resource type="DynamicFont" id=6]
 size = 24
 use_filter = true
 font_data = ExtResource( 7 )
 
+[sub_resource type="Shader" id=7]
+code = "shader_type canvas_item;
+
+uniform float blur_amount : hint_range(0, 5);
+
+void fragment() {
+	COLOR = textureLod(SCREEN_TEXTURE, SCREEN_UV, blur_amount);
+}
+"
+
+[sub_resource type="ShaderMaterial" id=8]
+shader = SubResource( 7 )
+shader_param/blur_amount = 1.621
+
 [node name="Main" type="Node2D"]
 script = ExtResource( 2 )
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+pause_mode = 2
+anims/fade_to_black = SubResource( 1 )
+anims/fade_to_normal = SubResource( 2 )
+anims/fade_to_normal_start = SubResource( 3 )
+
+[node name="StartCountingAnimation" type="AnimationPlayer" parent="."]
+anims/start_count = SubResource( 4 )
+
 [node name="Node2D" type="Node2D" parent="."]
-position = Vector2( 950, 630.739 )
+position = Vector2( 950, 630 )
 z_index = 3
 
 [node name="HealthBar" parent="Node2D" instance=ExtResource( 3 )]
@@ -34,13 +139,37 @@ margin_top = 492.146
 margin_right = 118.794
 margin_bottom = 492.146
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="ColorRect" type="ColorRect" parent="Node2D"]
+margin_left = -950.0
+margin_top = -630.739
+margin_right = 970.0
+margin_bottom = 449.261
+mouse_filter = 2
+color = Color( 0, 0, 0, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CountingStart" type="Label" parent="Node2D"]
+margin_left = -950.0
+margin_top = -630.0
+margin_right = 970.0
+margin_bottom = 450.0
+custom_fonts/font = SubResource( 5 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CameraScene" type="Camera2D" parent="."]
 position = Vector2( 960, 540 )
 current = true
 limit_left = 0
 limit_top = 0
 limit_right = 1920
 limit_bottom = 1080
+script = ExtResource( 12 )
 
 [node name="Spawn" type="Node2D" parent="."]
 position = Vector2( 960, 1000 )
@@ -52,7 +181,7 @@ margin_left = 1472.82
 margin_top = 3.54034
 margin_right = 1766.83
 margin_bottom = 55.5403
-custom_fonts/normal_font = SubResource( 1 )
+custom_fonts/normal_font = SubResource( 6 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 962.58, 498.929 )
@@ -61,7 +190,7 @@ position = Vector2( 962.58, 498.929 )
 position = Vector2( 960, 1000 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = 100
+layer = 8
 
 [node name="Pause" type="Control" parent="CanvasLayer"]
 pause_mode = 2
@@ -101,6 +230,77 @@ margin_bottom = 562.0
 texture_normal = ExtResource( 9 )
 texture_pressed = ExtResource( 8 )
 
+[node name="UpgradeSkill" type="Node2D" parent="CanvasLayer"]
+pause_mode = 2
+visible = false
+script = ExtResource( 13 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="CanvasLayer/UpgradeSkill"]
+layer = 9
+
+[node name="BlurFilter" type="ColorRect" parent="CanvasLayer/UpgradeSkill/CanvasLayer"]
+visible = false
+modulate = Color( 0, 0, 0, 0.690196 )
+material = SubResource( 8 )
+margin_right = 1920.0
+margin_bottom = 1080.0
+color = Color( 1, 1, 1, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="CanvasLayer/UpgradeSkill"]
+layer = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UpgradeSkill/CanvasLayer2"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.531
+anchor_bottom = 0.5
+margin_left = -840.0
+margin_top = -40.0
+margin_right = 792.48
+margin_bottom = 260.0
+rect_pivot_offset = Vector2( 10, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UpgradeSpell1" type="TextureButton" parent="CanvasLayer/UpgradeSkill/CanvasLayer2/HBoxContainer"]
+margin_right = 420.0
+margin_bottom = 300.0
+texture_normal = ExtResource( 14 )
+texture_hover = ExtResource( 15 )
+
+[node name="UpgradeSpell2" type="TextureButton" parent="CanvasLayer/UpgradeSkill/CanvasLayer2/HBoxContainer"]
+margin_left = 424.0
+margin_right = 844.0
+margin_bottom = 300.0
+texture_normal = ExtResource( 14 )
+texture_hover = ExtResource( 15 )
+
+[node name="UpgradeSpell3" type="TextureButton" parent="CanvasLayer/UpgradeSkill/CanvasLayer2/HBoxContainer"]
+margin_left = 848.0
+margin_right = 1268.0
+margin_bottom = 300.0
+texture_normal = ExtResource( 14 )
+texture_hover = ExtResource( 15 )
+
+[node name="UpgradeSpell4" type="TextureButton" parent="CanvasLayer/UpgradeSkill/CanvasLayer2/HBoxContainer"]
+margin_left = 1272.0
+margin_right = 1692.0
+margin_bottom = 300.0
+texture_normal = ExtResource( 14 )
+texture_hover = ExtResource( 15 )
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="animation_finished" from="StartCountingAnimation" to="." method="_on_StartCountingAnimation_animation_finished"]
+[connection signal="room_cleared" from="Castle" to="CanvasLayer/UpgradeSkill" method="_on_Castle_room_cleared"]
 [connection signal="hp_changed" from="Player" to="Node2D/HealthBar" method="_on_Player_hp_changed"]
 [connection signal="pressed" from="CanvasLayer/Pause/VBoxContainer/ResumePauseButton" to="CanvasLayer/Pause" method="_on_ResumePauseButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/Pause/VBoxContainer/QuitPauseButton" to="CanvasLayer/Pause" method="_on_QuitPauseButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/UpgradeSkill/CanvasLayer2/HBoxContainer/UpgradeSpell1" to="CanvasLayer/UpgradeSkill" method="_on_UpgradeSpell1_pressed"]
+[connection signal="pressed" from="CanvasLayer/UpgradeSkill/CanvasLayer2/HBoxContainer/UpgradeSpell2" to="CanvasLayer/UpgradeSkill" method="_on_UpgradeSpell2_pressed"]
+[connection signal="pressed" from="CanvasLayer/UpgradeSkill/CanvasLayer2/HBoxContainer/UpgradeSpell3" to="CanvasLayer/UpgradeSkill" method="_on_UpgradeSpell3_pressed"]
+[connection signal="pressed" from="CanvasLayer/UpgradeSkill/CanvasLayer2/HBoxContainer/UpgradeSpell4" to="CanvasLayer/UpgradeSkill" method="_on_UpgradeSpell4_pressed"]

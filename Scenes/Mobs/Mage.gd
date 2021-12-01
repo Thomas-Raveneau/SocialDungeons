@@ -80,11 +80,14 @@ func _handle_collision():
 		if hitbox.disabled or !node:
 			continue
 		if get_tree().get_nodes_in_group("projectile").has(node.collider):
+			$DamageTimer.start()
+			animation.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
 			take_damage(node.collider.DAMAGE, node.collider.orientation)
 			node.collider.destroy()
 
 func _handle_death_animation() -> void:
 	hitbox.disabled = true
+	$DeathSound.play()	
 	animation.play("death")
 
 func _shoot_fireball():
@@ -137,3 +140,8 @@ func _on_Animation_animation_finished():
 	elif animation.get_animation() == "death":
 		is_attacking = false
 		_handle_death()
+
+
+func _on_DamageTimer_timeout() -> void:
+	animation.self_modulate = Color(1, 1, 1)
+	pass # Replace with function body.

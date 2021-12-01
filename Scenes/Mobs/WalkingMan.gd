@@ -68,6 +68,14 @@ func _handle_collision():
 			continue
 		if get_tree().get_nodes_in_group("player").has(node.collider) and can_attack:
 			_handle_attack(node)
+<<<<<<< HEAD
+=======
+		if get_tree().get_nodes_in_group("projectile").has(node.collider):
+			$DamageTimer.start()
+			animation.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
+			take_damage(node.collider.DAMAGE, node.collider.orientation)
+			node.collider.destroy()
+>>>>>>> master
 
 func _handle_attack(node):
 	if can_attack:
@@ -84,6 +92,7 @@ func _handle_death() -> void:
 	queue_free()
 
 func _handle_death_animation() -> void:
+	$DeathSound.play()
 	_handle_death()
 
 func _handle_damage_animation(damage_orientation : Vector2) -> void:
@@ -119,5 +128,15 @@ func _on_DamageTimer_timeout():
 	skin.self_modulate = Color(1, 1, 1)
 	is_taking_damage = false
 
+<<<<<<< HEAD
 func _on_DoAttackTimer_timeout():
 	is_attacking = false
+=======
+func _on_HitTimer_timeout():
+	can_hit = true
+	hit_sprite.visible = true
+
+func _on_DamageTimer_timeout() -> void:
+	animation.self_modulate = Color(1, 1, 1)
+
+>>>>>>> master

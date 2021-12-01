@@ -79,6 +79,7 @@ func _handle_collision() -> void:
 		if get_tree().get_nodes_in_group("player").has(node.collider):
 			_handle_hit_attack(node)
 		if get_tree().get_nodes_in_group("projectile").has(node.collider):
+			animation.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
 			take_damage(node.collider.DAMAGE, node.collider.orientation)
 			node.collider.destroy()
 

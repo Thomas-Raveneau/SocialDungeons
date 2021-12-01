@@ -6,7 +6,7 @@
 [ext_resource path="res://Scenes/Maps/Castle/Rooms/Door.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Maps/Castle/Rooms/Room_01.gd" type="Script" id=5]
 [ext_resource path="res://Scenes/Maps/Castle/Traps/FloorSpikes.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scenes/Mobs/WalkingMan.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Maps/Castle/Traps/Hole.tscn" type="PackedScene" id=7]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 64, 64, 0, 64, 0, 43.8283, 64, 43.8283 )
@@ -187,6 +187,7 @@ points = PoolVector2Array( 0, 107.989, 64, 107.989, 64, 128, 0, 128 )
 
 [node name="Room_01" type="Node2D"]
 script = ExtResource( 5 )
+MOB_AMOUNT = 0
 
 [node name="Floor" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
@@ -199,7 +200,6 @@ tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 
 tile_set = ExtResource( 3 )
 cell_tile_origin = 2
 cell_y_sort = true
-show_collision = true
 collision_layer = 16
 collision_mask = 3
 format = 1
@@ -215,7 +215,6 @@ z_index = 2
 tile_set = SubResource( 8 )
 cell_tile_origin = 2
 cell_y_sort = true
-show_collision = true
 collision_layer = 16
 collision_mask = 3
 format = 1
@@ -275,6 +274,9 @@ position = Vector2( 1056, 288 )
 
 [node name="FloorSpikes16" parent="Traps" instance=ExtResource( 6 )]
 position = Vector2( 864, 288 )
+
+[node name="Hole" parent="Traps" instance=ExtResource( 7 )]
+position = Vector2( 160, 224 )
 
 [node name="MobsSpawns" type="Node2D" parent="."]
 
