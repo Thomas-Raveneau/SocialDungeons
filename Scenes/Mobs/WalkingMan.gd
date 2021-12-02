@@ -10,6 +10,8 @@ export var HIT_COOLDOWN : int = 0
 onready var hit_sprite : Sprite = $HitSprite
 onready var hit_timer : Timer = $HitTimer
 var can_hit : bool = true
+var current_target = null
+var saved_move_direction: Vector2 = Vector2(0, 0)
 
 # ANIMATION
 onready var animation = $AnimatedSprite
@@ -19,6 +21,7 @@ onready var animation = $AnimatedSprite
 func _ready():
 	._ready()
 	hit_timer.wait_time = HIT_COOLDOWN
+	KNOCKBACK_FORCE = 60
 
 func _physics_process(_delta):
 	if is_alive:
@@ -33,6 +36,8 @@ func _handle_movement():
 	velocity = move_and_slide(velocity)
 
 func _handle_flip():
+	if ($DamageTimer.time_left > 0):
+		yield($DamageTimer, "timeout")
 	if (velocity.x < 0 and !animation.flip_h):
 		animation.flip_h = true
 	if (velocity.x > 0 and animation.flip_h):
@@ -54,6 +59,8 @@ func _handle_collision():
 			_handle_attack(node)
 		if get_tree().get_nodes_in_group("projectile").has(node.collider):
 			$DamageTimer.start()
+			saved_move_direction = velocity
+			target = null
 			animation.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
 			take_damage(node.collider.DAMAGE, node.collider.orientation)
 			node.collider.destroy()
@@ -74,6 +81,7 @@ func _on_DetectionArea_body_entered(body):
 	players_list = get_tree().get_nodes_in_group("player")
 	if players_list.has(body):
 		target = players_list[players_list.find(body)]
+		current_target = target
 
 func _on_DetectionArea_body_exited(body):
 	if body == target:
@@ -85,4 +93,8 @@ func _on_HitTimer_timeout():
 
 func _on_DamageTimer_timeout() -> void:
 	animation.self_modulate = Color(1, 1, 1)
+	velocity = saved_move_direction
+	target = current_target
+
+
 

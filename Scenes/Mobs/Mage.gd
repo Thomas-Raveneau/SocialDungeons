@@ -10,6 +10,7 @@ var in_range_of_attack : bool = false
 var can_attack : bool = true
 var is_attacking  : bool = false
 var is_dodging : bool = false
+var knockback : Vector2 = Vector2(0, 0)
 
 export var ATTACK_COOLDOWN : int = 0
 onready var attack_timer : Timer = $AttackTimer
@@ -29,6 +30,7 @@ onready var spawn_point : Node2D = $SpawnPoint
 func _ready():
 	attack_timer.wait_time = ATTACK_COOLDOWN
 	attack_timer.start()
+	KNOCKBACK_FORCE = 300
 
 func _physics_process(_delta):
 	if is_alive:
@@ -79,6 +81,7 @@ func _handle_collision():
 			continue
 		if get_tree().get_nodes_in_group("projectile").has(node.collider):
 			$DamageTimer.start()
+			velocity = Vector2(0, 0)
 			animation.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
 			take_damage(node.collider.DAMAGE, node.collider.orientation)
 			node.collider.destroy()

@@ -72,15 +72,15 @@ animations = [ {
 "name": "walk",
 "speed": 17.0
 }, {
-"frames": [ ExtResource( 32 ), ExtResource( 33 ), ExtResource( 36 ), ExtResource( 37 ), ExtResource( 38 ), ExtResource( 35 ), ExtResource( 41 ), ExtResource( 40 ), ExtResource( 42 ), ExtResource( 39 ), ExtResource( 31 ), ExtResource( 34 ) ],
-"loop": false,
-"name": "attack",
-"speed": 15.0
-}, {
 "frames": [ ExtResource( 57 ), ExtResource( 58 ), ExtResource( 46 ), ExtResource( 44 ), ExtResource( 47 ), ExtResource( 56 ), ExtResource( 48 ), ExtResource( 49 ), ExtResource( 45 ), ExtResource( 51 ), ExtResource( 50 ), ExtResource( 52 ), ExtResource( 54 ), ExtResource( 53 ), ExtResource( 55 ) ],
 "loop": false,
 "name": "death",
 "speed": 14.0
+}, {
+"frames": [ ExtResource( 32 ), ExtResource( 33 ), ExtResource( 36 ), ExtResource( 37 ), ExtResource( 38 ), ExtResource( 35 ), ExtResource( 41 ), ExtResource( 40 ), ExtResource( 42 ), ExtResource( 39 ), ExtResource( 31 ), ExtResource( 34 ) ],
+"loop": false,
+"name": "attack",
+"speed": 15.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=2]
@@ -115,7 +115,7 @@ ATTACK_COOLDOWN = 1
 [node name="Animation" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "idle"
-frame = 7
+frame = 8
 playing = true
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
@@ -134,7 +134,6 @@ collision_layer = 0
 shape = SubResource( 4 )
 
 [node name="DetectionArea" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
