@@ -7,8 +7,8 @@ export var SPEED : float = 450
 var velocity : Vector2 = Vector2.ZERO
 
 # PROJECTILE
-onready var FIREBALL = preload("res://Scenes/Mobs/Projectile/FireBall.tscn")
-onready var NOVA = preload("res://Scenes/Mobs/Projectile/Nova.tscn")
+onready var FIREBALL = preload("res://Scenes/Projectile/FireBall.tscn")
+onready var NOVA = preload("res://Scenes/Projectile/Nova.tscn")
 
 # ATTACK
 var in_range_of_attack : bool = false

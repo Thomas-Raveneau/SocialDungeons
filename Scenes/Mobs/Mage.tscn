@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=2]
+[gd_scene load_steps=78 format=2]
 
 [ext_resource path="res://Scenes/Mobs/Assets/Satyr/Walking/Satyr_01_Walking_009.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Mobs/Assets/Satyr/Idle/Satyr_01_Idle_007.png" type="Texture" id=2]
@@ -58,6 +58,19 @@
 [ext_resource path="res://Scenes/Mobs/Assets/Satyr/Dying/Satyr_01_Dying_005.png" type="Texture" id=56]
 [ext_resource path="res://Scenes/Mobs/Assets/Satyr/Dying/Satyr_01_Dying_000.png" type="Texture" id=57]
 [ext_resource path="res://Scenes/Mobs/Assets/Satyr/Dying/Satyr_01_Dying_001.png" type="Texture" id=58]
+[ext_resource path="res://Scenes/Mobs/Sounds/mixkit-boxer-getting-hit-2055.wav" type="AudioStream" id=59]
+[ext_resource path="res://Scenes/Mobs/Assets/Satyr/Hurt/Satyr_01_Hurt_000.png" type="Texture" id=60]
+[ext_resource path="res://Scenes/Mobs/Assets/Satyr/Hurt/Satyr_01_Hurt_005.png" type="Texture" id=61]
+[ext_resource path="res://Scenes/Mobs/Assets/Satyr/Hurt/Satyr_01_Hurt_011.png" type="Texture" id=62]
+[ext_resource path="res://Scenes/Mobs/Assets/Satyr/Hurt/Satyr_01_Hurt_004.png" type="Texture" id=63]
+[ext_resource path="res://Scenes/Mobs/Assets/Satyr/Hurt/Satyr_01_Hurt_003.png" type="Texture" id=64]
+[ext_resource path="res://Scenes/Mobs/Assets/Satyr/Hurt/Satyr_01_Hurt_006.png" type="Texture" id=65]
+[ext_resource path="res://Scenes/Mobs/Assets/Satyr/Hurt/Satyr_01_Hurt_001.png" type="Texture" id=66]
+[ext_resource path="res://Scenes/Mobs/Assets/Satyr/Hurt/Satyr_01_Hurt_002.png" type="Texture" id=67]
+[ext_resource path="res://Scenes/Mobs/Assets/Satyr/Hurt/Satyr_01_Hurt_007.png" type="Texture" id=68]
+[ext_resource path="res://Scenes/Mobs/Assets/Satyr/Hurt/Satyr_01_Hurt_010.png" type="Texture" id=69]
+[ext_resource path="res://Scenes/Mobs/Assets/Satyr/Hurt/Satyr_01_Hurt_008.png" type="Texture" id=70]
+[ext_resource path="res://Scenes/Mobs/Assets/Satyr/Hurt/Satyr_01_Hurt_009.png" type="Texture" id=71]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -66,20 +79,25 @@ animations = [ {
 "name": "idle",
 "speed": 11.0
 }, {
-"frames": [ ExtResource( 8 ), ExtResource( 26 ), ExtResource( 14 ), ExtResource( 27 ), ExtResource( 23 ), ExtResource( 28 ), ExtResource( 25 ), ExtResource( 20 ), ExtResource( 7 ), ExtResource( 1 ), ExtResource( 21 ), ExtResource( 18 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 12 ), ExtResource( 13 ) ],
-"loop": true,
-"name": "walk",
-"speed": 17.0
+"frames": [ ExtResource( 57 ), ExtResource( 58 ), ExtResource( 46 ), ExtResource( 44 ), ExtResource( 47 ), ExtResource( 56 ), ExtResource( 48 ), ExtResource( 49 ), ExtResource( 45 ), ExtResource( 51 ), ExtResource( 50 ), ExtResource( 52 ), ExtResource( 54 ), ExtResource( 53 ), ExtResource( 55 ) ],
+"loop": false,
+"name": "death",
+"speed": 14.0
+}, {
+"frames": [ ExtResource( 60 ), ExtResource( 66 ), ExtResource( 67 ), ExtResource( 64 ), ExtResource( 63 ), ExtResource( 61 ), ExtResource( 65 ), ExtResource( 68 ), ExtResource( 70 ), ExtResource( 71 ), ExtResource( 69 ), ExtResource( 62 ) ],
+"loop": false,
+"name": "hurt",
+"speed": 12.0
 }, {
 "frames": [ ExtResource( 32 ), ExtResource( 33 ), ExtResource( 36 ), ExtResource( 37 ), ExtResource( 38 ), ExtResource( 35 ), ExtResource( 41 ), ExtResource( 40 ), ExtResource( 42 ), ExtResource( 39 ), ExtResource( 31 ), ExtResource( 34 ) ],
 "loop": false,
 "name": "attack",
 "speed": 15.0
 }, {
-"frames": [ ExtResource( 57 ), ExtResource( 58 ), ExtResource( 46 ), ExtResource( 44 ), ExtResource( 47 ), ExtResource( 56 ), ExtResource( 48 ), ExtResource( 49 ), ExtResource( 45 ), ExtResource( 51 ), ExtResource( 50 ), ExtResource( 52 ), ExtResource( 54 ), ExtResource( 53 ), ExtResource( 55 ) ],
-"loop": false,
-"name": "death",
-"speed": 14.0
+"frames": [ ExtResource( 8 ), ExtResource( 26 ), ExtResource( 14 ), ExtResource( 27 ), ExtResource( 23 ), ExtResource( 28 ), ExtResource( 25 ), ExtResource( 20 ), ExtResource( 7 ), ExtResource( 1 ), ExtResource( 21 ), ExtResource( 18 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 12 ), ExtResource( 13 ) ],
+"loop": true,
+"name": "walk",
+"speed": 17.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=2]
@@ -95,6 +113,9 @@ radius = 2125.77
 [sub_resource type="CircleShape2D" id=5]
 radius = 3618.67
 
+[sub_resource type="CircleShape2D" id=6]
+radius = 203.937
+
 [node name="Mage" type="KinematicBody2D" groups=[
 "mobs",
 ]]
@@ -105,16 +126,16 @@ script = ExtResource( 43 )
 __meta__ = {
 "_edit_group_": true
 }
-SPEED = 300
-DAMAGE = 20
-MAX_HEALTH = 10
+SPEED = 200.0
+DAMAGE = 5.0
+MAX_HEALTH = 45.0
 DODGE_SPEED = 250
 ATTACK_COOLDOWN = 1
 
 [node name="Animation" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
-animation = "idle"
-frame = 9
+animation = "hurt"
+frame = 11
 playing = true
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
@@ -139,10 +160,23 @@ collision_layer = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource( 5 )
 
+[node name="UnSplitArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UnSplitArea"]
+shape = SubResource( 6 )
+
 [node name="AttackTimer" type="Timer" parent="."]
+
+[node name="DamageTimer" type="Timer" parent="."]
+wait_time = 0.2
 
 [node name="SpawnPoint" type="Node2D" parent="."]
 position = Vector2( 149.84, -19.0273 )
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 59 )
 
 [connection signal="animation_finished" from="Animation" to="." method="_on_Animation_animation_finished"]
 [connection signal="body_entered" from="DodgeArea" to="." method="_on_DodgeArea_body_entered"]
@@ -151,4 +185,7 @@ position = Vector2( 149.84, -19.0273 )
 [connection signal="body_exited" from="RangeArea" to="." method="_on_RangeArea_body_exited"]
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_DetectionArea_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_DetectionArea_body_exited"]
+[connection signal="body_entered" from="UnSplitArea" to="." method="_on_UnSplitArea_body_entered"]
+[connection signal="body_exited" from="UnSplitArea" to="." method="_on_UnSplitArea_body_exited"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]
+[connection signal="timeout" from="DamageTimer" to="." method="_on_DamageTimer_timeout"]

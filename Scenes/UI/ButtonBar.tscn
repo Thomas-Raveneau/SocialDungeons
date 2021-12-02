@@ -126,7 +126,6 @@ scale = Vector2( 0.930645, 1 )
 texture = ExtResource( 6 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-reset_on_save = false
 anims/spellFlash = SubResource( 3 )
 
 [connection signal="autohit" from="." to="AutohitButton" method="_on_spell"]

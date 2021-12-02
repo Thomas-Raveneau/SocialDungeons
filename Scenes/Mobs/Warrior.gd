@@ -2,6 +2,9 @@ extends "res://Scenes/Mobs/AMonster.gd"
 
 ########################### VARIABLES ##########################################
 
+# MOVEMENT
+var velocity : Vector2 = Vector2.ZERO
+
 # COLLIDER
 onready var hitbox : CollisionShape2D = $Hitbox
 
@@ -36,8 +39,8 @@ func _physics_process(_delta) -> void:
 
 func _handle_movement() -> void:
 	velocity = Vector2.ZERO
-	if target and !is_attacking:
-		velocity = position.direction_to(target.position) * SPEED
+	if player and !is_attacking:
+		velocity = position.direction_to(player.position) * SPEED
 	elif is_dashing:
 		velocity = dash_vector * DASH_SPEED
 	velocity = move_and_slide(velocity)
@@ -46,11 +49,11 @@ func _handle_attack() -> void:
 	if in_range_of_attack and can_attack:
 		can_attack = false
 		is_attacking = true
-		dash_vector = position.direction_to(target.position).normalized()
+		dash_vector = position.direction_to(player.position).normalized()
 		animation.play("taunt")
 
 func _handle_flip() -> void:
-	if target and !is_attacking:
+	if player and !is_attacking:
 		if (velocity.x < 0 and !animation.flip_h):
 			animation.flip_h = true
 		if (velocity.x > 0 and animation.flip_h):
@@ -76,6 +79,7 @@ func _handle_collision() -> void:
 		if get_tree().get_nodes_in_group("player").has(node.collider):
 			_handle_hit_attack(node)
 		if get_tree().get_nodes_in_group("projectile").has(node.collider):
+			animation.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
 			take_damage(node.collider.DAMAGE, node.collider.orientation)
 			node.collider.destroy()
 
@@ -92,19 +96,19 @@ func take_damage(damage_amount : int, damage_orientation : Vector2) -> void:
 ######################### PRIVATE SIGNALS ######################################
 
 func _on_DetectionArea_body_entered(body) -> void:
-	if players_list.has(body):
-		target = players_list[players_list.find(body)]
+	if players.has(body):
+		player = players[players.find(body)]
 
 func _on_DetectionArea_body_exited(body) -> void:
-	if target == body:
-		target = null
+	if player == body:
+		player = null
 
 func _on_RangeArea_body_entered(body) -> void:
-	if target == body:
+	if player == body:
 		in_range_of_attack = true
 
 func _on_RangeArea_body_exited(body) -> void:
-	if target == body:
+	if player == body:
 		in_range_of_attack = false
 
 func _on_DashTimer_timeout() -> void:

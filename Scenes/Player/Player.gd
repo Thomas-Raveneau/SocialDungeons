@@ -19,18 +19,22 @@ export var KNOCKBACK_FORCE = 3
 # SPELLS STATS
 export var BASIC_ATTACK_SPEED: float = 15.0
 export var BASIC_ATTACK_DAMAGE: float = 5.0
-export var BASIC_ATTACK_COOLDOWN: float = 0.1
-export var PORTAL_SPEAR_ATTACK_DAMAGE: float = 5.0
-export var PORTAL_SPEAR_ATTACK_COOLDOWN: float = 1.0
+export var BASIC_ATTACK_COOLDOWN: float = 0.5
+export var PORTAL_SPEAR_ATTACK_DAMAGE: float = 30.0
+export var PORTAL_SPEAR_ATTACK_COOLDOWN: float = 3.0
+export var LIGHTNING_ATTACK_DAMAGE: float = 20.0
+export var LIGHTNING_ATTACK_COOLDOWN: float = 1.0
 
 # SPELLS TIMERS
 onready var basic_attack_timer: Timer = $BasicAttackTimer
 onready var portal_spear_attack_timer: Timer = $PortalSpearAttackTimer
+onready var lightning_attack_timer: Timer = $LightningAttackTimer
 
 # SPELLS UTILS
 var can_basic_attack: bool = true
 var can_portal_spear_attack: bool = true
 var current_portal_spear_attack = null
+var can_lightning_attack: bool = true
 
 # DAMAGE PARTICLE UTILS
 var damage_particle_dir = Vector2(0, -25)
@@ -51,6 +55,7 @@ var velocity: Vector2 = Vector2()
 var knockback: Vector2 = Vector2()
 var last_step = -1
 var is_falling: bool = false
+var hole_damage: int = 10
 onready var player_size: Vector2 = $Skin.get_sprite_frames().get_frame("idle", 0).get_size()
 
 # NODES
@@ -62,12 +67,15 @@ onready var dash_duration_timer: Timer = $DashDuration
 onready var dash_cooldown_timer: Timer = $DashCooldown
 onready var damage_animation_timer: Timer = $DamageAnimation
 onready var damage_sound: AudioStreamPlayer = $DamageSound
+onready var damage_particles: CPUParticles2D = $DamageParticles
 
 # SCENES
 var damage_particle = preload("res://Scenes/Player/DamageParticle.tscn")
 var step_particles = preload("res://Scenes/Particles/FootStep.tscn")
 var basic_attack = preload("res://Scenes/Player/Spells/BasicAttack.tscn")
+var flame_dash = preload("res://Scenes/Projectile/Flame.tscn")
 var portal_spear_attack = preload("res://Scenes/Player/Spells/PortalSpear.tscn")
+var lightning_attack = preload("res://Scenes/Player/Spells/Lightning.tscn")
 
 ################################################################################
 
@@ -78,8 +86,8 @@ func _ready() -> void:
 	dash_cooldown_timer.wait_time = DASH_COOLDOWN
 
 	basic_attack_timer.wait_time = BASIC_ATTACK_COOLDOWN
-
 	portal_spear_attack_timer.wait_time = PORTAL_SPEAR_ATTACK_COOLDOWN
+	lightning_attack_timer.wait_time = LIGHTNING_ATTACK_COOLDOWN
 	
 	_set_hp(HEALTH)
 
@@ -96,7 +104,7 @@ func _physics_process(_delta: float) -> void:
 		velocity = move_and_slide(velocity * 100)
 	else:
 		velocity = move_and_slide(knockback * 100)
-		camera.add_trauma(0.05)
+		camera.add_trauma(0.03)
 	
 	_handle_collisions()
 
@@ -142,8 +150,9 @@ func _handle_collisions() -> void :
 	for i in slide_count:
 		var collided_node = get_slide_collision(i)
 		if (get_tree().get_nodes_in_group("projectile").has(collided_node.collider)):
-			damage(1, collided_node.collider.orientation)
-			collided_node.collider.destroy()
+			pass
+#			damage(1, collided_node.collider.orientation)
+#			collided_node.collider.destroy()
 
 func _dash() -> void:
 	can_dash = false
@@ -172,6 +181,8 @@ func _handle_spells_inputs() -> void:
 		_basic_attack()
 		emit_signal("spell", 1, BASIC_ATTACK_COOLDOWN);
 	_handle_portal_spear_attack_inputs()
+	if (Input.is_action_just_pressed("action_spêll_03")):
+		_lightning_attack()
 
 func _basic_attack() -> void:
 	if (!can_basic_attack):
@@ -185,6 +196,7 @@ func _basic_attack() -> void:
 	get_parent().add_child(new_axe)
 	can_basic_attack = false
 	basic_attack_timer.start()
+	$ThrowAxe.play()
 
 func _handle_portal_spear_attack_inputs() -> void:
 	if (!can_portal_spear_attack):
@@ -220,6 +232,21 @@ func _portal_spear_attacking():
 	portal_spear_attack_timer.start()
 	current_portal_spear_attack = null
 
+func _lightning_attack():
+	if (!can_lightning_attack):
+		return
+	
+	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
+	var lightning_dir: Vector2 = (mouse_pos - global_position).normalized()
+	var new_lightning = lightning_attack.instance()
+	
+	new_lightning.init_params(LIGHTNING_ATTACK_DAMAGE, Vector2.ZERO, lightning_dir)
+	add_child(new_lightning)
+	
+	can_lightning_attack = false
+	lightning_attack_timer.start()
+	
+
 func _handle_inputs() -> void:
 	velocity = Vector2()
 	if (is_alive and !is_taking_damage and !is_falling):
@@ -248,9 +275,10 @@ func _handle_animations() -> void:
 func _handle_death() -> int:
 	if (is_alive):
 		is_alive = false
-		skin.stop()
-		skin.rotation_degrees = 90
-		
+		skin.play("death")
+#		skin.rotation_degrees = 90
+		$DeathSound.play()
+		$WalkSound.stop()
 		return 0
 	else:
 		return -1
@@ -266,6 +294,8 @@ func _handle_damage_animation(damage_amount: int, damage_dir: Vector2) -> void:
 	damage_particle_dir, 
 	damage_particle_duration, 
 	damage_particle_spread, false)
+	
+	damage_particles.emitting = true
 
 func _handle_invicibility() -> void:
 	invicibility_timer.start()
@@ -351,7 +381,17 @@ func _on_FallDuration_timeout():
 	is_falling = false
 	self.rotation_degrees = 0
 	self.scale = Vector2(5, 5)
-	self.damage(MAX_HEALTH, Vector2.ZERO)
+	self.damage(hole_damage, Vector2.ZERO)
+	print(get_viewport().get_visible_rect().size)
+	position = Vector2(get_viewport().get_visible_rect().size.x / 2, get_viewport().get_visible_rect().size.y / 1.15)
 
 func _on_PortalSpearAttackTimer_timeout():
 	can_portal_spear_attack = true
+
+func _on_LightningAttackTimer_timeout():
+	can_lightning_attack = true
+
+func _on_Skin_animation_finished():
+	if (skin.animation == "death"):
+		skin.frame = 5
+		skin.stop()

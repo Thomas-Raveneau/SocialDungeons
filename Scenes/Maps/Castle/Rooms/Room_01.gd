@@ -23,7 +23,7 @@ onready var mobs_spawns = [
 
 # LEVEL DIFFICULTY
 export var MOB_AMOUNT: int = 8
-export var SPAWN_DELAY: float = 5.0
+export var SPAWN_DELAY: float = 3.0
 
 # UTILS
 var mob_index: int = 0
@@ -72,6 +72,5 @@ func _on_MobSpawnDelay_timeout():
 
 func _on_monster_death():
 	dead_mobs += 1
-	
 	if (dead_mobs == MOB_AMOUNT):
 		open_door()
