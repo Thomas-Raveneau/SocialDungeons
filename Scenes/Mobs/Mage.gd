@@ -58,7 +58,7 @@ func _handle_movement():
 	velocity = move_and_slide(velocity)
 
 func _handle_attack():
-	if in_range_of_attack and can_attack and !is_dodging:
+	if in_range_of_attack and can_attack and !is_dodging and !is_taking_damage:
 		is_attacking = true
 		can_attack = false
 		attack_timer.start()
@@ -112,8 +112,9 @@ func _handle_damage_animation(damage_orientation : Vector2) -> void:
 #	$DamageTimer.start()
 	animation.play("hurt")
 	animation.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
-	knockback = damage_orientation.normalized()
+	knockback = Vector2.ZERO
 	is_taking_damage = true
+	print("BLABLA")
 
 ####################### PUBLIC METHODS #########################################
 
@@ -158,15 +159,17 @@ func _on_AttackTimer_timeout():
 	can_attack = true
 
 func _on_Animation_animation_finished():
-	if animation.get_animation() == "attack":
+	print("ANIMATION END " + animation.get_animation())
+	if animation.get_animation() == "hurt":
+		animation.self_modulate = Color(1, 1, 1)
+		is_taking_damage = false
+		print("END DAMAGE")
+	elif animation.get_animation() == "attack":
 		is_attacking = false
 		_shoot_fireball()
 	elif animation.get_animation() == "death":
 		is_attacking = false
 		_handle_death()
-	elif animation.get_animation() == "hurt":
-		animation.self_modulate = Color(1, 1, 1)
-		is_taking_damage = false
 
 func _on_DamageTimer_timeout() -> void:
 	pass
