@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Scenes/Maps/Castle/Tilesets/Floor.tres" type="TileSet" id=1]
 [ext_resource path="res://Scenes/Maps/Castle/Assets/tileset_castle.png" type="Texture" id=2]
@@ -7,7 +7,6 @@
 [ext_resource path="res://Scenes/Maps/Castle/Rooms/Room_01.gd" type="Script" id=5]
 [ext_resource path="res://Scenes/Maps/Castle/Traps/FloorSpikes.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/Maps/Castle/Traps/Hole.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Scenes/Mobs/Mage.tscn" type="PackedScene" id=8]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 64, 64, 0, 64, 0, 43.8283, 64, 43.8283 )
@@ -188,7 +187,6 @@ points = PoolVector2Array( 0, 107.989, 64, 107.989, 64, 128, 0, 128 )
 
 [node name="Room_01" type="Node2D"]
 script = ExtResource( 5 )
-MOB_AMOUNT = 0
 
 [node name="Floor" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
@@ -292,14 +290,5 @@ position = Vector2( 128, 896 )
 
 [node name="BottomRight" type="Position2D" parent="MobsSpawns"]
 position = Vector2( 1792, 896 )
-
-[node name="WalkingMan" parent="." instance=ExtResource( 7 )]
-position = Vector2( 235.717, 289.595 )
-
-[node name="Mage" parent="." instance=ExtResource( 8 )]
-position = Vector2( 352.453, 217.758 )
-
-[node name="Mage2" parent="." instance=ExtResource( 8 )]
-position = Vector2( 134.696, 727.356 )
 
 [connection signal="timeout" from="MobSpawnDelay" to="." method="_on_MobSpawnDelay_timeout"]
