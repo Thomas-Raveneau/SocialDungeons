@@ -94,6 +94,7 @@ func _handle_collision_level_2() -> void:
 		elif get_tree().get_nodes_in_group("mobs").has(node.collider) and !touch_target.has(node.collider):
 			node.collider.take_damage(DAMAGE, position - node.collider.position)
 			touch_target.push_back(node.collider)
+			destroy()
 
 func _handle_destroy_level_2() -> void:
 	if _get_distance_to_player() < 50.0 and direction_state == "toward_player":
@@ -115,4 +116,4 @@ func destroy() -> void:
 
 ### SIGNALS ###
 func _on_VisibilityNotifier2D_screen_exited():
-	pass # Replace with function body.
+	destroy()

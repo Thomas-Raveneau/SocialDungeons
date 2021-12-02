@@ -58,7 +58,7 @@ func _handle_movement():
 	velocity = move_and_slide(velocity)
 
 func _handle_attack():
-	if in_range_of_attack and can_attack and !is_dodging:
+	if in_range_of_attack and can_attack and !is_dodging and !is_taking_damage:
 		is_attacking = true
 		can_attack = false
 		attack_timer.start()
@@ -112,7 +112,8 @@ func _handle_damage_animation(damage_orientation : Vector2) -> void:
 #	$DamageTimer.start()
 	animation.play("hurt")
 	animation.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
-	knockback = damage_orientation.normalized()
+#	knockback = damage_orientation.normalized()
+	knockback = Vector2.ZERO
 	is_taking_damage = true
 
 ####################### PUBLIC METHODS #########################################

@@ -79,7 +79,7 @@ func _handle_collision():
 #			take_damage(node.collider.DAMAGE, node.collider.orientation)
 
 func _handle_attack(node):
-	if can_attack:
+	if can_attack and !is_taking_damage:
 		var sword = SWORD.instance()
 		sword.position = position + ((player.position - position).normalized() * 20)
 		sword.orientation = player.position - position
@@ -99,7 +99,8 @@ func _handle_death_animation() -> void:
 func _handle_damage_animation(damage_orientation : Vector2) -> void:
 	damage_timer.start()
 	skin.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
-	knockback = damage_orientation.normalized()
+#	knockback = damage_orientation.normalized()
+	knockback = Vector2.ZERO
 	is_taking_damage = true
 
 ### PUBLIC METHODS ###
