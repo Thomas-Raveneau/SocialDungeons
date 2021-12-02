@@ -4,13 +4,17 @@ extends "res://Scenes/Mobs/AMonster.gd"
 
 # MOVEMENT
 var velocity : Vector2 = Vector2.ZERO
+var knockback : Vector2 = Vector2.ZERO
 export var DODGE_SPEED = 200
+export var KNOCKBACK_FORCE = 200
+var mobs_view : Array
 
 # ACTION
 var in_range_of_attack : bool = false
 var can_attack : bool = true
 var is_attacking  : bool = false
 var is_dodging : bool = false
+var is_taking_damage  : bool = false
 
 export var ATTACK_COOLDOWN : int = 0
 onready var attack_timer : Timer = $AttackTimer
@@ -30,6 +34,7 @@ onready var spawn_point : Node2D = $SpawnPoint
 func _ready():
 	attack_timer.wait_time = ATTACK_COOLDOWN
 	attack_timer.start()
+	mobs_view.clear()
 
 func _physics_process(_delta):
 	if is_alive:
@@ -43,9 +48,13 @@ func _handle_movement():
 	velocity = Vector2.ZERO
 	if player:
 		if !in_range_of_attack:
-			velocity = position.direction_to(player.position) * SPEED
+			velocity = position.direction_to(player.position).normalized() * SPEED
 		elif is_dodging:
-			velocity = position.direction_to(player.position) * DODGE_SPEED * -1
+			velocity = position.direction_to(player.position).normalized() * DODGE_SPEED * -1
+		for i in mobs_view:
+			velocity = (velocity.normalized() + (position.direction_to(i.position) * -1)).normalized() * SPEED
+	if is_taking_damage:
+		velocity = knockback.normalized() * KNOCKBACK_FORCE
 	velocity = move_and_slide(velocity)
 
 func _handle_attack():
@@ -56,11 +65,13 @@ func _handle_attack():
 		animation.play("attack")
 
 func _handle_animation():
-	if (!is_attacking):
+	if (!is_attacking and !is_taking_damage):
 		if (velocity == Vector2(0, 0)):
 			animation.play("idle")
 		else:
 			animation.play("walk")
+	elif (is_taking_damage):
+		animation.play("hurt")
 
 func _handle_flip():
 	if player:
@@ -79,27 +90,40 @@ func _handle_collision():
 		var node = get_slide_collision(i)
 		if hitbox.disabled or !node:
 			continue
-		if get_tree().get_nodes_in_group("projectile").has(node.collider):
-			$DamageTimer.start()
-			animation.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
-			take_damage(node.collider.DAMAGE, node.collider.orientation)
-			node.collider.destroy()
+#		if get_tree().get_nodes_in_group("projectile").has(node.collider):
+#			take_damage(node.collider.DAMAGE, node.collider.orientation)
+#			node.collider.destroy()
 
 func _handle_death_animation() -> void:
 	hitbox.disabled = true
-	$DeathSound.play()	
+	$DeathSound.play()
 	animation.play("death")
 
 func _shoot_fireball():
-		var bullet = FIREBALL.instance()
-		bullet.position = spawn_point.get_global_position()
-		bullet.orientation = player.position - spawn_point.get_global_position()
-		get_parent().add_child(bullet)
+	var bullet = FIREBALL.instance()
+	bullet.position = spawn_point.get_global_position()
+	bullet.orientation = player.position - spawn_point.get_global_position()
+	get_parent().add_child(bullet)
 
 func _handle_death() -> void:
 	queue_free()
 
+func _handle_damage_animation(damage_orientation : Vector2) -> void:
+#	$DamageTimer.start()
+	animation.play("hurt")
+	animation.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
+	knockback = damage_orientation.normalized()
+	is_taking_damage = true
+
 ####################### PUBLIC METHODS #########################################
+
+func take_damage(damage_amount : int, damage_orientation : Vector2) -> void:
+	health = health - damage_amount
+	if (health <= 0):
+		is_alive = false
+		_handle_death_animation()
+	else:
+		_handle_damage_animation(damage_orientation)
 
 ######################## PRIVATE SIGNALS #######################################
 
@@ -140,8 +164,19 @@ func _on_Animation_animation_finished():
 	elif animation.get_animation() == "death":
 		is_attacking = false
 		_handle_death()
-
+	elif animation.get_animation() == "hurt":
+		animation.self_modulate = Color(1, 1, 1)
+		is_taking_damage = false
 
 func _on_DamageTimer_timeout() -> void:
+	pass
 	animation.self_modulate = Color(1, 1, 1)
-	pass # Replace with function body.
+	is_taking_damage = false
+
+func _on_UnSplitArea_body_entered(body):
+	if get_tree().get_nodes_in_group("mobs").has(body):
+		mobs_view.push_back(body)
+
+func _on_UnSplitArea_body_exited(body):
+	if mobs_view.has(body):
+		mobs_view.erase(body)

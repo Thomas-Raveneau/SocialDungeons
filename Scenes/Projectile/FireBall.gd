@@ -16,6 +16,12 @@ func _handle_movement():
 
 func _handle_collision():
 	._handle_wall_collision()
+	var slide_count = get_slide_count()
+	for i in slide_count:
+		var collided_node = get_slide_collision(i)
+		if (get_tree().get_nodes_in_group("player").has(collided_node.collider)):
+			collided_node.collider.damage(DAMAGE, orientation)
+			destroy()
 
 ############################# PRIVATE SIGNALS ##################################
 

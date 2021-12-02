@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=2]
+[gd_scene load_steps=78 format=2]
 
 [ext_resource path="res://Scenes/Mobs/Assets/Satyr/Walking/Satyr_01_Walking_009.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Mobs/Assets/Satyr/Idle/Satyr_01_Idle_007.png" type="Texture" id=2]
@@ -59,6 +59,18 @@
 [ext_resource path="res://Scenes/Mobs/Assets/Satyr/Dying/Satyr_01_Dying_000.png" type="Texture" id=57]
 [ext_resource path="res://Scenes/Mobs/Assets/Satyr/Dying/Satyr_01_Dying_001.png" type="Texture" id=58]
 [ext_resource path="res://Scenes/Mobs/Sounds/mixkit-boxer-getting-hit-2055.wav" type="AudioStream" id=59]
+[ext_resource path="res://Scenes/Mobs/Assets/Satyr/Hurt/Satyr_01_Hurt_000.png" type="Texture" id=60]
+[ext_resource path="res://Scenes/Mobs/Assets/Satyr/Hurt/Satyr_01_Hurt_005.png" type="Texture" id=61]
+[ext_resource path="res://Scenes/Mobs/Assets/Satyr/Hurt/Satyr_01_Hurt_011.png" type="Texture" id=62]
+[ext_resource path="res://Scenes/Mobs/Assets/Satyr/Hurt/Satyr_01_Hurt_004.png" type="Texture" id=63]
+[ext_resource path="res://Scenes/Mobs/Assets/Satyr/Hurt/Satyr_01_Hurt_003.png" type="Texture" id=64]
+[ext_resource path="res://Scenes/Mobs/Assets/Satyr/Hurt/Satyr_01_Hurt_006.png" type="Texture" id=65]
+[ext_resource path="res://Scenes/Mobs/Assets/Satyr/Hurt/Satyr_01_Hurt_001.png" type="Texture" id=66]
+[ext_resource path="res://Scenes/Mobs/Assets/Satyr/Hurt/Satyr_01_Hurt_002.png" type="Texture" id=67]
+[ext_resource path="res://Scenes/Mobs/Assets/Satyr/Hurt/Satyr_01_Hurt_007.png" type="Texture" id=68]
+[ext_resource path="res://Scenes/Mobs/Assets/Satyr/Hurt/Satyr_01_Hurt_010.png" type="Texture" id=69]
+[ext_resource path="res://Scenes/Mobs/Assets/Satyr/Hurt/Satyr_01_Hurt_008.png" type="Texture" id=70]
+[ext_resource path="res://Scenes/Mobs/Assets/Satyr/Hurt/Satyr_01_Hurt_009.png" type="Texture" id=71]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -81,6 +93,11 @@ animations = [ {
 "loop": false,
 "name": "death",
 "speed": 14.0
+}, {
+"frames": [ ExtResource( 60 ), ExtResource( 66 ), ExtResource( 67 ), ExtResource( 64 ), ExtResource( 63 ), ExtResource( 61 ), ExtResource( 65 ), ExtResource( 68 ), ExtResource( 70 ), ExtResource( 71 ), ExtResource( 69 ), ExtResource( 62 ) ],
+"loop": false,
+"name": "hurt",
+"speed": 12.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=2]
@@ -96,6 +113,9 @@ radius = 2125.77
 [sub_resource type="CircleShape2D" id=5]
 radius = 3618.67
 
+[sub_resource type="CircleShape2D" id=6]
+radius = 203.937
+
 [node name="Mage" type="KinematicBody2D" groups=[
 "mobs",
 ]]
@@ -106,15 +126,13 @@ script = ExtResource( 43 )
 __meta__ = {
 "_edit_group_": true
 }
-SPEED = 300
-DAMAGE = 20
-MAX_HEALTH = 10
+SPEED = 200.0
 DODGE_SPEED = 250
 ATTACK_COOLDOWN = 1
 
 [node name="Animation" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
-animation = "idle"
+animation = "hurt"
 frame = 11
 playing = true
 
@@ -140,6 +158,13 @@ collision_layer = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource( 5 )
 
+[node name="UnSplitArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UnSplitArea"]
+shape = SubResource( 6 )
+
 [node name="AttackTimer" type="Timer" parent="."]
 
 [node name="DamageTimer" type="Timer" parent="."]
@@ -158,5 +183,7 @@ stream = ExtResource( 59 )
 [connection signal="body_exited" from="RangeArea" to="." method="_on_RangeArea_body_exited"]
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_DetectionArea_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_DetectionArea_body_exited"]
+[connection signal="body_entered" from="UnSplitArea" to="." method="_on_UnSplitArea_body_entered"]
+[connection signal="body_exited" from="UnSplitArea" to="." method="_on_UnSplitArea_body_exited"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]
 [connection signal="timeout" from="DamageTimer" to="." method="_on_DamageTimer_timeout"]

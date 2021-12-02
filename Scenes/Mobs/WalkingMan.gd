@@ -2,6 +2,9 @@ extends "res://Scenes/Mobs/AMonster.gd"
 
 ######################### VARIABLES ############################################
 
+# MOVEMENT
+var mobs_view : Array
+
 # STATS
 export var KNOCKBACK_FORCE : float = 10
 
@@ -41,9 +44,11 @@ func _physics_process(_delta):
 func _handle_movement():
 	velocity = Vector2.ZERO
 	if player and !is_taking_damage and !is_attacking:
-		velocity = position.direction_to(player.position) * SPEED
+		velocity = position.direction_to(player.position).normalized() * SPEED
 	elif is_taking_damage:
-		velocity = knockback * KNOCKBACK_FORCE
+		velocity = knockback.normalized() * KNOCKBACK_FORCE
+	for i in mobs_view:
+		velocity = (velocity.normalized() + (position.direction_to(i.position) * -1)).normalized() * SPEED
 	velocity = move_and_slide(velocity)
 
 func _handle_flip():
@@ -68,14 +73,10 @@ func _handle_collision():
 			continue
 		if get_tree().get_nodes_in_group("player").has(node.collider) and can_attack:
 			_handle_attack(node)
-<<<<<<< HEAD
-=======
-		if get_tree().get_nodes_in_group("projectile").has(node.collider):
-			$DamageTimer.start()
-			animation.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
-			take_damage(node.collider.DAMAGE, node.collider.orientation)
-			node.collider.destroy()
->>>>>>> master
+#		if get_tree().get_nodes_in_group("projectile").has(node.collider):
+#			$DamageTimer.start()
+#			skin.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
+#			take_damage(node.collider.DAMAGE, node.collider.orientation)
 
 func _handle_attack(node):
 	if can_attack:
@@ -108,7 +109,8 @@ func take_damage(damage_amount : int, damage_orientation : Vector2) -> void:
 	if (health <= 0):
 		is_alive = false
 		_handle_death_animation()
-	_handle_damage_animation(damage_orientation)
+	else:
+		_handle_damage_animation(damage_orientation)
 
 ### PRIVATE SIGNALS ###
 
@@ -128,15 +130,13 @@ func _on_DamageTimer_timeout():
 	skin.self_modulate = Color(1, 1, 1)
 	is_taking_damage = false
 
-<<<<<<< HEAD
 func _on_DoAttackTimer_timeout():
 	is_attacking = false
-=======
-func _on_HitTimer_timeout():
-	can_hit = true
-	hit_sprite.visible = true
 
-func _on_DamageTimer_timeout() -> void:
-	animation.self_modulate = Color(1, 1, 1)
+func _on_UnSplitArea_body_entered(body):
+	if get_tree().get_nodes_in_group("mobs").has(body):
+		mobs_view.push_back(body)
 
->>>>>>> master
+func _on_UnSplitArea_body_exited(body):
+	if mobs_view.has(body):
+		mobs_view.erase(body)

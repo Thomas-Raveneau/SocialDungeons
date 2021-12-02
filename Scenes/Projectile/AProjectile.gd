@@ -13,7 +13,6 @@ export var DAMAGE : int = 10
 ########################## PRIVATE METHODS #####################################
 
 func _ready():
-
 	pass
 
 func _handle_wall_collision():
