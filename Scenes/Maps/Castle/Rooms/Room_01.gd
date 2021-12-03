@@ -4,8 +4,8 @@ extends Node2D
 
 # SCENES
 var mobs = [
-	preload("res://Scenes/Mobs/Mage.tscn"),
-#	preload("res://Scenes/Mobs/WalkingMan.tscn")
+#	preload("res://Scenes/Mobs/Mage.tscn"),
+	preload("res://Scenes/Mobs/Orc.tscn")
 ]
 
 # NODES

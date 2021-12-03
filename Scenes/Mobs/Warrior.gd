@@ -2,9 +2,6 @@ extends "res://Scenes/Mobs/AMonster.gd"
 
 ########################### VARIABLES ##########################################
 
-# MOVEMENT
-var velocity : Vector2 = Vector2.ZERO
-
 # COLLIDER
 onready var hitbox : CollisionShape2D = $Hitbox
 
