@@ -132,7 +132,6 @@ func _generate_walking_particles() -> void:
 			var offset_x = 0 if velocity.y != 0 else -32 if skin.flip_h else 32
 			var offset_y = 50 if velocity.y > 0 else -10 if velocity.y < 0 else 32
 			dust.global_position = Vector2(global_position.x + offset_x, global_position.y + offset_y)
-			dust.emitting = true
 			dust.process_material.direction = Vector3(-velocity.x, -velocity.y, 0)
 			get_parent().add_child(dust)
 		last_step = $Skin.get_frame()
@@ -141,7 +140,6 @@ func _generate_blood_particles() -> void:
 	if (is_taking_damage and damage_particles_timer.time_left == 0.00000):
 		damage_particles_timer.start()
 		var blood = blood_particles.instance()
-		blood.emitting = true
 		blood.global_position = Vector2(global_position.x, global_position.y)
 		blood.process_material.direction = Vector3(-knockback.x, -knockback.y, 0)
 		get_parent().add_child(blood)

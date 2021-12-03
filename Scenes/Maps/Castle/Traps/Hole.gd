@@ -12,8 +12,8 @@ func _physics_process(_delta):
 		is_player_inside()
 
 func is_player_inside() -> void:
-	if (player.position.y + player_size.y < position.y and
-		abs(player.position.x - position.x) < player_size.x):
+	if (player.position.y + player_size.y - position.y < 8 and
+		abs(player.position.x - position.x) - player_size.x < 8):
 		player.fall(self.position)
 		player = null
 
