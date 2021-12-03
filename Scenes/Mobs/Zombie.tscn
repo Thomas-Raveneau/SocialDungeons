@@ -49,7 +49,7 @@ DASH_SPEED = 1000.0
 [node name="Animation" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "run"
-frame = 1
+frame = 3
 playing = true
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
