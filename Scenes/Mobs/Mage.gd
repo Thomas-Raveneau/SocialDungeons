@@ -31,6 +31,7 @@ onready var spawn_point : Node2D = $SpawnPoint
 
 func _ready():
 	health = MAX_HEALTH
+	CURRENT_WEIGHT_CLASS = WEIGHT_CLASS.LIGHT
 	attack_timer.wait_time = ATTACK_COOLDOWN
 	attack_timer.start()
 	mobs_view.clear()
@@ -71,6 +72,7 @@ func _handle_animation():
 			animation.play("walk")
 	elif (is_taking_damage):
 		animation.play("hurt")
+		animation.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
 
 func _handle_flip():
 	if player:
@@ -89,9 +91,9 @@ func _handle_collision():
 		var node = get_slide_collision(i)
 		if hitbox.disabled or !node:
 			continue
-#		if get_tree().get_nodes_in_group("projectile").has(node.collider):
-#			take_damage(node.collider.DAMAGE, node.collider.orientation)
-#			node.collider.destroy()
+		if get_tree().get_nodes_in_group("projectile").has(node.collider):
+			take_damage(node.collider.DAMAGE, node.collider.orientation)
+			node.collider.destroy()
 
 func _handle_death_animation() -> void:
 	hitbox.disabled = true
@@ -107,11 +109,9 @@ func _shoot_fireball():
 
 func _handle_damage_animation(damage_orientation : Vector2) -> void:
 	$DamageTimer.start()
-	animation.play("hurt")
-	animation.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
-#	knockback = damage_orientation.normalized()
-	knockback = Vector2.ZERO
 	is_taking_damage = true
+	animation.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
+	knockback = damage_orientation.normalized()
 
 ####################### PUBLIC METHODS #########################################
 
