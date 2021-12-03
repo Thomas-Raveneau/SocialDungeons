@@ -75,7 +75,7 @@ var damage_particle = preload("res://Scenes/Player/DamageParticle.tscn")
 var step_particles = preload("res://Scenes/Particles/FootStep.tscn")
 var blood_particles = preload("res://Scenes/Particles/Blood.tscn")
 var basic_attack = preload("res://Scenes/Player/Spells/BasicAttack.tscn")
-var flame_dash = preload("res://Scenes/Projectile/Flame.tscn")
+var dash_effect = preload("res://Scenes/Player/Effects/DashEffect.tscn")
 var portal_spear_attack = preload("res://Scenes/Player/Spells/PortalSpear.tscn")
 var lightning_attack = preload("res://Scenes/Player/Spells/Lightning.tscn")
 
@@ -167,6 +167,10 @@ func _dash() -> void:
 	can_dash = false
 	is_dashing = true
 	dash_duration_timer.start()
+	var dash_flame_effect = dash_effect.instance()
+	dash_flame_effect.position = global_position
+	dash_flame_effect.rotate(velocity.angle() + PI)
+	get_parent().add_child(dash_flame_effect)
 
 func _handle_movement_inputs() -> void:
 	if Input.is_action_pressed("move_right"):
@@ -177,7 +181,7 @@ func _handle_movement_inputs() -> void:
 		velocity.y += 1
 	if Input.is_action_pressed("move_up"):
 		velocity.y -= 1
-	if (Input.is_action_just_pressed("action_dash") and can_dash == true):
+	if (Input.is_action_just_pressed("action_dash") and can_dash == true and velocity != Vector2.ZERO):
 		_dash()
 
 	if (is_dashing):
