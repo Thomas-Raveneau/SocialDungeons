@@ -1,22 +1,22 @@
-extends KinematicBody2D
+extends "res://Scenes/Projectile/AProjectile.gd"
 
 ################################################################################
 
 # STATS
-export var speed: float
-
-# UTILS
-var orientation: Vector2 = Vector2.ZERO
 
 ################################################################################
 
 ### PRIVATE ###
+func _ready():
+	
+	pass
+
 func _physics_process(_delta: float) -> void:
 	_handle_movement()
 	_handle_collision()
 
 func _handle_movement() -> void:
-	move_and_slide(orientation * speed * 100)
+	move_and_slide(orientation * SPEED)
 
 func _handle_collision() -> void:
 	var slide_count = get_slide_count()
@@ -25,13 +25,17 @@ func _handle_collision() -> void:
 		var node = get_slide_collision(i)
 		if get_tree().get_nodes_in_group("wall").has(node.collider):
 			destroy()
+		var collided_node = get_slide_collision(i)
+		if (get_tree().get_nodes_in_group("player").has(collided_node.collider)):
+			collided_node.collider.damage(DAMAGE, orientation)
+			destroy()		
 
 ### PUBLIC ###
 func destroy() -> void:
 	queue_free()
 
 func set_speed_and_dir(bullet_speed: float, bullet_dir: Vector2) -> void:
-	speed = bullet_speed
+	SPEED = bullet_speed
 	orientation = bullet_dir
 
 ### SIGNALS ###
