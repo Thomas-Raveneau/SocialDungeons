@@ -6,7 +6,6 @@ export var cooldown = 1.0
 
 
 func _ready():
-	print_tree_pretty()
 	time_label.hide()
 	$Sweep.value = 0
 	$Sweep.texture_progress = texture_normal

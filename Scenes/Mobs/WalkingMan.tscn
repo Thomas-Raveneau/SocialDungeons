@@ -11,7 +11,6 @@
 [ext_resource path="res://Scenes/Mobs/Assets/knight_m_run_anim_f0.png" type="Texture" id=9]
 [ext_resource path="res://Scenes/Mobs/Assets/knight_m_run_anim_f1.png" type="Texture" id=10]
 [ext_resource path="res://Scenes/Mobs/Sounds/mixkit-boxer-getting-hit-2055.wav" type="AudioStream" id=11]
-[ext_resource path="res://Scenes/Mobs/Assets/weapon_knight_sword.png" type="Texture" id=12]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -38,29 +37,21 @@ height = 7.73712
 [sub_resource type="CircleShape2D" id=3]
 radius = 186.72
 
+[sub_resource type="CircleShape2D" id=4]
+radius = 11.0328
+
 [node name="WalkingMan" type="KinematicBody2D" groups=[
 "mobs",
 ]]
 scale = Vector2( 5, 5 )
 collision_layer = 2
-collision_mask = 37
+collision_mask = 33
 script = ExtResource( 1 )
-SPEED = 250
-DAMAGE = 10
-MAX_HEALTH = 20
-HIT_COOLDOWN = 2
 
-[node name="HitSprite" type="Sprite" parent="."]
-position = Vector2( 9.54092, 1.01022 )
-rotation = 1.5708
-scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 12 )
-
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+[node name="AnimationSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -6 )
 frames = SubResource( 1 )
-animation = "run"
-frame = 2
+animation = "idle"
 playing = true
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
@@ -76,17 +67,28 @@ collision_layer = 0
 position = Vector2( 0, -3.55848 )
 shape = SubResource( 3 )
 
-[node name="HitTimer" type="Timer" parent="."]
-wait_time = 0.2
+[node name="UnSplitArea" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UnSplitArea"]
+position = Vector2( -0.11225, -1.90819 )
+shape = SubResource( 4 )
 
 [node name="DamageTimer" type="Timer" parent="."]
 wait_time = 0.2
-one_shot = true
+
+[node name="AttackTimer" type="Timer" parent="."]
+
+[node name="DoAttackTimer" type="Timer" parent="."]
+wait_time = 0.2
 
 [node name="DeathSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 11 )
 
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_DetectionArea_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_DetectionArea_body_exited"]
-[connection signal="timeout" from="HitTimer" to="." method="_on_HitTimer_timeout"]
+[connection signal="body_entered" from="UnSplitArea" to="." method="_on_UnSplitArea_body_entered"]
+[connection signal="body_exited" from="UnSplitArea" to="." method="_on_UnSplitArea_body_exited"]
 [connection signal="timeout" from="DamageTimer" to="." method="_on_DamageTimer_timeout"]
+[connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]
+[connection signal="timeout" from="DoAttackTimer" to="." method="_on_DoAttackTimer_timeout"]
