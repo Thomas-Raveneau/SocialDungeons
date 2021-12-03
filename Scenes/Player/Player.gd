@@ -66,12 +66,14 @@ onready var invicibility_timer: Timer = $Invicibility
 onready var dash_duration_timer: Timer = $DashDuration
 onready var dash_cooldown_timer: Timer = $DashCooldown
 onready var damage_animation_timer: Timer = $DamageAnimation
+onready var damage_particles_timer: Timer = $DamageParticlesTimer
 onready var damage_sound: AudioStreamPlayer = $DamageSound
 onready var damage_particles: CPUParticles2D = $DamageParticles
 
 # SCENES
 var damage_particle = preload("res://Scenes/Player/DamageParticle.tscn")
 var step_particles = preload("res://Scenes/Particles/FootStep.tscn")
+var blood_particles = preload("res://Scenes/Particles/Blood.tscn")
 var basic_attack = preload("res://Scenes/Player/Spells/BasicAttack.tscn")
 var flame_dash = preload("res://Scenes/Projectile/Flame.tscn")
 var portal_spear_attack = preload("res://Scenes/Player/Spells/PortalSpear.tscn")
@@ -105,9 +107,13 @@ func _physics_process(_delta: float) -> void:
 	else:
 		velocity = move_and_slide(knockback * 100)
 		camera.add_trauma(0.03)
-	
+
 	_handle_collisions()
 
+func _generate_particles() -> void:
+	_generate_walking_particles()
+	_generate_blood_particles()	
+	
 func fall(hole: Vector2) -> void:
 	$FallDuration.start()
 	is_falling = true
@@ -119,23 +125,26 @@ func _handle_fall_animation() -> void:
 		self.rotation_degrees -= 0.5
 		self.position.y += 0.35
 
-func _generate_particles() -> void:
-	if ($Skin.animation == "run"):
+func _generate_walking_particles() -> void:
+	if ($Skin.animation == "run" and velocity != Vector2.ZERO):
 		if ($Skin.get_frame() == 3 && last_step != 3):
-			var particles = step_particles.instance()
-			particles.global_position = Vector2(global_position.x, global_position.y + 32)
-			particles.emitting = true
-
-			if Input.is_action_pressed("move_right"):
-				particles.process_material.direction = Vector3(-1, -1, 0)
-			elif Input.is_action_pressed("move_left"):
-				particles.process_material.direction = Vector3(1, -1, 0)
-			elif Input.is_action_pressed("move_up"):
-				particles.process_material.direction = Vector3(0, 1, 0)
-			else:
-				particles.process_material.direction = Vector3(0, -1, 0)
-			get_parent().add_child(particles)
+			var dust = step_particles.instance()
+			var offset_x = 0 if velocity.y != 0 else -32 if skin.flip_h else 32
+			var offset_y = 50 if velocity.y > 0 else -10 if velocity.y < 0 else 32
+			dust.global_position = Vector2(global_position.x + offset_x, global_position.y + offset_y)
+			dust.emitting = true
+			dust.process_material.direction = Vector3(-velocity.x, -velocity.y, 0)
+			get_parent().add_child(dust)
 		last_step = $Skin.get_frame()
+
+func _generate_blood_particles() -> void:
+	if (is_taking_damage and damage_particles_timer.time_left == 0.00000):
+		damage_particles_timer.start()
+		var blood = blood_particles.instance()
+		blood.emitting = true
+		blood.global_position = Vector2(global_position.x, global_position.y)
+		blood.process_material.direction = Vector3(-knockback.x, -knockback.y, 0)
+		get_parent().add_child(blood)
 
 func _handle_walking_sound() -> void:
 	if ($Skin.animation == "run"):
