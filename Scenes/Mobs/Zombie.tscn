@@ -1,0 +1,92 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Scenes/Mobs/Zombie.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Mobs/Assets/Zombie/big_zombie_idle_anim_f1.png" type="Texture" id=2]
+[ext_resource path="res://Scenes/Mobs/Assets/Zombie/big_zombie_idle_anim_f3.png" type="Texture" id=3]
+[ext_resource path="res://Scenes/Mobs/Assets/Zombie/big_zombie_run_anim_f0.png" type="Texture" id=4]
+[ext_resource path="res://Scenes/Mobs/Assets/Zombie/big_zombie_idle_anim_f0.png" type="Texture" id=5]
+[ext_resource path="res://Scenes/Mobs/Assets/Zombie/big_zombie_idle_anim_f2.png" type="Texture" id=6]
+[ext_resource path="res://Scenes/Mobs/Assets/Zombie/big_zombie_run_anim_f1.png" type="Texture" id=7]
+[ext_resource path="res://Scenes/Mobs/Assets/Zombie/big_zombie_run_anim_f2.png" type="Texture" id=8]
+[ext_resource path="res://Scenes/Mobs/Assets/Zombie/big_zombie_run_anim_f3.png" type="Texture" id=9]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 5 ), ExtResource( 2 ), ExtResource( 6 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "run",
+"speed": 5.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 9.62612
+height = 8.48284
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 404.876
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 135.718
+
+[node name="Zombie" type="KinematicBody2D" groups=[
+"mobs",
+]]
+position = Vector2( 1, 0 )
+scale = Vector2( 5, 5 )
+collision_layer = 2
+collision_mask = 37
+script = ExtResource( 1 )
+SPEED = 200
+DAMAGE = 20
+MAX_HEALTH = 65
+DASH_SPEED = 1000.0
+
+[node name="Animation" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "run"
+frame = 1
+playing = true
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 6.2 )
+shape = SubResource( 2 )
+
+[node name="DetectionArea" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource( 3 )
+
+[node name="RangeArea" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RangeArea"]
+shape = SubResource( 4 )
+
+[node name="DashTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[node name="DashDuration" type="Timer" parent="."]
+one_shot = true
+
+[node name="TauntDuration" type="Timer" parent="."]
+one_shot = true
+
+[node name="DamageDuration" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_DetectionArea_body_entered"]
+[connection signal="body_exited" from="DetectionArea" to="." method="_on_DetectionArea_body_exited"]
+[connection signal="body_entered" from="RangeArea" to="." method="_on_RangeArea_body_entered"]
+[connection signal="body_exited" from="RangeArea" to="." method="_on_RangeArea_body_exited"]
+[connection signal="timeout" from="DashTimer" to="." method="_on_DashTimer_timeout"]
+[connection signal="timeout" from="DashDuration" to="." method="_on_DashDuration_timeout"]
+[connection signal="timeout" from="TauntDuration" to="." method="_on_TauntDuration_timeout"]
+[connection signal="timeout" from="DamageDuration" to="." method="_on_DamageDuration_timeout"]
