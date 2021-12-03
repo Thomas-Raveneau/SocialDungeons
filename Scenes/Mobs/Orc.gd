@@ -105,7 +105,6 @@ func take_damage(damage_amount : int, damage_orientation : Vector2) -> void:
 	else:
 		_handle_damage_animation(damage_orientation)
 
-
 ### PRIVATE SIGNALS ###
 
 func _on_DetectionArea_body_entered(body):
