@@ -5,7 +5,7 @@ extends "res://Scenes/Mobs/AMonster.gd"
 # MOVEMENT
 var velocity : Vector2 = Vector2.ZERO
 var knockback : Vector2 = Vector2.ZERO
-export var DODGE_SPEED = 200
+export var DODGE_SPEED = 300
 export var KNOCKBACK_FORCE = 200
 var mobs_view : Array
 
@@ -59,19 +59,20 @@ func _handle_movement():
 
 func _handle_attack():
 	if in_range_of_attack and can_attack and !is_dodging and !is_taking_damage:
-		is_attacking = true
+		is_attacking = false
 		can_attack = false
 		attack_timer.start()
-		animation.play("attack")
+		_shoot_fireball()
 
 func _handle_animation():
-	if (!is_attacking and !is_taking_damage):
-		if (velocity == Vector2(0, 0)):
-			animation.play("idle")
-		else:
-			animation.play("walk")
-	elif (is_taking_damage):
-		animation.play("hurt")
+	animation.play("idle")
+#	if (!is_attacking and !is_taking_damage):
+#		if (velocity == Vector2(0, 0)):
+#			animation.play("idle")
+#		else:
+#			animation.play("walk")
+#	elif (is_taking_damage):
+#		animation.play("hurt")
 
 func _handle_flip():
 	if player:
@@ -97,7 +98,8 @@ func _handle_collision():
 func _handle_death_animation() -> void:
 	hitbox.disabled = true
 	$DeathSound.play()
-	animation.play("death")
+	is_attacking = false
+	_handle_death()
 
 func _shoot_fireball():
 	var bullet = FIREBALL.instance()
@@ -159,13 +161,7 @@ func _on_AttackTimer_timeout():
 	can_attack = true
 
 func _on_Animation_animation_finished():
-	if animation.get_animation() == "attack":
-		is_attacking = false
-		_shoot_fireball()
-	elif animation.get_animation() == "death":
-		is_attacking = false
-		_handle_death()
-	elif animation.get_animation() == "hurt":
+	if animation.get_animation() == "hurt":
 		animation.self_modulate = Color(1, 1, 1)
 		is_taking_damage = false
 
