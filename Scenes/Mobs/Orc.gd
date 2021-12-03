@@ -12,7 +12,7 @@ var is_attacking : bool = false
 var is_taking_damage : bool = false
 
 # TIMER
-export var ATTACK_COOLDOWN : int = 0
+export var ATTACK_COOLDOWN : int = 5
 
 # NODE
 onready var skin : AnimatedSprite = $AnimationSprite
@@ -54,9 +54,7 @@ func _handle_flip():
 		skin.flip_h = false
 
 func _handle_animation():
-	if is_taking_damage:
-		skin.play('hit')
-	elif velocity == Vector2.ZERO:
+	if velocity == Vector2.ZERO:
 		skin.play('idle')
 	else:
 		skin.play('run')
