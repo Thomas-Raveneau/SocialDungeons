@@ -42,7 +42,7 @@ func _handle_movement():
 	if player and !is_taking_damage and !is_attacking:
 		velocity = position.direction_to(player.position).normalized() * SPEED
 	elif is_taking_damage:
-		velocity = knockback.normalized() * KNOCKBACK_FORCE
+		velocity = knockback.normalized() * get_knockback_multiplier() * KNOCKBACK_FORCE
 	for i in mobs_view:
 		velocity = (velocity.normalized() + (position.direction_to(i.position) * -1)).normalized() * SPEED
 	velocity = move_and_slide(velocity)
@@ -85,19 +85,20 @@ func _handle_attack(node):
 
 func _handle_death_animation() -> void:
 	$DeathSound.play()
+	skin.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
+	print("LMAO IM DEAD ORC SIDE")
 	_handle_death()
 
 func _handle_damage_animation(damage_orientation : Vector2) -> void:
 	damage_timer.start()
+	print("HIT BOUBOUBOU")
 	skin.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
-#	knockback = damage_orientation.normalized()
-	knockback = Vector2.ZERO
 	is_taking_damage = true
 
 
 ### PUBLIC METHODS ###
 
-func take_damage(damage_amount : int, damage_orientation : Vector2) -> void:
+func take_damage(damage_amount : int, damage_orientation : Vector2, knockback_force : int) -> void:
 	health = health - damage_amount
 	if (health <= 0):
 		is_alive = false

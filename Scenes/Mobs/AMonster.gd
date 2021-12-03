@@ -50,13 +50,14 @@ func _handle_damage_animation(damage_orientation : Vector2) -> void:
 
 ############################# PUBLIC METHODS ###################################
 
-func get_knockback_multiplier() -> float:
+func get_knockback_multiplier() -> Vector2:
 	if (CURRENT_WEIGHT_CLASS != WEIGHT_CLASS.IMMOVABLE):
-		return float(CURRENT_WEIGHT_CLASS / 2)
-	return WEIGHT_CLASS.IMMOVABLE
+		return Vector2(float(CURRENT_WEIGHT_CLASS / 2), float(CURRENT_WEIGHT_CLASS / 2))
+	return Vector2(WEIGHT_CLASS.IMMOVABLE, WEIGHT_CLASS.IMMOVABLE)
 
-func take_damage(damage_amount : int, damage_orientation : Vector2) -> void:
+func take_damage(damage_amount : int, damage_orientation : Vector2, knockback_force : int) -> void:
 	health = health - damage_amount
+	damage_orientation = knockback_force * get_knockback_multiplier()
 	if (health <= 0):
 		is_alive = false
 		_handle_death_animation()

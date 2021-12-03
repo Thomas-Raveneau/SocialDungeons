@@ -92,11 +92,13 @@ func _handle_collision():
 		if hitbox.disabled or !node:
 			continue
 		if get_tree().get_nodes_in_group("projectile").has(node.collider):
-			take_damage(node.collider.DAMAGE, node.collider.orientation)
+			take_damage(node.collider.DAMAGE, node.collider.orientation, 1)
 			node.collider.destroy()
 
 func _handle_death_animation() -> void:
 	hitbox.disabled = true
+	animation.self_modulate = Color(0/255.0, 0/255.0, 0/255.0)
+	print("LMAO IM DEAD")
 	$DeathSound.play()
 	is_attacking = false
 	_handle_death()
@@ -110,12 +112,11 @@ func _shoot_fireball():
 func _handle_damage_animation(damage_orientation : Vector2) -> void:
 	$DamageTimer.start()
 	is_taking_damage = true
-	animation.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
 	knockback = damage_orientation.normalized()
 
 ####################### PUBLIC METHODS #########################################
 
-func take_damage(damage_amount : int, damage_orientation : Vector2) -> void:
+func take_damage(damage_amount : int, damage_orientation : Vector2, knockback_force : int) -> void:
 	health = health - damage_amount
 	if (health <= 0):
 		is_alive = false
