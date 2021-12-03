@@ -37,10 +37,11 @@ func _handle_movement():
 
 func _handle_flip():
 	if ($DamageTimer.time_left > 0):
-		yield($DamageTimer, "timeout")
-	if (velocity.x < 0 and !animation.flip_h):
+		return
+	elif (velocity.x < 0 and !animation.flip_h and int($DamageTimer.time_left) == 0):
+		print($DamageTimer.time_left)
 		animation.flip_h = true
-	if (velocity.x > 0 and animation.flip_h):
+	elif (velocity.x > 0 and animation.flip_h and int($DamageTimer.time_left) == 0):
 		animation.flip_h = false
 
 func _handle_animation():
@@ -93,7 +94,6 @@ func _on_HitTimer_timeout():
 
 func _on_DamageTimer_timeout() -> void:
 	animation.self_modulate = Color(1, 1, 1)
-	velocity = saved_move_direction
 	target = current_target
 
 

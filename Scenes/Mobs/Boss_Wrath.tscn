@@ -114,15 +114,15 @@ animations = [ {
 "name": "walk",
 "speed": 11.0
 }, {
-"frames": [ ExtResource( 27 ), ExtResource( 19 ), ExtResource( 16 ), ExtResource( 26 ), ExtResource( 20 ), ExtResource( 22 ), ExtResource( 25 ), ExtResource( 13 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 15 ), ExtResource( 23 ), ExtResource( 14 ), ExtResource( 21 ), ExtResource( 24 ) ],
-"loop": false,
-"name": "death",
-"speed": 14.0
-}, {
 "frames": [ ExtResource( 3 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 8 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 12 ), ExtResource( 11 ) ],
 "loop": false,
 "name": "attack",
 "speed": 22.0
+}, {
+"frames": [ ExtResource( 27 ), ExtResource( 19 ), ExtResource( 16 ), ExtResource( 26 ), ExtResource( 20 ), ExtResource( 22 ), ExtResource( 25 ), ExtResource( 13 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 15 ), ExtResource( 23 ), ExtResource( 14 ), ExtResource( 21 ), ExtResource( 24 ) ],
+"loop": false,
+"name": "death",
+"speed": 14.0
 }, {
 "frames": [ ExtResource( 90 ), ExtResource( 91 ), ExtResource( 94 ), ExtResource( 97 ), ExtResource( 93 ), ExtResource( 92 ), ExtResource( 95 ), ExtResource( 96 ), ExtResource( 100 ), ExtResource( 98 ), ExtResource( 99 ), ExtResource( 101 ) ],
 "loop": false,
@@ -161,7 +161,7 @@ __meta__ = {
 [node name="Animated" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "idle"
-frame = 10
+frame = 3
 playing = true
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
