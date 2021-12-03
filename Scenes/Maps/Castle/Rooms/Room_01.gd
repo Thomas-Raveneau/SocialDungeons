@@ -5,7 +5,7 @@ extends Node2D
 # SCENES
 var mobs = [
 	preload("res://Scenes/Mobs/Mage.tscn"),
-	preload("res://Scenes/Mobs/WalkingMan.tscn")
+#	preload("res://Scenes/Mobs/WalkingMan.tscn")
 ]
 
 # NODES
@@ -72,6 +72,5 @@ func _on_MobSpawnDelay_timeout():
 
 func _on_monster_death():
 	dead_mobs += 1
-	
 	if (dead_mobs == MOB_AMOUNT):
 		open_door()

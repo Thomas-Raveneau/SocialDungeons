@@ -73,6 +73,7 @@ var damage_particle = preload("res://Scenes/Player/DamageParticle.tscn")
 var step_particles = preload("res://Scenes/Particles/FootStep.tscn")
 var blood_particles = preload("res://Scenes/Particles/Blood.tscn")
 var basic_attack = preload("res://Scenes/Player/Spells/BasicAttack.tscn")
+var flame_dash = preload("res://Scenes/Projectile/Flame.tscn")
 var portal_spear_attack = preload("res://Scenes/Player/Spells/PortalSpear.tscn")
 var lightning_attack = preload("res://Scenes/Player/Spells/Lightning.tscn")
 
@@ -155,8 +156,9 @@ func _handle_collisions() -> void :
 	for i in slide_count:
 		var collided_node = get_slide_collision(i)
 		if (get_tree().get_nodes_in_group("projectile").has(collided_node.collider)):
-			damage(1, collided_node.collider.orientation)
-			collided_node.collider.destroy()
+			pass
+#			damage(1, collided_node.collider.orientation)
+#			collided_node.collider.destroy()
 
 func _dash() -> void:
 	can_dash = false
