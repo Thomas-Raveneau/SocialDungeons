@@ -1,13 +1,13 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Scenes/Maps/Castle/Turrets/Arrow.gd" type="Script" id=1]
-[ext_resource path="res://Scenes/Maps/Castle/Turrets/Assets/arrow2.png" type="Texture" id=2]
-[ext_resource path="res://Scenes/Maps/Castle/Turrets/Assets/arrow0.png" type="Texture" id=3]
-[ext_resource path="res://Scenes/Maps/Castle/Turrets/Assets/arrow1.png" type="Texture" id=4]
+[ext_resource path="res://Scenes/Projectile/Arrow.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Maps/Castle/Turrets/Assets/arrow0.png" type="Texture" id=2]
+[ext_resource path="res://Scenes/Maps/Castle/Turrets/Assets/arrow1.png" type="Texture" id=3]
+[ext_resource path="res://Scenes/Maps/Castle/Turrets/Assets/arrow2.png" type="Texture" id=4]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 2 ) ],
+"frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ) ],
 "loop": true,
 "name": "default",
 "speed": 10.0

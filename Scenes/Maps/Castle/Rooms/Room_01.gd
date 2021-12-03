@@ -5,7 +5,7 @@ extends Node2D
 # SCENES
 var mobs = [
 	preload("res://Scenes/Mobs/Mage.tscn"),
-#	preload("res://Scenes/Mobs/WalkingMan.tscn")
+	preload("res://Scenes/Mobs/WalkingMan.tscn")
 ]
 
 # NODES
@@ -23,7 +23,7 @@ onready var mobs_spawns = [
 
 # LEVEL DIFFICULTY
 export var MOB_AMOUNT: int = 8
-export var SPAWN_DELAY: float = 5.0
+export var SPAWN_DELAY: float = 3.0
 
 # UTILS
 var mob_index: int = 0
