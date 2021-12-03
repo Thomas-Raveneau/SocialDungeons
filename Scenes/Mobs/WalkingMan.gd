@@ -11,7 +11,7 @@ onready var hit_sprite : Sprite = $HitSprite
 onready var hit_timer : Timer = $HitTimer
 var can_hit : bool = true
 var current_target = null
-var saved_move_direction: Vector2 = Vector2(0, 0)
+
 
 # ANIMATION
 onready var animation = $AnimatedSprite
@@ -21,6 +21,7 @@ onready var animation = $AnimatedSprite
 func _ready():
 	._ready()
 	hit_timer.wait_time = HIT_COOLDOWN
+	CURRENT_WEIGHT_CLASS = WEIGHT_CLASS.STANDARD
 	KNOCKBACK_FORCE = 60
 
 func _physics_process(_delta):
@@ -60,10 +61,9 @@ func _handle_collision():
 			_handle_attack(node)
 		if get_tree().get_nodes_in_group("projectile").has(node.collider):
 			$DamageTimer.start()
-			saved_move_direction = velocity
 			target = null
 			animation.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
-			take_damage(node.collider.DAMAGE, node.collider.orientation)
+			take_damage(node.collider.DAMAGE, node.collider.orientation, 1)
 			node.collider.destroy()
 
 func _handle_attack(node):

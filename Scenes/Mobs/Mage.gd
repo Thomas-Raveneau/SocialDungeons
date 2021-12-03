@@ -22,7 +22,7 @@ onready var hitbox : CollisionShape2D = $Hitbox
 onready var animation : AnimatedSprite = $Animation
 
 # PROJECTILE
-onready var FIREBALL = preload("res://Scenes/Mobs/Projectile/FireBall.tscn")
+onready var FIREBALL = preload("res://Scenes/Projectile/FireBall.tscn")
 onready var spawn_point : Node2D = $SpawnPoint
 
 ######################## PRIVATE METHODS #######################################
@@ -30,6 +30,7 @@ onready var spawn_point : Node2D = $SpawnPoint
 func _ready():
 	attack_timer.wait_time = ATTACK_COOLDOWN
 	attack_timer.start()
+	CURRENT_WEIGHT_CLASS = WEIGHT_CLASS.LIGHT
 	KNOCKBACK_FORCE = 300
 
 func _physics_process(_delta):
@@ -83,7 +84,7 @@ func _handle_collision():
 			$DamageTimer.start()
 			velocity = Vector2(0, 0)
 			animation.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
-			take_damage(node.collider.DAMAGE, node.collider.orientation)
+			take_damage(node.collider.DAMAGE, node.collider.orientation, 1)
 			node.collider.destroy()
 
 func _handle_death_animation() -> void:

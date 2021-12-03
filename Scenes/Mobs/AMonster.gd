@@ -2,16 +2,24 @@ extends KinematicBody2D
 
 ################################### VARIABLES ##################################
 
+enum WEIGHT_CLASS {
+	LIGHT = 3,
+	STANDARD = 2,
+	HEAVY = 1,
+	IMMOVABLE = 0
+}
+
 # MOVEMENT
 export var SPEED : int
 var velocity : Vector2 = Vector2.ZERO
 
 # DAMAGE
 export var DAMAGE : int = 1
-export var KNOCKBACK_FORCE : int = 3
+export var KNOCKBACK_FORCE : int = 50
 
 # HEALTH AND LIFE
 export var MAX_HEALTH : int
+export var CURRENT_WEIGHT_CLASS: int
 var health : int = 0
 var is_alive : bool = true
 
@@ -27,6 +35,7 @@ signal monster_death
 
 func _ready() -> void:
 	health = MAX_HEALTH
+	CURRENT_WEIGHT_CLASS = WEIGHT_CLASS.IMMOVABLE
 
 func _handle_death() -> void:
 	emit_signal("monster_death")
@@ -36,16 +45,21 @@ func _handle_death() -> void:
 func _handle_death_animation() -> void:
 	_handle_death()
 
-func _handle_damage_animation(damage_orientation : Vector2) -> void:
+func _handle_damage_animation(damage_orientation : Vector2, knockback_effective_force: int) -> void:
 	velocity = Vector2(0, 0)
 	velocity = move_and_slide(damage_orientation.normalized() * KNOCKBACK_FORCE)
 	pass
 
 ############################# PUBLIC METHODS ###################################
 
-func take_damage(damage_amount : int, damage_orientation : Vector2) -> void:
+func get_knockback_multiplier() -> float:
+	if (CURRENT_WEIGHT_CLASS != WEIGHT_CLASS.IMMOVABLE):
+		return float(CURRENT_WEIGHT_CLASS / 2)
+	return WEIGHT_CLASS.IMMOVABLE
+
+func take_damage(damage_amount : int, damage_orientation : Vector2, knockback_effective_force: int) -> void:
 	health = health - damage_amount
 	if (health <= 0):
 		is_alive = false
 		_handle_death_animation()
-	_handle_damage_animation(damage_orientation)
+	_handle_damage_animation(damage_orientation, knockback_effective_force)
