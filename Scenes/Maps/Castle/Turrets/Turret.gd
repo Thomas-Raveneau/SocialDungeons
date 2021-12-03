@@ -3,7 +3,7 @@ extends StaticBody2D
 ################################################################################
 
 # STATS
-export var ARROW_SPEED: float = 10.0
+export var ARROW_SPEED: float = 1200
 export var ARROW_FREQUENCY: float = 1.0
 
 # NODES
@@ -11,7 +11,7 @@ onready var shoot_timer: Timer = $ShootTimer
 onready var sprite: AnimatedSprite = $TurretSprite
 
 # SCENES
-onready var Arrow = preload("res://Scenes/Maps/Castle/Turrets/Arrow.tscn")
+onready var Arrow = preload("res://Scenes/Projectile/Arrow.tscn")
 
 # UTILS
 var arrow_offset: int = 25
