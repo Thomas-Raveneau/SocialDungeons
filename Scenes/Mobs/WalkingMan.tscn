@@ -47,14 +47,11 @@ scale = Vector2( 5, 5 )
 collision_layer = 2
 collision_mask = 33
 script = ExtResource( 1 )
-SPEED = 250.0
-KNOCKBACK_FORCE = 100.0
 
 [node name="AnimationSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -6 )
 frames = SubResource( 1 )
 animation = "idle"
-frame = 1
 playing = true
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]

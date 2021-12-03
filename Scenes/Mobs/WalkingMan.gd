@@ -5,11 +5,7 @@ extends "res://Scenes/Mobs/AMonster.gd"
 # MOVEMENT
 var mobs_view : Array
 
-# STATS
-export var KNOCKBACK_FORCE : float = 10
-
 # UTILS
-var velocity : Vector2 = Vector2.ZERO
 var knockback : Vector2 = Vector2.ZERO
 var can_attack : bool = true
 var is_attacking : bool = false
@@ -89,9 +85,6 @@ func _handle_attack(node):
 		is_attacking = true
 		can_attack = false
 
-func _handle_death() -> void:
-	queue_free()
-
 func _handle_death_animation() -> void:
 	$DeathSound.play()
 	_handle_death()
@@ -103,6 +96,7 @@ func _handle_damage_animation(damage_orientation : Vector2) -> void:
 	knockback = Vector2.ZERO
 	is_taking_damage = true
 
+
 ### PUBLIC METHODS ###
 
 func take_damage(damage_amount : int, damage_orientation : Vector2) -> void:
@@ -112,6 +106,7 @@ func take_damage(damage_amount : int, damage_orientation : Vector2) -> void:
 		_handle_death_animation()
 	else:
 		_handle_damage_animation(damage_orientation)
+
 
 ### PRIVATE SIGNALS ###
 

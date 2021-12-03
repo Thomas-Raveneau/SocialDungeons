@@ -3,10 +3,8 @@ extends "res://Scenes/Mobs/AMonster.gd"
 ### VARIABLES ###
 
 # MOVEMENT
-var velocity : Vector2 = Vector2.ZERO
 var knockback : Vector2 = Vector2.ZERO
 export var DODGE_SPEED = 300
-export var KNOCKBACK_FORCE = 200
 var mobs_view : Array
 
 # ACTION
@@ -32,6 +30,7 @@ onready var spawn_point : Node2D = $SpawnPoint
 ### PRIVATE METHODS ###
 
 func _ready():
+	health = MAX_HEALTH
 	attack_timer.wait_time = ATTACK_COOLDOWN
 	attack_timer.start()
 	mobs_view.clear()
@@ -65,14 +64,13 @@ func _handle_attack():
 		_shoot_fireball()
 
 func _handle_animation():
-	animation.play("idle")
-#	if (!is_attacking and !is_taking_damage):
-#		if (velocity == Vector2(0, 0)):
-#			animation.play("idle")
-#		else:
-#			animation.play("walk")
-#	elif (is_taking_damage):
-#		animation.play("hurt")
+	if (!is_attacking and !is_taking_damage):
+		if (velocity == Vector2(0, 0)):
+			animation.play("idle")
+		else:
+			animation.play("walk")
+	elif (is_taking_damage):
+		animation.play("hurt")
 
 func _handle_flip():
 	if player:
@@ -107,11 +105,8 @@ func _shoot_fireball():
 	bullet.orientation = player.position - spawn_point.get_global_position()
 	get_parent().add_child(bullet)
 
-func _handle_death() -> void:
-	queue_free()
-
 func _handle_damage_animation(damage_orientation : Vector2) -> void:
-#	$DamageTimer.start()
+	$DamageTimer.start()
 	animation.play("hurt")
 	animation.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
 #	knockback = damage_orientation.normalized()
@@ -164,6 +159,7 @@ func _on_Animation_animation_finished():
 	if animation.get_animation() == "hurt":
 		animation.self_modulate = Color(1, 1, 1)
 		is_taking_damage = false
+		print("here")
 
 func _on_DamageTimer_timeout() -> void:
 	pass
