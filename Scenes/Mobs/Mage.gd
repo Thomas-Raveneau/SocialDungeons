@@ -159,7 +159,6 @@ func _on_Animation_animation_finished():
 	if animation.get_animation() == "hurt":
 		animation.self_modulate = Color(1, 1, 1)
 		is_taking_damage = false
-		print("here")
 
 func _on_DamageTimer_timeout() -> void:
 	pass
