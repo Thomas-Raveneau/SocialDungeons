@@ -12,6 +12,7 @@ var ACCELERATION: float = 1.0
 var orientation: Vector2 = Vector2.ZERO
 var attack_point: Vector2 = Vector2.ZERO
 var direction_state: String = "toward_target"
+var touch_target : Array
 
 ################################################################################
 
@@ -46,6 +47,9 @@ func _handle_collision_level_1() -> void:
 		var node = get_slide_collision(i)
 		if get_tree().get_nodes_in_group("wall").has(node.collider):
 			destroy()
+		elif get_tree().get_nodes_in_group("mobs").has(node.collider) and !touch_target.has(node.collider):
+			node.collider.take_damage(DAMAGE, position - node.collider.position)
+			touch_target.push_back(node.collider)
 
 func _handle_spell_level_2() -> void:
 	_handle_movement_level_2()
@@ -87,6 +91,10 @@ func _handle_collision_level_2() -> void:
 			destroy()
 		elif get_tree().get_nodes_in_group("player").has(node.collider) and direction_state == "toward_player":
 			destroy()
+		elif get_tree().get_nodes_in_group("mobs").has(node.collider) and !touch_target.has(node.collider):
+			node.collider.take_damage(DAMAGE, position - node.collider.position)
+			touch_target.push_back(node.collider)
+			destroy()
 
 func _handle_destroy_level_2() -> void:
 	if _get_distance_to_player() < 50.0 and direction_state == "toward_player":
@@ -108,4 +116,4 @@ func destroy() -> void:
 
 ### SIGNALS ###
 func _on_VisibilityNotifier2D_screen_exited():
-	pass # Replace with function body.
+	destroy()
