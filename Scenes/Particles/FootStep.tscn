@@ -35,3 +35,6 @@ explosiveness = 1.0
 visibility_rect = Rect2( -15, -20, 30, 30 )
 process_material = SubResource( 3 )
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}

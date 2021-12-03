@@ -71,6 +71,7 @@ onready var damage_particles: CPUParticles2D = $DamageParticles
 # SCENES
 var damage_particle = preload("res://Scenes/Player/DamageParticle.tscn")
 var step_particles = preload("res://Scenes/Particles/FootStep.tscn")
+var blood_particles = preload("res://Scenes/Particles/Blood.tscn")
 var basic_attack = preload("res://Scenes/Player/Spells/BasicAttack.tscn")
 var portal_spear_attack = preload("res://Scenes/Player/Spells/PortalSpear.tscn")
 var lightning_attack = preload("res://Scenes/Player/Spells/Lightning.tscn")
@@ -101,6 +102,12 @@ func _physics_process(_delta: float) -> void:
 	if (!is_taking_damage):
 		velocity = move_and_slide(velocity * 100)
 	else:
+		print("ounga bounga")
+		var particles = blood_particles.instance()
+		particles.global_position = Vector2(global_position.x, global_position.y)
+		particles.emitting = true
+
+		get_parent().add_child(particles)
 		velocity = move_and_slide(knockback * 100)
 		camera.add_trauma(0.03)
 	
