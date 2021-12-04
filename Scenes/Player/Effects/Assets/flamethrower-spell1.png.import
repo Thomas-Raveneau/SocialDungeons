@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/flamethrower-spell7.png-9ffc4856adb1fd5c5dfcefc83aaef876.stex"
+path="res://.import/flamethrower-spell1.png-e7f578923d629b8b94cc4be61ecd8b3a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/Projectile/Assets/Flame/flamethrower-spell7.png"
-dest_files=[ "res://.import/flamethrower-spell7.png-9ffc4856adb1fd5c5dfcefc83aaef876.stex" ]
+source_file="res://Scenes/Player/Effects/Assets/flamethrower-spell1.png"
+dest_files=[ "res://.import/flamethrower-spell1.png-e7f578923d629b8b94cc4be61ecd8b3a.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

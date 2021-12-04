@@ -6,12 +6,12 @@ extends "res://Scenes/Mobs/AMonster.gd"
 
 # ATTACK
 var in_range_of_attack : bool = false
-var can_attack : bool = true
+var can_attack : bool = false
 var is_attacking : bool = false
 
 # DASH
 export var DASH_SPEED : float = 500
-export var DASH_COOLDOWN : int = 5
+export var DASH_COOLDOWN : int = 4
 
 var dash_vector : Vector2 = Vector2.ZERO
 var is_taking_damage : bool = false

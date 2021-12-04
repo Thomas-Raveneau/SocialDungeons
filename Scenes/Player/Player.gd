@@ -71,11 +71,11 @@ onready var damage_sound: AudioStreamPlayer = $DamageSound
 onready var damage_particles: CPUParticles2D = $DamageParticles
 
 # SCENES
-var damage_particle = preload("res://Scenes/Player/DamageParticle.tscn")
+var damage_particle = preload("res://Scenes/Player/Effects/DamageParticle.tscn")
 var step_particles = preload("res://Scenes/Particles/FootStep.tscn")
 var blood_particles = preload("res://Scenes/Particles/Blood.tscn")
 var basic_attack = preload("res://Scenes/Player/Spells/BasicAttack.tscn")
-var flame_dash = preload("res://Scenes/Projectile/Flame.tscn")
+var dash_effect = preload("res://Scenes/Player/Effects/DashEffect.tscn")
 var portal_spear_attack = preload("res://Scenes/Player/Spells/PortalSpear.tscn")
 var lightning_attack = preload("res://Scenes/Player/Spells/Lightning.tscn")
 
@@ -132,7 +132,6 @@ func _generate_walking_particles() -> void:
 			var offset_x = 0 if velocity.y != 0 else -32 if skin.flip_h else 32
 			var offset_y = 50 if velocity.y > 0 else -10 if velocity.y < 0 else 32
 			dust.global_position = Vector2(global_position.x + offset_x, global_position.y + offset_y)
-			dust.emitting = true
 			dust.process_material.direction = Vector3(-velocity.x, -velocity.y, 0)
 			get_parent().add_child(dust)
 		last_step = $Skin.get_frame()
@@ -141,7 +140,6 @@ func _generate_blood_particles() -> void:
 	if (is_taking_damage and damage_particles_timer.time_left == 0.00000):
 		damage_particles_timer.start()
 		var blood = blood_particles.instance()
-		blood.emitting = true
 		blood.global_position = Vector2(global_position.x, global_position.y)
 		blood.process_material.direction = Vector3(-knockback.x, -knockback.y, 0)
 		get_parent().add_child(blood)
@@ -167,6 +165,10 @@ func _dash() -> void:
 	can_dash = false
 	is_dashing = true
 	dash_duration_timer.start()
+	var dash_flame_effect = dash_effect.instance()
+	dash_flame_effect.position = global_position
+	dash_flame_effect.rotate(velocity.angle() + PI)
+	get_parent().add_child(dash_flame_effect)
 
 func _handle_movement_inputs() -> void:
 	if Input.is_action_pressed("move_right"):
@@ -177,7 +179,7 @@ func _handle_movement_inputs() -> void:
 		velocity.y += 1
 	if Input.is_action_pressed("move_up"):
 		velocity.y -= 1
-	if (Input.is_action_just_pressed("action_dash") and can_dash == true):
+	if (Input.is_action_just_pressed("action_dash") and can_dash == true and velocity != Vector2.ZERO):
 		_dash()
 
 	if (is_dashing):
