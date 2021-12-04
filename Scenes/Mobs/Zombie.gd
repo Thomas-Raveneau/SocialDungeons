@@ -14,7 +14,9 @@ export var DASH_SPEED : float = 500
 export var DASH_COOLDOWN : int = 5
 
 var dash_vector : Vector2 = Vector2.ZERO
+var is_taking_damage : bool = false
 var is_dashing : bool = false
+var knockback: Vector2 = Vector2.ZERO
 var DASH_DURATION: float = 1.0
 var TAUNT_DURATION: float = 0.5
 
@@ -35,6 +37,7 @@ func _ready():
 	dash_timer.wait_time = DASH_COOLDOWN
 	dash_duration_timer.wait_time = DASH_DURATION
 	taunt_duration_timer.wait_time = TAUNT_DURATION
+	CURRENT_WEIGHT_CLASS = WEIGHT_CLASS.HEAVY
 
 func _physics_process(_delta) -> void:
 	if is_alive:
@@ -50,6 +53,8 @@ func _handle_movement() -> void:
 		velocity = position.direction_to(player.position) * SPEED
 	elif is_dashing:
 		velocity = dash_vector * DASH_SPEED
+	elif is_taking_damage:
+		velocity = (position.direction_to(player.position).normalized() * knockback.normalized() * get_knockback_multiplier()) * -1
 	velocity = move_and_slide(velocity)
 
 func _handle_attack() -> void:
@@ -75,6 +80,7 @@ func _handle_animation() -> void:
 			animation.play("run")
 
 func _handle_death_animation() -> void:
+	animation.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
 	_handle_death()
 
 func _handle_collision() -> void:
@@ -94,12 +100,29 @@ func _handle_hit_attack(node):
 
 ######################### PUBLIC METHODS #######################################
 
-func take_damage(damage_amount : int, damage_orientation : Vector2) -> void:
+func _handle_damage_animation(damage_orientation : Vector2, knockback_force : int, spell_state : String) -> void:
+	damage_duration_timer.start()
+	if (spell_state == 'toward_player'):
+		knockback = Vector2.ZERO
+	else:
+		knockback = get_knockback_multiplier() * knockback_force
+	animation.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
+	is_taking_damage = true
+
+#func take_damage(damage_amount : int, damage_orientation : Vector2, knockback_force : int, spell_state : String) -> void:
+#	if !is_dashing:
+#		.take_damage(damage_amount, damage_orientation, knockback_force, spell_state)
+#		animation.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
+#		damage_duration_timer.start()
+
+func take_damage(damage_amount : int, damage_orientation : Vector2, knockback_force : int, spell_state : String) -> void:
 	if !is_dashing:
-		.take_damage(damage_amount, damage_orientation)
-		animation.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
-		damage_duration_timer.start()
-		
+		health = health - damage_amount
+		if (health <= 0):
+			is_alive = false
+			_handle_death_animation()
+		else:
+			_handle_damage_animation(damage_orientation, knockback_force, spell_state)
 
 ######################### PRIVATE SIGNALS ######################################
 

@@ -29,6 +29,7 @@ var SWORD = preload("res://Scenes/Projectile/Sword.tscn")
 func _ready():
 	._ready()
 	attack_timer.wait_time = ATTACK_COOLDOWN
+	CURRENT_WEIGHT_CLASS = WEIGHT_CLASS.STANDARD
 
 func _physics_process(_delta):
 	if is_alive:
@@ -42,12 +43,14 @@ func _handle_movement():
 	if player and !is_taking_damage and !is_attacking:
 		velocity = position.direction_to(player.position).normalized() * SPEED
 	elif is_taking_damage:
-		velocity = knockback.normalized() * get_knockback_multiplier() * KNOCKBACK_FORCE
+		velocity = (position.direction_to(player.position).normalized() * knockback.normalized() * get_knockback_multiplier()) * -1
 	for i in mobs_view:
 		velocity = (velocity.normalized() + (position.direction_to(i.position) * -1)).normalized() * SPEED
 	velocity = move_and_slide(velocity)
 
 func _handle_flip():
+	if (is_taking_damage or damage_timer.time_left > 0):
+		return
 	if (velocity.x < 0 and !skin.flip_h):
 		skin.flip_h = true
 	if (velocity.x > 0 and skin.flip_h):
@@ -67,12 +70,8 @@ func _handle_collision():
 			continue
 		if get_tree().get_nodes_in_group("player").has(node.collider) and can_attack:
 			_handle_attack(node)
-#		if get_tree().get_nodes_in_group("projectile").has(node.collider):
-#			$DamageTimer.start()
-#			skin.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
-#			take_damage(node.collider.DAMAGE, node.collider.orientation)
 
-func _handle_attack(node):
+func _handle_attack(_node):
 	if can_attack and !is_taking_damage:
 		var sword = SWORD.instance()
 		sword.position = position + ((player.position - position).normalized() * 20)
@@ -89,22 +88,25 @@ func _handle_death_animation() -> void:
 	print("LMAO IM DEAD ORC SIDE")
 	_handle_death()
 
-func _handle_damage_animation(damage_orientation : Vector2) -> void:
+func _handle_damage_animation(damage_orientation : Vector2, knockback_force : int, spell_state : String) -> void:
 	damage_timer.start()
-	print("HIT BOUBOUBOU")
+	if (spell_state == 'toward_player'):
+		knockback = Vector2.ZERO
+	else:
+		knockback = get_knockback_multiplier() * knockback_force
 	skin.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
 	is_taking_damage = true
 
 
 ### PUBLIC METHODS ###
 
-func take_damage(damage_amount : int, damage_orientation : Vector2, knockback_force : int) -> void:
+func take_damage(damage_amount : int, damage_orientation : Vector2, knockback_force : int, spell_state : String) -> void:
 	health = health - damage_amount
 	if (health <= 0):
 		is_alive = false
 		_handle_death_animation()
 	else:
-		_handle_damage_animation(damage_orientation)
+		_handle_damage_animation(damage_orientation, knockback_force, spell_state)
 
 ### PRIVATE SIGNALS ###
 

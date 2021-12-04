@@ -16,6 +16,7 @@ var is_taking_damage  : bool = false
 
 export var ATTACK_COOLDOWN : int = 0
 onready var attack_timer : Timer = $AttackTimer
+onready var damage_timer : Timer = $DamageTimer
 
 # COLLIDER
 onready var hitbox : CollisionShape2D = $Hitbox
@@ -49,12 +50,12 @@ func _handle_movement():
 	if player:
 		if !in_range_of_attack:
 			velocity = position.direction_to(player.position).normalized() * SPEED
+		elif is_taking_damage:
+			velocity = (position.direction_to(player.position).normalized() * knockback.normalized() * get_knockback_multiplier()) * -1
 		elif is_dodging:
 			velocity = position.direction_to(player.position).normalized() * DODGE_SPEED * -1
 		for i in mobs_view:
 			velocity = (velocity.normalized() + (position.direction_to(i.position) * -1)).normalized() * SPEED
-	if is_taking_damage:
-		velocity = knockback.normalized() * KNOCKBACK_FORCE
 	velocity = move_and_slide(velocity)
 
 func _handle_attack():
@@ -92,7 +93,7 @@ func _handle_collision():
 		if hitbox.disabled or !node:
 			continue
 		if get_tree().get_nodes_in_group("projectile").has(node.collider):
-			take_damage(node.collider.DAMAGE, node.collider.orientation, 1)
+			take_damage(node.collider.DAMAGE, node.collider.orientation, 1, '')
 			node.collider.destroy()
 
 func _handle_death_animation() -> void:
@@ -109,20 +110,23 @@ func _shoot_fireball():
 	bullet.orientation = player.position - spawn_point.get_global_position()
 	get_parent().add_child(bullet)
 
-func _handle_damage_animation(damage_orientation : Vector2) -> void:
-	$DamageTimer.start()
+func _handle_damage_animation(damage_orientation : Vector2, knockback_force : int, spell_state : String) -> void:
+	damage_timer.start()
+	if (spell_state == 'toward_player'):
+		knockback = Vector2.ZERO
+	else:
+		knockback = get_knockback_multiplier() * knockback_force
+	animation.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
 	is_taking_damage = true
-	knockback = damage_orientation.normalized()
-
 ####################### PUBLIC METHODS #########################################
 
-func take_damage(damage_amount : int, damage_orientation : Vector2, knockback_force : int) -> void:
+func take_damage(damage_amount : int, damage_orientation : Vector2, knockback_force : int, spell_state : String) -> void:
 	health = health - damage_amount
 	if (health <= 0):
 		is_alive = false
 		_handle_death_animation()
 	else:
-		_handle_damage_animation(damage_orientation)
+		_handle_damage_animation(damage_orientation, knockback_force, spell_state)
 
 ######################## PRIVATE SIGNALS #######################################
 
