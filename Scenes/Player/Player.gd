@@ -336,7 +336,7 @@ func _input(event):
 
 ### PUBLIC ###
 func damage(damage_amount: int, damage_dir: Vector2) -> bool: 
-	if (is_invicible or !is_alive or is_falling):
+	if (is_invicible or is_dashing or !is_alive or is_falling):
 		return false
 	
 	_handle_damage_animation(damage_amount, damage_dir)
@@ -382,6 +382,7 @@ func _set_hp(newHpValue: int) -> void:
 		if HEALTH == 0:
 			emit_signal("killed")
 
+### SIGNALS ###
 ### SIGNALS ###
 func _on_DashDuration_timeout() -> void:
 	is_dashing = false

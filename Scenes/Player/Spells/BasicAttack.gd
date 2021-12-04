@@ -48,7 +48,7 @@ func _handle_collision_level_1() -> void:
 		if get_tree().get_nodes_in_group("wall").has(node.collider):
 			destroy()
 		elif get_tree().get_nodes_in_group("mobs").has(node.collider) and !touch_target.has(node.collider):
-			node.collider.take_damage(DAMAGE, position - node.collider.position)
+			node.collider.take_damage(DAMAGE, position - node.collider.position, direction_state)
 			touch_target.push_back(node.collider)
 
 func _handle_spell_level_2() -> void:
@@ -92,7 +92,7 @@ func _handle_collision_level_2() -> void:
 		elif get_tree().get_nodes_in_group("player").has(node.collider) and direction_state == "toward_player":
 			destroy()
 		elif get_tree().get_nodes_in_group("mobs").has(node.collider) and !touch_target.has(node.collider):
-			node.collider.take_damage(DAMAGE, position - node.collider.position)
+			node.collider.take_damage(DAMAGE, position - node.collider.position, 1, direction_state)
 			touch_target.push_back(node.collider)
 			destroy()
 

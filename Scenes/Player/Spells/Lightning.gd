@@ -44,4 +44,4 @@ func _on_AnimatedSprite_animation_finished():
 
 func _on_Lightning_body_entered(body):
 	if (get_tree().get_nodes_in_group("mobs").has(body)):
-		body.take_damage(DAMAGE, Vector2.ZERO)
+		body.take_damage(DAMAGE, Vector2.ZERO, 1, '')
