@@ -20,8 +20,8 @@ export var KNOCKBACK_FORCE = 3
 export var BASIC_ATTACK_SPEED: float = 15.0
 export var BASIC_ATTACK_DAMAGE: float = 5.0
 export var BASIC_ATTACK_COOLDOWN: float = 0.5
-export var PORTAL_SPEAR_ATTACK_DAMAGE: float = 30.0
-export var PORTAL_SPEAR_ATTACK_COOLDOWN: float = 3.0
+export var PORTAL_SPEAR_ATTACK_DAMAGE: float = 1.0
+export var PORTAL_SPEAR_ATTACK_COOLDOWN: float = 0.5
 export var LIGHTNING_ATTACK_DAMAGE: float = 20.0
 export var LIGHTNING_ATTACK_COOLDOWN: float = 1.0
 
@@ -191,8 +191,10 @@ func _handle_spells_inputs() -> void:
 	if (Input.is_action_just_pressed("action_spell_01")):
 		_basic_attack()
 		emit_signal("spell", 1, BASIC_ATTACK_COOLDOWN);
-	_handle_portal_spear_attack_inputs()
-	if (Input.is_action_just_pressed("action_spêll_03")):
+	if (Input.is_action_just_pressed("action_spell_02")):
+		_portal_spear_attack()
+#	_handle_portal_spear_attack_inputs()
+	if (Input.is_action_just_pressed("action_spell_03")):
 		_lightning_attack()
 
 func _basic_attack() -> void:
@@ -208,6 +210,17 @@ func _basic_attack() -> void:
 	can_basic_attack = false
 	basic_attack_timer.start()
 	$ThrowAxe.play()
+
+func _portal_spear_attack() -> void:
+	var player_pos: Vector2 = global_position
+	var mouse_pos: Vector2 = get_global_mouse_position()
+	var portal_direction: Vector2 = (mouse_pos - global_position).normalized()
+	var portal_position: Vector2 = player_pos + (portal_direction * 50)
+	
+	current_portal_spear_attack = portal_spear_attack.instance()
+	current_portal_spear_attack.init_params(PORTAL_SPEAR_ATTACK_DAMAGE, portal_position, portal_direction)
+	
+	get_parent().add_child(current_portal_spear_attack)
 
 func _handle_portal_spear_attack_inputs() -> void:
 	if (!can_portal_spear_attack):
@@ -256,7 +269,6 @@ func _lightning_attack():
 	
 	can_lightning_attack = false
 	lightning_attack_timer.start()
-	
 
 func _handle_inputs() -> void:
 	velocity = Vector2()

@@ -42,11 +42,9 @@ func _ready() -> void:
 		collision_shape_up.visible = false
 	if (SPELL_LEVEL == 1):
 		animated_sprite.frame = 5
-		animated_sprite.self_modulate.a = 0.7
 		animated_sprite_up.frame = 5
-		animated_sprite_up.self_modulate.a = 0.7
 		animated_sprite_down.frame = 5
-		animated_sprite_down.self_modulate.a = 0.7
+	attack()
 
 func _update_collision_shape_size() -> void:
 	var current_frame: int = animated_sprite.frame
@@ -85,9 +83,10 @@ func _update_collision_shape_size() -> void:
 		collision_shape_up.shape.extents = new_extents
 
 ### PUBLIC ###
-func init_params(spear_damage: float, portal_position: Vector2) -> void:
+func init_params(spear_damage: float, portal_position: Vector2, portal_direction: Vector2) -> void:
 	DAMAGE = spear_damage
 	position = portal_position
+	rotation = portal_direction.angle()
 
 func attack() -> void:
 	animated_sprite.frame = 0
