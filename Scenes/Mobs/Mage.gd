@@ -54,8 +54,6 @@ func _handle_movement():
 			velocity = position.direction_to(player.position).normalized() * SPEED
 		elif is_dodging:
 			velocity = position.direction_to(player.position).normalized() * DODGE_SPEED * -1
-		for i in mobs_view:
-			velocity = (velocity.normalized() + (position.direction_to(i.position) * -1)).normalized() * SPEED
 		velocity = move_and_slide(velocity)
 
 func _handle_attack():
@@ -115,7 +113,7 @@ func _handle_damage_animation(damage_orientation : Vector2, knockback_force : in
 	if (spell_state == 'toward_player'):
 		knockback = Vector2.ZERO
 	else:
-		knockback = get_knockback_multiplier() * knockback_force
+		knockback = get_knockback_multiplier() * (knockback_force * 100)
 	animation.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
 	is_taking_damage = true
 ####################### PUBLIC METHODS #########################################
