@@ -199,6 +199,7 @@ func _handle_spells_inputs() -> void:
 		emit_signal("spell", 1, BASIC_ATTACK_COOLDOWN);
 	if (Input.is_action_just_pressed("action_spell_02")):
 		_portal_spear_attack()
+		emit_signal("spell", 2, PORTAL_SPEAR_ATTACK_COOLDOWN);
 #	_handle_portal_spear_attack_inputs()
 	if (Input.is_action_just_pressed("action_spell_03")):
 		_lightning_attack()
