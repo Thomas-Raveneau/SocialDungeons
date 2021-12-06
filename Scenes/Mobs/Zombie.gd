@@ -50,6 +50,7 @@ func _physics_process(_delta) -> void:
 func _handle_movement() -> void:
 	velocity = Vector2.ZERO
 	if is_taking_damage:
+
 		velocity = (position.direction_to(player.position).normalized() * knockback.normalized() * get_knockback_multiplier()) * -1
 	elif player and !is_attacking:
 		velocity = position.direction_to(player.position) * SPEED
@@ -66,6 +67,8 @@ func _handle_attack() -> void:
 		taunt_duration_timer.start()
 
 func _handle_flip() -> void:
+	if (is_taking_damage):
+		return
 	if player and !is_attacking:
 		if (velocity.x < 0 and !animation.flip_h):
 			animation.flip_h = true
@@ -157,3 +160,4 @@ func _on_TauntDuration_timeout():
 
 func _on_DamageDuration_timeout():
 	animation.self_modulate = Color(1, 1, 1)
+	is_taking_damage = false
