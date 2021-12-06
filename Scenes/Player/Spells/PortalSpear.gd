@@ -119,4 +119,4 @@ func _on_AnimatedSprite_animation_finished():
 
 func _on_PortalSpear_body_entered(body):
 	if (get_tree().get_nodes_in_group("mobs").has(body)):
-		body.take_damage(DAMAGE, direction, 1)
+		body.take_damage(DAMAGE, direction, 1, "")

@@ -92,7 +92,7 @@ func _handle_collision_level_2() -> void:
 		elif get_tree().get_nodes_in_group("player").has(node.collider) and direction_state == "toward_player":
 			destroy()
 		elif get_tree().get_nodes_in_group("mobs").has(node.collider) and !touch_target.has(node.collider):
-			node.collider.take_damage(DAMAGE, position - node.collider.position, 1, direction_state)
+			node.collider.take_damage(DAMAGE, position - node.collider.position, 10000, direction_state)
 			touch_target.push_back(node.collider)
 			destroy()
 

@@ -222,40 +222,6 @@ func _portal_spear_attack() -> void:
 	
 	get_parent().add_child(current_portal_spear_attack)
 
-func _handle_portal_spear_attack_inputs() -> void:
-	if (!can_portal_spear_attack):
-		return
-	if (Input.is_action_just_pressed("action_spell_02")):
-		_portal_spear_placing()
-	if (Input.is_action_pressed("action_spell_02") and current_portal_spear_attack != null):
-		_portal_spear_orientating()
-	if (Input.is_action_just_released("action_spell_02") and current_portal_spear_attack != null):
-		_portal_spear_attacking()
-		emit_signal("spell", 2, PORTAL_SPEAR_ATTACK_COOLDOWN);
-
-func _portal_spear_placing() -> void :
-	var mouse_pos: Vector2 = get_global_mouse_position()
-	
-	current_portal_spear_attack = portal_spear_attack.instance()
-	current_portal_spear_attack.init_params(PORTAL_SPEAR_ATTACK_DAMAGE, mouse_pos)
-	
-	get_parent().add_child(current_portal_spear_attack)
-
-func _portal_spear_orientating():
-	var mouse_pos: Vector2 = get_global_mouse_position()
-	var direction: Vector2 = mouse_pos - current_portal_spear_attack.position
-	
-	direction = direction.normalized()
-	
-	current_portal_spear_attack.rotation = direction.angle()
-	current_portal_spear_attack.direction = direction
-
-func _portal_spear_attacking():
-	current_portal_spear_attack.attack()
-	can_portal_spear_attack = false
-	portal_spear_attack_timer.start()
-	current_portal_spear_attack = null
-
 func _lightning_attack():
 	if (!can_lightning_attack):
 		return

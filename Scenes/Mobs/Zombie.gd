@@ -37,7 +37,7 @@ func _ready():
 	dash_timer.wait_time = DASH_COOLDOWN
 	dash_duration_timer.wait_time = DASH_DURATION
 	taunt_duration_timer.wait_time = TAUNT_DURATION
-	CURRENT_WEIGHT_CLASS = WEIGHT_CLASS.HEAVY
+	CURRENT_WEIGHT_CLASS = WEIGHT_CLASS.LIGHT
 
 func _physics_process(_delta) -> void:
 	if is_alive:
@@ -49,12 +49,12 @@ func _physics_process(_delta) -> void:
 
 func _handle_movement() -> void:
 	velocity = Vector2.ZERO
-	if player and !is_attacking:
+	if is_taking_damage:
+		velocity = (position.direction_to(player.position).normalized() * knockback.normalized() * get_knockback_multiplier()) * -1
+	elif player and !is_attacking:
 		velocity = position.direction_to(player.position) * SPEED
 	elif is_dashing:
 		velocity = dash_vector * DASH_SPEED
-	elif is_taking_damage:
-		velocity = (position.direction_to(player.position).normalized() * knockback.normalized() * get_knockback_multiplier()) * -1
 	velocity = move_and_slide(velocity)
 
 func _handle_attack() -> void:

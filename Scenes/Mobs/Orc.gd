@@ -40,10 +40,10 @@ func _physics_process(_delta):
 
 func _handle_movement():
 	velocity = Vector2.ZERO
-	if player and !is_taking_damage and !is_attacking:
-		velocity = position.direction_to(player.position).normalized() * SPEED
-	elif is_taking_damage:
+	if is_taking_damage:
 		velocity = (position.direction_to(player.position).normalized() * knockback.normalized() * get_knockback_multiplier()) * -1
+	elif player and !is_taking_damage and !is_attacking:
+		velocity = position.direction_to(player.position).normalized() * SPEED
 	for i in mobs_view:
 		velocity = (velocity.normalized() + (position.direction_to(i.position) * -1)).normalized() * SPEED
 	velocity = move_and_slide(velocity)

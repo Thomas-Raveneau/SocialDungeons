@@ -48,15 +48,15 @@ func _physics_process(_delta):
 func _handle_movement():
 	velocity = Vector2.ZERO
 	if player:
-		if !in_range_of_attack:
-			velocity = position.direction_to(player.position).normalized() * SPEED
-		elif is_taking_damage:
+		if is_taking_damage:
 			velocity = (position.direction_to(player.position).normalized() * knockback.normalized() * get_knockback_multiplier()) * -1
+		elif !in_range_of_attack:
+			velocity = position.direction_to(player.position).normalized() * SPEED
 		elif is_dodging:
 			velocity = position.direction_to(player.position).normalized() * DODGE_SPEED * -1
 		for i in mobs_view:
 			velocity = (velocity.normalized() + (position.direction_to(i.position) * -1)).normalized() * SPEED
-	velocity = move_and_slide(velocity)
+		velocity = move_and_slide(velocity)
 
 func _handle_attack():
 	if in_range_of_attack and can_attack and !is_dodging and !is_taking_damage:
