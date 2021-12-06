@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Scenes/Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Maps/Main.gd" type="Script" id=2]
@@ -16,6 +16,8 @@
 [ext_resource path="res://Scenes/Menus/Level_Selector_Menu/Assets/selector_sprite_selected1.png" type="Texture" id=14]
 [ext_resource path="res://Scenes/Menus/Level_Selector_Menu/Assets/selector_sprite_selected2.png" type="Texture" id=15]
 [ext_resource path="res://Scenes/UI/ButtonBar.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Scenes/Menus/Death_Menu/DeathMenu.tscn" type="PackedScene" id=17]
+[ext_resource path="res://Scenes/Menus/Death_Menu/DeathMenu.gd" type="Script" id=18]
 
 [sub_resource type="Animation" id=11]
 resource_name = "fade_to_black"
@@ -100,7 +102,7 @@ size = 24
 use_filter = true
 font_data = ExtResource( 7 )
 
-[sub_resource type="Shader" id=10]
+[sub_resource type="Shader" id=17]
 code = "shader_type canvas_item;
 
 uniform float blur_amount : hint_range(0, 5);
@@ -111,7 +113,7 @@ void fragment() {
 "
 
 [sub_resource type="ShaderMaterial" id=8]
-shader = SubResource( 10 )
+shader = SubResource( 17 )
 shader_param/blur_amount = 1.621
 
 [sub_resource type="DynamicFont" id=9]
@@ -157,16 +159,16 @@ margin_top = -630.739
 margin_right = 970.0
 margin_bottom = 449.261
 mouse_filter = 2
-color = Color( 0, 0, 0, 1 )
+color = Color( 0, 0, 0, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="CountingStart" type="Label" parent="Node2D"]
-margin_left = -1128.27
-margin_top = -653.941
-margin_right = 791.735
-margin_bottom = 426.059
+margin_left = -949.889
+margin_top = -630.67
+margin_right = 970.116
+margin_bottom = 449.33
 custom_fonts/font = SubResource( 15 )
 align = 1
 valign = 1
@@ -363,10 +365,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="DeathMenu" parent="CanvasLayer" instance=ExtResource( 17 )]
+script = ExtResource( 18 )
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="animation_finished" from="StartCountingAnimation" to="." method="_on_StartCountingAnimation_animation_finished"]
 [connection signal="room_cleared" from="Castle" to="CanvasLayer/UpgradeSkill" method="_on_Castle_room_cleared"]
 [connection signal="hp_changed" from="Player" to="Node2D/HealthBar" method="_on_Player_hp_changed"]
+[connection signal="killed" from="Player" to="CanvasLayer/DeathMenu" method="_on_Player_killed"]
 [connection signal="spell" from="Player" to="SkillBar/ButtonBar" method="_on_Player_spell"]
 [connection signal="pressed" from="CanvasLayer/Pause/VBoxContainer/ResumePauseButton" to="CanvasLayer/Pause" method="_on_ResumePauseButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/Pause/VBoxContainer/QuitPauseButton" to="CanvasLayer/Pause" method="_on_QuitPauseButton_pressed"]
