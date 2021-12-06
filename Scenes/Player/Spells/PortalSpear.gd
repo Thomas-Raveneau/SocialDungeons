@@ -3,7 +3,7 @@ extends Area2D
 ################################################################################
 
 # STATS
-var SPELL_LEVEL: int = 1
+var SPELL_LEVEL: int = 0
 var DAMAGE: float = 5.0
 
 # NODES
@@ -83,7 +83,8 @@ func _update_collision_shape_size() -> void:
 		collision_shape_up.shape.extents = new_extents
 
 ### PUBLIC ###
-func init_params(spear_damage: float, portal_position: Vector2, portal_direction: Vector2) -> void:
+func init_params(spear_damage: float, portal_position: Vector2, portal_direction: Vector2, portal_level: int) -> void:
+	SPELL_LEVEL = portal_level
 	DAMAGE = spear_damage
 	position = portal_position
 	rotation = portal_direction.angle()

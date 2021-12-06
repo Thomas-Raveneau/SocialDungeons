@@ -17,11 +17,16 @@ export var ATTACK = 10
 export var KNOCKBACK_FORCE = 3
 
 # SPELLS STATS
+export var BASIC_ATTACK_CURRENT_LEVEL: int = 0
 export var BASIC_ATTACK_SPEED: float = 15.0
 export var BASIC_ATTACK_DAMAGE: float = 5.0
 export var BASIC_ATTACK_COOLDOWN: float = 0.5
+
+export var PORTAL_SPEAR_ATTACK_CURRENT_LEVEL: int = 0
 export var PORTAL_SPEAR_ATTACK_DAMAGE: float = 1.0
 export var PORTAL_SPEAR_ATTACK_COOLDOWN: float = 0.5
+
+export var LIGHTNING_ATTACK_CURRENT_LEVEL: int = 0
 export var LIGHTNING_ATTACK_DAMAGE: float = 20.0
 export var LIGHTNING_ATTACK_COOLDOWN: float = 1.0
 
@@ -92,6 +97,7 @@ func _ready() -> void:
 	lightning_attack_timer.wait_time = LIGHTNING_ATTACK_COOLDOWN
 	
 	_set_hp(HEALTH)
+	get_parent().get_skill_upgrade_node().connect("on_skill_updrade", self, "_on_skill_upgrade")
 
 func _process(_delta: float) -> void:
 	pass
@@ -205,7 +211,7 @@ func _basic_attack() -> void:
 	var attack_dir: Vector2 = (mouse_pos - global_position).normalized()
 	var new_axe = basic_attack.instance()
 	
-	new_axe.init_params(BASIC_ATTACK_DAMAGE, BASIC_ATTACK_SPEED, mouse_pos, global_position)
+	new_axe.init_params(BASIC_ATTACK_DAMAGE, BASIC_ATTACK_SPEED, mouse_pos, global_position, BASIC_ATTACK_CURRENT_LEVEL)
 	get_parent().add_child(new_axe)
 	can_basic_attack = false
 	basic_attack_timer.start()
@@ -218,7 +224,7 @@ func _portal_spear_attack() -> void:
 	var portal_position: Vector2 = player_pos + (portal_direction * 50)
 	
 	current_portal_spear_attack = portal_spear_attack.instance()
-	current_portal_spear_attack.init_params(PORTAL_SPEAR_ATTACK_DAMAGE, portal_position, portal_direction)
+	current_portal_spear_attack.init_params(PORTAL_SPEAR_ATTACK_DAMAGE, portal_position, portal_direction, PORTAL_SPEAR_ATTACK_CURRENT_LEVEL)
 	
 	get_parent().add_child(current_portal_spear_attack)
 
@@ -230,7 +236,7 @@ func _lightning_attack():
 	var lightning_dir: Vector2 = (mouse_pos - global_position).normalized()
 	var new_lightning = lightning_attack.instance()
 	
-	new_lightning.init_params(LIGHTNING_ATTACK_DAMAGE, Vector2.ZERO, lightning_dir)
+	new_lightning.init_params(LIGHTNING_ATTACK_DAMAGE, Vector2.ZERO, lightning_dir, LIGHTNING_ATTACK_CURRENT_LEVEL)
 	add_child(new_lightning)
 	
 	can_lightning_attack = false
@@ -385,3 +391,11 @@ func _on_Skin_animation_finished():
 	if (skin.animation == "death"):
 		skin.frame = 5
 		skin.stop()
+
+func _on_skill_upgrade(skill_to_upgrade: String) -> void:
+	if (skill_to_upgrade == "basic_attack"):
+		BASIC_ATTACK_CURRENT_LEVEL = 1
+	if (skill_to_upgrade == "portal_spear"):
+		PORTAL_SPEAR_ATTACK_CURRENT_LEVEL = 1
+	if (skill_to_upgrade == "lightning"):
+		LIGHTNING_ATTACK_CURRENT_LEVEL = 1

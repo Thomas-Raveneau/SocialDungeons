@@ -3,7 +3,7 @@ extends Area2D
 ################################################################################
 
 # STATS
-var SPELL_LEVEL: int = 1
+var SPELL_LEVEL: int = 0
 var DAMAGE: float = 5.0
 
 # NODES
@@ -26,7 +26,8 @@ func _physics_process(_delta: float) -> void:
 	pass
 
 ### PUBLIC ###
-func init_params(lightning_damage: float, lightning_position: Vector2, lightning_direction: Vector2) -> void:
+func init_params(lightning_damage: float, lightning_position: Vector2, lightning_direction: Vector2, lightning_level: int) -> void:
+	SPELL_LEVEL = lightning_level
 	DAMAGE = lightning_damage
 	position = lightning_position
 	orientation = lightning_direction
