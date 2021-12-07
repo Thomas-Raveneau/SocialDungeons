@@ -43,7 +43,7 @@ collision_mask = 33
 script = ExtResource( 1 )
 SPEED = 300
 DAMAGE = 15
-MAX_HEALTH = 1000000
+MAX_HEALTH = 65
 
 [node name="AnimationSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -6 )

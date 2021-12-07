@@ -23,7 +23,7 @@ export var BASIC_ATTACK_DAMAGE: float = 5.0
 export var BASIC_ATTACK_COOLDOWN: float = 0.5
 
 export var PORTAL_SPEAR_ATTACK_CURRENT_LEVEL: int = 0
-export var PORTAL_SPEAR_ATTACK_DAMAGE: float = 1.0
+export var PORTAL_SPEAR_ATTACK_DAMAGE: float = 5.0
 export var PORTAL_SPEAR_ATTACK_COOLDOWN: float = 0.5
 
 export var LIGHTNING_ATTACK_CURRENT_LEVEL: int = 0

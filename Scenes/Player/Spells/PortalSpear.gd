@@ -121,8 +121,6 @@ func _on_AnimatedSprite_animation_finished():
 
 func _on_PortalSpear_body_entered(body):
 	if (get_tree().get_nodes_in_group("mobs").has(body)):
-#		body.take_damage(DAMAGE, direction, 150, "")
-#		print(body.get_instance_id())
 		bodies_to_damage.append(body)
 
 func _on_PortalSpear_body_exited(body):
@@ -131,4 +129,4 @@ func _on_PortalSpear_body_exited(body):
 
 func _on_DamageTimer_timeout():
 	for body in bodies_to_damage:
-		body.take_damage(DAMAGE, direction, 1500, "")
+		body.take_damage(DAMAGE, direction, 12, "")

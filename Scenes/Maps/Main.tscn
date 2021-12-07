@@ -17,7 +17,7 @@
 [ext_resource path="res://Scenes/Menus/Level_Selector_Menu/Assets/selector_sprite_selected2.png" type="Texture" id=15]
 [ext_resource path="res://Scenes/UI/ButtonBar.tscn" type="PackedScene" id=16]
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=1]
 resource_name = "fade_to_black"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Node2D/ColorRect:color")
@@ -32,7 +32,7 @@ tracks/0/keys = {
 "values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ) ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=2]
 resource_name = "fade_to_normal"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Node2D/ColorRect:color")
@@ -47,7 +47,7 @@ tracks/0/keys = {
 "values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=3]
 resource_name = "fade_to_normal_start"
 length = 3.0
 tracks/0/type = "value"
@@ -63,7 +63,7 @@ tracks/0/keys = {
 "values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=4]
 resource_name = "start_count"
 length = 3.0
 tracks/0/type = "value"
@@ -91,16 +91,16 @@ tracks/1/keys = {
 "values": [ "3", "2", "1", "" ]
 }
 
-[sub_resource type="DynamicFont" id=15]
+[sub_resource type="DynamicFont" id=5]
 size = 1
 font_data = ExtResource( 7 )
 
-[sub_resource type="DynamicFont" id=16]
+[sub_resource type="DynamicFont" id=6]
 size = 24
 use_filter = true
 font_data = ExtResource( 7 )
 
-[sub_resource type="Shader" id=10]
+[sub_resource type="Shader" id=7]
 code = "shader_type canvas_item;
 
 uniform float blur_amount : hint_range(0, 5);
@@ -111,7 +111,7 @@ void fragment() {
 "
 
 [sub_resource type="ShaderMaterial" id=8]
-shader = SubResource( 10 )
+shader = SubResource( 7 )
 shader_param/blur_amount = 1.621
 
 [sub_resource type="DynamicFont" id=9]
@@ -122,12 +122,12 @@ script = ExtResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 pause_mode = 2
-anims/fade_to_black = SubResource( 11 )
-anims/fade_to_normal = SubResource( 12 )
-anims/fade_to_normal_start = SubResource( 13 )
+anims/fade_to_black = SubResource( 1 )
+anims/fade_to_normal = SubResource( 2 )
+anims/fade_to_normal_start = SubResource( 3 )
 
 [node name="StartCountingAnimation" type="AnimationPlayer" parent="."]
-anims/start_count = SubResource( 14 )
+anims/start_count = SubResource( 4 )
 
 [node name="SkillBar" type="Node2D" parent="."]
 position = Vector2( -12, -253 )
@@ -163,11 +163,11 @@ __meta__ = {
 }
 
 [node name="CountingStart" type="Label" parent="Node2D"]
-margin_left = -1128.27
-margin_top = -653.941
-margin_right = 791.735
-margin_bottom = 426.059
-custom_fonts/font = SubResource( 15 )
+margin_left = -950.0
+margin_top = -630.0
+margin_right = 970.005
+margin_bottom = 450.0
+custom_fonts/font = SubResource( 5 )
 align = 1
 valign = 1
 __meta__ = {
@@ -193,7 +193,7 @@ margin_left = 1472.82
 margin_top = 3.54034
 margin_right = 1766.83
 margin_bottom = 55.5403
-custom_fonts/normal_font = SubResource( 16 )
+custom_fonts/normal_font = SubResource( 6 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 962.58, 498.929 )
