@@ -9,6 +9,9 @@ export (float) var shader_range = 0.0;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	get_node("FirstSpellButton/BindedButton").text = 'A'
+	get_node("SecondSpellButton/BindedButton").text = 'E'
+	get_node("UltimateButton/BindedButton").text = 'R'
 	pass # Replace with function body.
 	
 func update_shader_range():
