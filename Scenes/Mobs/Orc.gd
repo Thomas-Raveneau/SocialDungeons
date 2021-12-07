@@ -69,7 +69,6 @@ func _handle_collision():
 			_handle_attack(node)
 
 func _handle_attack(_node):
-	return
 	if can_attack and !is_taking_damage:
 		var sword = SWORD.instance()
 		sword.position = position + ((player.position - position).normalized() * 20)
