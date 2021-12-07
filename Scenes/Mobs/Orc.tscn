@@ -43,13 +43,13 @@ collision_mask = 33
 script = ExtResource( 1 )
 SPEED = 300
 DAMAGE = 15
-MAX_HEALTH = 65
+MAX_HEALTH = 1000000
 
 [node name="AnimationSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -6 )
 frames = SubResource( 1 )
 animation = "idle"
-frame = 2
+frame = 3
 playing = true
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]

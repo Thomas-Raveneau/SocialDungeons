@@ -58,6 +58,12 @@ position = Vector2( 0, -40.0001 )
 shape = SubResource( 2 )
 disabled = true
 
+[node name="DamageTimer" type="Timer" parent="."]
+wait_time = 0.01
+autostart = true
+
 [connection signal="body_entered" from="." to="." method="_on_PortalSpear_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_PortalSpear_body_exited"]
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
 [connection signal="frame_changed" from="AnimatedSprite" to="." method="_on_AnimatedSprite_frame_changed"]
+[connection signal="timeout" from="DamageTimer" to="." method="_on_DamageTimer_timeout"]
