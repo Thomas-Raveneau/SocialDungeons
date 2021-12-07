@@ -108,7 +108,7 @@ func _handle_damage_animation(damage_orientation : Vector2, knockback_force : in
 	if (spell_state == 'toward_player'):
 		knockback = Vector2.ZERO
 	else:
-		knockback = get_knockback_multiplier() * knockback_force
+		knockback = get_knockback_multiplier() * (knockback_force * 100)
 	animation.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
 	is_taking_damage = true
 

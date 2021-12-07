@@ -39,13 +39,10 @@ func _physics_process(_delta):
 		_handle_collision()
 
 func _handle_movement():
-	velocity = Vector2.ZERO
 	if is_taking_damage:
-		velocity = (position.direction_to(player.position).normalized() * knockback.normalized() * get_knockback_multiplier()) * -1
+			velocity = (position.direction_to(player.position).normalized() * knockback) * -1
 	elif player and !is_taking_damage and !is_attacking:
 		velocity = position.direction_to(player.position).normalized() * SPEED
-	for i in mobs_view:
-		velocity = (velocity.normalized() + (position.direction_to(i.position) * -1)).normalized() * SPEED
 	velocity = move_and_slide(velocity)
 
 func _handle_flip():
@@ -94,7 +91,7 @@ func _handle_damage_animation(damage_orientation : Vector2, knockback_force : in
 	if (spell_state == 'toward_player'):
 		knockback = Vector2.ZERO
 	else:
-		knockback = get_knockback_multiplier() * knockback_force
+		knockback = get_knockback_multiplier() * (knockback_force * 100)
 	skin.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
 	is_taking_damage = true
 
