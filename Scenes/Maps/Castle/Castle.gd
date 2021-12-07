@@ -29,6 +29,13 @@ func _process(_delta: float):
 	if (Input.is_action_just_pressed("debug_button")):
 		current_room_instance.open_door()
 
+func reset_rooms():
+	current_room_id = 0
+	
+	current_room_instance = rooms[current_room_id].instance()
+	add_child(current_room_instance)
+
+
 func handle_door_z_index(player_pos: Vector2) -> void:
 	var player_y = player_pos.y
 	var door = current_room_instance.get_node("Door")
