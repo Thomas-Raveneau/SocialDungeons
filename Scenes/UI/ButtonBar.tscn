@@ -5,7 +5,7 @@
 [ext_resource path="res://Scenes/UI/Assets/icons/boot-stomp.png" type="Texture" id=3]
 [ext_resource path="res://Scenes/UI/Assets/icons/grasping-claws.png" type="Texture" id=4]
 [ext_resource path="res://Scenes/UI/ButtonBar.gd" type="Script" id=5]
-[ext_resource path="res://Scenes/UI/Assets/spellBar.png" type="Texture" id=6]
+[ext_resource path="res://Scenes/UI/Assets/spellBarMouseButton.png" type="Texture" id=6]
 [ext_resource path="res://Scenes/UI/Assets/flash.png" type="Texture" id=7]
 
 [sub_resource type="Shader" id=7]
@@ -301,36 +301,38 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -135.5
+margin_left = -135.0
 margin_top = -95.0
-margin_right = 135.5
-margin_bottom = -31.0
+margin_right = 177.0
+margin_bottom = 11.0
 custom_constants/separation = 5
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 autohit_shader_range = 1.0
-first_shader_range = 1.0
-ultimate_shader_range = 1.0
 
 [node name="AutohitButton" parent="." instance=ExtResource( 1 )]
+margin_bottom = 106.0
 
 [node name="FirstSpellButton" parent="." instance=ExtResource( 1 )]
 margin_left = 69.0
 margin_right = 133.0
+margin_bottom = 106.0
 texture_normal = ExtResource( 3 )
 cooldown = 5.0
 
 [node name="SecondSpellButton" parent="." instance=ExtResource( 1 )]
 margin_left = 138.0
 margin_right = 202.0
+margin_bottom = 106.0
 texture_normal = ExtResource( 2 )
 cooldown = 10.0
 
 [node name="UltimateButton" parent="." instance=ExtResource( 1 )]
 margin_left = 207.0
 margin_right = 271.0
+margin_bottom = 106.0
 texture_normal = ExtResource( 4 )
 cooldown = 0.5
 

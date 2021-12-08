@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Buttin-UI-retry2.png-f0fca8bc19bc7138dc3768959a5d90f9.stex"
+path="res://.import/spellBarMouseButton.png-ff6baf16bcdc6bff8cadab9c5083302d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/Menus/Assets/Buttin-UI-retry2.png"
-dest_files=[ "res://.import/Buttin-UI-retry2.png-f0fca8bc19bc7138dc3768959a5d90f9.stex" ]
+source_file="res://Scenes/UI/Assets/spellBarMouseButton.png"
+dest_files=[ "res://.import/spellBarMouseButton.png-ff6baf16bcdc6bff8cadab9c5083302d.stex" ]
 
 [params]
 
