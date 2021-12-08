@@ -97,7 +97,6 @@ func _handle_collision():
 func _handle_death_animation() -> void:
 	hitbox.disabled = true
 	animation.self_modulate = Color(0/255.0, 0/255.0, 0/255.0)
-	print("LMAO IM DEAD")
 	$DeathSound.play()
 	is_attacking = false
 	_handle_death()

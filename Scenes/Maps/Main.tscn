@@ -295,7 +295,7 @@ rect_clip_content = false
 custom_fonts/normal_font = SubResource( 9 )
 custom_colors/default_color = Color( 1, 1, 1, 1 )
 tab_size = 24
-text = "Lightning Spell"
+text = " Axe throw"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -337,7 +337,7 @@ rect_scale = Vector2( 1.5, 1.5 )
 custom_fonts/normal_font = SubResource( 9 )
 custom_colors/default_color = Color( 1, 1, 1, 1 )
 tab_size = 24
-text = "Hatchets Throws"
+text = "Lightning"
 __meta__ = {
 "_edit_use_anchors_": false
 }

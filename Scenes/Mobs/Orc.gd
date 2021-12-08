@@ -82,7 +82,6 @@ func _handle_attack(_node):
 func _handle_death_animation() -> void:
 	$DeathSound.play()
 	skin.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
-	print("LMAO IM DEAD ORC SIDE")
 	_handle_death()
 
 func _handle_damage_animation(damage_orientation : Vector2, knockback_force : int, spell_state : String) -> void:
