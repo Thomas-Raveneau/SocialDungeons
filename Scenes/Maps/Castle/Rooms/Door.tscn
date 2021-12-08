@@ -29,16 +29,13 @@ frames = SubResource( 1 )
 animation = "open"
 
 [node name="ClosedCollision" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2( 0.0606232, 10.1353 )
 shape = SubResource( 2 )
 
 [node name="OpenedCollisionLeft" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2( -90.683, 10.6086 )
 shape = SubResource( 3 )
 
 [node name="OpenedCollisionRight" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2( 90.0992, 10.5603 )
 shape = SubResource( 3 )
