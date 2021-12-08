@@ -17,11 +17,16 @@ export var ATTACK = 10
 export var KNOCKBACK_FORCE = 3
 
 # SPELLS STATS
+export var BASIC_ATTACK_CURRENT_LEVEL: int = 0
 export var BASIC_ATTACK_SPEED: float = 15.0
 export var BASIC_ATTACK_DAMAGE: float = 5.0
 export var BASIC_ATTACK_COOLDOWN: float = 0.5
-export var PORTAL_SPEAR_ATTACK_DAMAGE: float = 30.0
-export var PORTAL_SPEAR_ATTACK_COOLDOWN: float = 3.0
+
+export var PORTAL_SPEAR_ATTACK_CURRENT_LEVEL: int = 0
+export var PORTAL_SPEAR_ATTACK_DAMAGE: float = 5.0
+export var PORTAL_SPEAR_ATTACK_COOLDOWN: float = 0.5
+
+export var LIGHTNING_ATTACK_CURRENT_LEVEL: int = 0
 export var LIGHTNING_ATTACK_DAMAGE: float = 20.0
 export var LIGHTNING_ATTACK_COOLDOWN: float = 1.0
 
@@ -92,6 +97,7 @@ func _ready() -> void:
 	lightning_attack_timer.wait_time = LIGHTNING_ATTACK_COOLDOWN
 	
 	_set_hp(HEALTH)
+	get_parent().get_skill_upgrade_node().connect("on_skill_updrade", self, "_on_skill_upgrade")
 
 func _process(_delta: float) -> void:
 	pass
@@ -191,8 +197,11 @@ func _handle_spells_inputs() -> void:
 	if (Input.is_action_just_pressed("action_spell_01")):
 		_basic_attack()
 		emit_signal("spell", 1, BASIC_ATTACK_COOLDOWN);
-	_handle_portal_spear_attack_inputs()
-	if (Input.is_action_just_pressed("action_spêll_03")):
+	if (Input.is_action_just_pressed("action_spell_02")):
+		_portal_spear_attack()
+		emit_signal("spell", 2, PORTAL_SPEAR_ATTACK_COOLDOWN);
+#	_handle_portal_spear_attack_inputs()
+	if (Input.is_action_just_pressed("action_spell_03")):
 		_lightning_attack()
 
 func _basic_attack() -> void:
@@ -203,45 +212,22 @@ func _basic_attack() -> void:
 	var attack_dir: Vector2 = (mouse_pos - global_position).normalized()
 	var new_axe = basic_attack.instance()
 	
-	new_axe.init_params(BASIC_ATTACK_DAMAGE, BASIC_ATTACK_SPEED, mouse_pos, global_position)
+	new_axe.init_params(BASIC_ATTACK_DAMAGE, BASIC_ATTACK_SPEED, mouse_pos, global_position, BASIC_ATTACK_CURRENT_LEVEL)
 	get_parent().add_child(new_axe)
 	can_basic_attack = false
 	basic_attack_timer.start()
 	$ThrowAxe.play()
 
-func _handle_portal_spear_attack_inputs() -> void:
-	if (!can_portal_spear_attack):
-		return
-	if (Input.is_action_just_pressed("action_spell_02")):
-		_portal_spear_placing()
-	if (Input.is_action_pressed("action_spell_02") and current_portal_spear_attack != null):
-		_portal_spear_orientating()
-	if (Input.is_action_just_released("action_spell_02") and current_portal_spear_attack != null):
-		_portal_spear_attacking()
-		emit_signal("spell", 2, PORTAL_SPEAR_ATTACK_COOLDOWN);
-
-func _portal_spear_placing() -> void :
+func _portal_spear_attack() -> void:
+	var player_pos: Vector2 = global_position
 	var mouse_pos: Vector2 = get_global_mouse_position()
+	var portal_direction: Vector2 = (mouse_pos - global_position).normalized()
+	var portal_position: Vector2 = player_pos + (portal_direction * 50)
 	
 	current_portal_spear_attack = portal_spear_attack.instance()
-	current_portal_spear_attack.init_params(PORTAL_SPEAR_ATTACK_DAMAGE, mouse_pos)
+	current_portal_spear_attack.init_params(PORTAL_SPEAR_ATTACK_DAMAGE, portal_position, portal_direction, PORTAL_SPEAR_ATTACK_CURRENT_LEVEL)
 	
 	get_parent().add_child(current_portal_spear_attack)
-
-func _portal_spear_orientating():
-	var mouse_pos: Vector2 = get_global_mouse_position()
-	var direction: Vector2 = mouse_pos - current_portal_spear_attack.position
-	
-	direction = direction.normalized()
-	
-	current_portal_spear_attack.rotation = direction.angle()
-	current_portal_spear_attack.direction = direction
-
-func _portal_spear_attacking():
-	current_portal_spear_attack.attack()
-	can_portal_spear_attack = false
-	portal_spear_attack_timer.start()
-	current_portal_spear_attack = null
 
 func _lightning_attack():
 	if (!can_lightning_attack):
@@ -251,12 +237,11 @@ func _lightning_attack():
 	var lightning_dir: Vector2 = (mouse_pos - global_position).normalized()
 	var new_lightning = lightning_attack.instance()
 	
-	new_lightning.init_params(LIGHTNING_ATTACK_DAMAGE, Vector2.ZERO, lightning_dir)
+	new_lightning.init_params(LIGHTNING_ATTACK_DAMAGE, Vector2.ZERO, lightning_dir, LIGHTNING_ATTACK_CURRENT_LEVEL)
 	add_child(new_lightning)
 	
 	can_lightning_attack = false
 	lightning_attack_timer.start()
-	
 
 func _handle_inputs() -> void:
 	velocity = Vector2()
@@ -324,7 +309,7 @@ func _input(event):
 
 ### PUBLIC ###
 func damage(damage_amount: int, damage_dir: Vector2) -> bool: 
-	if (is_invicible or !is_alive or is_falling):
+	if (is_invicible or is_dashing or !is_alive or is_falling):
 		return false
 	
 	_handle_damage_animation(damage_amount, damage_dir)
@@ -371,6 +356,7 @@ func _set_hp(newHpValue: int) -> void:
 			emit_signal("killed")
 
 ### SIGNALS ###
+### SIGNALS ###
 func _on_DashDuration_timeout() -> void:
 	is_dashing = false
 	dash_cooldown_timer.start()
@@ -406,3 +392,11 @@ func _on_Skin_animation_finished():
 	if (skin.animation == "death"):
 		skin.frame = 5
 		skin.stop()
+
+func _on_skill_upgrade(skill_to_upgrade: String) -> void:
+	if (skill_to_upgrade == "basic_attack"):
+		BASIC_ATTACK_CURRENT_LEVEL = 1
+	if (skill_to_upgrade == "portal_spear"):
+		PORTAL_SPEAR_ATTACK_CURRENT_LEVEL = 1
+	if (skill_to_upgrade == "lightning"):
+		LIGHTNING_ATTACK_CURRENT_LEVEL = 1

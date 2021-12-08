@@ -49,7 +49,7 @@ MAX_HEALTH = 65
 position = Vector2( 0, -6 )
 frames = SubResource( 1 )
 animation = "idle"
-frame = 2
+frame = 1
 playing = true
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
@@ -58,6 +58,7 @@ shape = SubResource( 2 )
 
 [node name="DetectionArea" type="Area2D" parent="."]
 visible = false
+scale = Vector2( 3, 3 )
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
@@ -73,6 +74,7 @@ shape = SubResource( 4 )
 
 [node name="DamageTimer" type="Timer" parent="."]
 wait_time = 0.2
+one_shot = true
 
 [node name="AttackTimer" type="Timer" parent="."]
 
