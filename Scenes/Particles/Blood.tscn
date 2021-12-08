@@ -30,10 +30,12 @@ scale = 5.0
 scale_curve = SubResource( 4 )
 color_ramp = SubResource( 2 )
 
-[node name="Particles2D" type="Particles2D"]
+[node name="BloodParticles" type="Particles2D"]
 scale = Vector2( 5, 5 )
+emitting = false
 amount = 15
-lifetime = 0.5
+lifetime = 0.3
+one_shot = true
 explosiveness = 0.8
 randomness = 0.1
 visibility_rect = Rect2( -20, -20, 40, 40 )

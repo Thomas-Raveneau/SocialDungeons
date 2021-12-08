@@ -41,13 +41,27 @@ __meta__ = {
 
 [node name="Value" type="Label" parent="Counter"]
 margin_left = 5.0
-margin_top = 8.0
+margin_top = 1.0
 margin_right = 59.0
-margin_bottom = 10.0
+margin_bottom = 17.0
 custom_fonts/font = ExtResource( 3 )
 text = "0.0"
 align = 2
 clip_text = true
+
+[node name="BindedButton" type="Label" parent="."]
+margin_left = -38.5386
+margin_top = 2.37122
+margin_right = 101.461
+margin_bottom = 18.3712
+rect_scale = Vector2( 0.7, 0.7 )
+custom_fonts/font = ExtResource( 3 )
+text = "R-Click"
+align = 2
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [connection signal="pressed" from="." to="." method="_on_AbilityButton_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

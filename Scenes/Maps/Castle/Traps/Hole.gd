@@ -4,6 +4,9 @@ extends Area2D
 var player: Node = null
 var player_size: Vector2 = Vector2.ZERO
 
+const HOLE_RANGE_X: int = 20
+const HOLE_RANGE_Y: int = 15
+
 func _ready():
 	pass
 
@@ -12,8 +15,8 @@ func _physics_process(_delta):
 		is_player_inside()
 
 func is_player_inside() -> void:
-	if (player.position.y + player_size.y - position.y < 8 and
-		abs(player.position.x - position.x) - player_size.x < 8):
+	if (player.position.y + player_size.y - position.y < HOLE_RANGE_Y and
+		abs(player.position.x - position.x) - player_size.x < HOLE_RANGE_X):
 		player.fall(self.position)
 		player = null
 

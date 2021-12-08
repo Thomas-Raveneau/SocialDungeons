@@ -29,11 +29,15 @@ onready var dash_duration_timer = $DashDuration
 onready var taunt_duration_timer = $TauntDuration
 onready var animation : AnimatedSprite = $Animation
 onready var damage_duration_timer: Timer = $DamageDuration
+onready var dash_effect_timer: Timer = $DashEffectTimer
 
+#SCENES
+var dash_particles = preload("res://Scenes/Particles/ZombieDash.tscn")
+var dash_effect = preload("res://Scenes/Mobs/Effect/ZombieDash.tscn")
 ######################## PRIVATE METHODS #######################################
 
 func _ready():
-	._ready()
+	._ready()	
 	dash_timer.wait_time = DASH_COOLDOWN
 	dash_duration_timer.wait_time = DASH_DURATION
 	taunt_duration_timer.wait_time = TAUNT_DURATION
@@ -57,6 +61,15 @@ func _handle_movement() -> void:
 	elif is_dashing:
 		velocity = dash_vector * DASH_SPEED
 	velocity = move_and_slide(velocity)
+
+func _instanciate_dash_effect() -> void:
+	var dash = dash_effect.instance()
+	get_parent().add_child(dash)
+	
+	dash.global_position = global_position
+	dash.texture = $Animation.frames.get_frame($Animation.animation, $Animation.frame)
+	dash.scale = self.scale
+	dash.flip_h = $Animation.flip_h
 
 func _handle_attack() -> void:
 	if in_range_of_attack and can_attack:
@@ -151,13 +164,18 @@ func _on_DashTimer_timeout() -> void:
 func _on_DashDuration_timeout():
 	is_dashing = false
 	is_attacking = false
+	dash_effect_timer.stop()
 	dash_timer.start()
 
 func _on_TauntDuration_timeout():
 	is_dashing = true
 	animation.play("run")
+	dash_effect_timer.start()
 	dash_duration_timer.start()
 
 func _on_DamageDuration_timeout():
 	animation.self_modulate = Color(1, 1, 1)
 	is_taking_damage = false
+
+func _on_DashEffectTimer_timeout():
+	_instanciate_dash_effect()
