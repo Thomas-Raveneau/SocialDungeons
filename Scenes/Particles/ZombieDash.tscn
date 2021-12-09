@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scenes/Particles/ZombieDash.gd" type="Script" id=1]
+
+[sub_resource type="Curve" id=1]
+min_value = -200.0
+max_value = 600.0
+_data = [ Vector2( 0.00440529, 600 ), 0.0, -2554.98, 0, 0, Vector2( 1, -200 ), 312.062, 0.0, 0, 0 ]
+
+[sub_resource type="Curve" id=2]
+max_value = 10.0
+_data = [ Vector2( 0, 0.293557 ), 0.0, 18.0568, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=3]
+offsets = PoolRealArray( 0.534314, 1 )
+colors = PoolColorArray( 0, 0, 0, 1, 1, 1, 1, 0 )
+
+[node name="CPUParticles2D" type="CPUParticles2D"]
+amount = 30
+explosiveness = 1.0
+spread = 10.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 600.0
+initial_velocity_random = 0.7
+angular_velocity = 100.0
+angular_velocity_random = 1.0
+orbit_velocity = 0.05
+linear_accel = 100.0
+linear_accel_random = 1.0
+linear_accel_curve = SubResource( 1 )
+damping = 100.0
+scale_amount = 8.0
+scale_amount_curve = SubResource( 2 )
+color_ramp = SubResource( 3 )
+script = ExtResource( 1 )

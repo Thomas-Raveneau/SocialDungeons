@@ -69,6 +69,7 @@ SPEED = 500
 position = Vector2( -25.8567, 12.9065 )
 frames = SubResource( 7 )
 animation = "Sprite"
+frame = 1
 playing = true
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]

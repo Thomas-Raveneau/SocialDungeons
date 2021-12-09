@@ -3,7 +3,7 @@ extends Control
 const MAIN_MENU_SCENE = "res://Scenes/Menus/Main/Main.tscn"
 
 func _input(event: InputEvent) -> void:
-	if Input.is_action_pressed("ui_pause"):
+	if Input.is_action_just_pressed("ui_pause"):
 		var state_pause = not get_tree().paused
 		get_tree().paused = state_pause
 		visible = state_pause

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Scenes/Maps/Castle/Assets/tileset_castle.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Maps/Castle/Tilesets/Walls.tres" type="TileSet" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Scenes/Maps/Castle/Traps/FloorSpikes.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Maps/Castle/Rooms/Room_04.gd" type="Script" id=6]
 [ext_resource path="res://Scenes/Maps/Castle/Turrets/Turret.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Mobs/Boss_Wrath.tscn" type="PackedScene" id=8]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 64, 64, 0, 64, 0, 43.8283, 64, 43.8283 )
@@ -269,29 +270,11 @@ position = Vector2( 1632, 288 )
 [node name="FloorSpikes44" parent="Traps" instance=ExtResource( 5 )]
 position = Vector2( 1568, 288 )
 
-[node name="FloorSpikes3" parent="Traps" instance=ExtResource( 5 )]
-position = Vector2( 1184, 352 )
-
-[node name="FloorSpikes4" parent="Traps" instance=ExtResource( 5 )]
-position = Vector2( 1120, 416 )
-
-[node name="FloorSpikes5" parent="Traps" instance=ExtResource( 5 )]
-position = Vector2( 1056, 480 )
-
 [node name="FloorSpikes6" parent="Traps" instance=ExtResource( 5 )]
 position = Vector2( 992, 544 )
 
 [node name="FloorSpikes17" parent="Traps" instance=ExtResource( 5 )]
 position = Vector2( 928, 544 )
-
-[node name="FloorSpikes18" parent="Traps" instance=ExtResource( 5 )]
-position = Vector2( 864, 480 )
-
-[node name="FloorSpikes19" parent="Traps" instance=ExtResource( 5 )]
-position = Vector2( 800, 416 )
-
-[node name="FloorSpikes20" parent="Traps" instance=ExtResource( 5 )]
-position = Vector2( 736, 352 )
 
 [node name="FloorSpikes21" parent="Traps" instance=ExtResource( 5 )]
 position = Vector2( 672, 288 )
@@ -299,29 +282,11 @@ position = Vector2( 672, 288 )
 [node name="FloorSpikes7" parent="Traps" instance=ExtResource( 5 )]
 position = Vector2( 928, 608 )
 
-[node name="FloorSpikes8" parent="Traps" instance=ExtResource( 5 )]
-position = Vector2( 864, 672 )
-
-[node name="FloorSpikes9" parent="Traps" instance=ExtResource( 5 )]
-position = Vector2( 800, 736 )
-
-[node name="FloorSpikes10" parent="Traps" instance=ExtResource( 5 )]
-position = Vector2( 736, 800 )
-
 [node name="FloorSpikes11" parent="Traps" instance=ExtResource( 5 )]
 position = Vector2( 672, 864 )
 
 [node name="FloorSpikes12" parent="Traps" instance=ExtResource( 5 )]
 position = Vector2( 1248, 864 )
-
-[node name="FloorSpikes13" parent="Traps" instance=ExtResource( 5 )]
-position = Vector2( 1184, 800 )
-
-[node name="FloorSpikes14" parent="Traps" instance=ExtResource( 5 )]
-position = Vector2( 1120, 736 )
-
-[node name="FloorSpikes15" parent="Traps" instance=ExtResource( 5 )]
-position = Vector2( 1056, 672 )
 
 [node name="FloorSpikes16" parent="Traps" instance=ExtResource( 5 )]
 position = Vector2( 992, 608 )
@@ -397,5 +362,9 @@ collision_layer = 16
 collision_mask = 3
 format = 1
 tile_data = PoolIntArray( 983040, 3, 0, 983041, 2, 0, 983042, 2, 0, 983043, 2, 0, 983044, 2, 0, 983045, 2, 0, 983046, 2, 0, 983047, 2, 0, 983048, 2, 0, 983049, 2, 0, 983050, 2, 0, 983051, 2, 0, 983052, 2, 0, 983053, 2, 0, 983054, 2, 0, 983055, 2, 0, 983056, 2, 0, 983057, 2, 0, 983058, 2, 0, 983059, 2, 0, 983060, 2, 0, 983061, 2, 0, 983062, 2, 0, 983063, 2, 0, 983064, 2, 0, 983065, 2, 0, 983066, 2, 0, 983067, 2, 0, 983068, 2, 0, 983069, 4, 0 )
+
+[node name="Boss_Wrath" parent="." instance=ExtResource( 8 )]
+position = Vector2( 954, 284 )
+scale = Vector2( 0.6, 0.6 )
 
 [connection signal="timeout" from="MobSpawnDelay" to="." method="_on_MobSpawnDelay_timeout"]

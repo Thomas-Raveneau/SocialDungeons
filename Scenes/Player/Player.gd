@@ -5,6 +5,7 @@ extends KinematicBody2D
 # SIGNALS
 signal hp_changed(health)
 signal killed()
+signal spell(spell_num, cooldown)
 
 # STATS
 export var SPEED: int = 6 
@@ -16,13 +17,18 @@ export var ATTACK = 10
 export var KNOCKBACK_FORCE = 3
 
 # SPELLS STATS
+export var BASIC_ATTACK_CURRENT_LEVEL: int = 0
 export var BASIC_ATTACK_SPEED: float = 15.0
 export var BASIC_ATTACK_DAMAGE: float = 5.0
-export var BASIC_ATTACK_COOLDOWN: float = 0.1
+export var BASIC_ATTACK_COOLDOWN: float = 0.5
+
+export var PORTAL_SPEAR_ATTACK_CURRENT_LEVEL: int = 0
 export var PORTAL_SPEAR_ATTACK_DAMAGE: float = 5.0
-export var PORTAL_SPEAR_ATTACK_COOLDOWN: float = 1.0
-export var LIGHTNING_ATTACK_DAMAGE: float = 5.0
-export var LIGHTNING_ATTACK_COOLDOWN: float = 1.0
+export var PORTAL_SPEAR_ATTACK_COOLDOWN: float = 2.0
+
+export var LIGHTNING_ATTACK_CURRENT_LEVEL: int = 0
+export var LIGHTNING_ATTACK_DAMAGE: float = 20.0
+export var LIGHTNING_ATTACK_COOLDOWN: float = 1.5
 
 # SPELLS TIMERS
 onready var basic_attack_timer: Timer = $BasicAttackTimer
@@ -65,14 +71,16 @@ onready var invicibility_timer: Timer = $Invicibility
 onready var dash_duration_timer: Timer = $DashDuration
 onready var dash_cooldown_timer: Timer = $DashCooldown
 onready var damage_animation_timer: Timer = $DamageAnimation
+onready var damage_particles_timer: Timer = $DamageParticlesTimer
 onready var damage_sound: AudioStreamPlayer = $DamageSound
 onready var damage_particles: CPUParticles2D = $DamageParticles
 
 # SCENES
-var damage_particle = preload("res://Scenes/Player/DamageParticle.tscn")
+var damage_particle = preload("res://Scenes/Player/Effects/DamageParticle.tscn")
 var step_particles = preload("res://Scenes/Particles/FootStep.tscn")
+var blood_particles = preload("res://Scenes/Particles/Blood.tscn")
 var basic_attack = preload("res://Scenes/Player/Spells/BasicAttack.tscn")
-var flame_dash = preload("res://Scenes/Projectile/Flame.tscn")
+var dash_effect = preload("res://Scenes/Player/Effects/DashEffect.tscn")
 var portal_spear_attack = preload("res://Scenes/Player/Spells/PortalSpear.tscn")
 var lightning_attack = preload("res://Scenes/Player/Spells/Lightning.tscn")
 
@@ -89,6 +97,7 @@ func _ready() -> void:
 	lightning_attack_timer.wait_time = LIGHTNING_ATTACK_COOLDOWN
 	
 	_set_hp(HEALTH)
+	get_parent().get_skill_upgrade_node().connect("on_skill_updrade", self, "_on_skill_upgrade")
 
 func _process(_delta: float) -> void:
 	pass
@@ -104,9 +113,13 @@ func _physics_process(_delta: float) -> void:
 	else:
 		velocity = move_and_slide(knockback * 100)
 		camera.add_trauma(0.03)
-	
+
 	_handle_collisions()
 
+func _generate_particles() -> void:
+	_generate_walking_particles()
+	_generate_blood_particles()	
+	
 func fall(hole: Vector2) -> void:
 	$FallDuration.start()
 	is_falling = true
@@ -118,23 +131,24 @@ func _handle_fall_animation() -> void:
 		self.rotation_degrees -= 0.5
 		self.position.y += 0.35
 
-func _generate_particles() -> void:
-	if ($Skin.animation == "run"):
+func _generate_walking_particles() -> void:
+	if ($Skin.animation == "run" and velocity != Vector2.ZERO):
 		if ($Skin.get_frame() == 3 && last_step != 3):
-			var particles = step_particles.instance()
-			particles.global_position = Vector2(global_position.x, global_position.y + 32)
-			particles.emitting = true
-
-			if Input.is_action_pressed("move_right"):
-				particles.process_material.direction = Vector3(-1, -1, 0)
-			elif Input.is_action_pressed("move_left"):
-				particles.process_material.direction = Vector3(1, -1, 0)
-			elif Input.is_action_pressed("move_up"):
-				particles.process_material.direction = Vector3(0, 1, 0)
-			else:
-				particles.process_material.direction = Vector3(0, -1, 0)
-			get_parent().add_child(particles)
+			var dust = step_particles.instance()
+			var offset_x = 0 if velocity.y != 0 else -32 if skin.flip_h else 32
+			var offset_y = 50 if velocity.y > 0 else -10 if velocity.y < 0 else 32
+			dust.global_position = Vector2(global_position.x + offset_x, global_position.y + offset_y)
+			dust.process_material.direction = Vector3(-velocity.x, -velocity.y, 0)
+			get_parent().add_child(dust)
 		last_step = $Skin.get_frame()
+
+func _generate_blood_particles() -> void:
+	if (is_taking_damage and damage_particles_timer.time_left == 0.00000):
+		damage_particles_timer.start()
+		var blood = blood_particles.instance()
+		blood.global_position = Vector2(global_position.x, global_position.y)
+		blood.process_material.direction = Vector3(-knockback.x, -knockback.y, 0)
+		get_parent().add_child(blood)
 
 func _handle_walking_sound() -> void:
 	if ($Skin.animation == "run"):
@@ -157,6 +171,10 @@ func _dash() -> void:
 	can_dash = false
 	is_dashing = true
 	dash_duration_timer.start()
+	var dash_flame_effect = dash_effect.instance()
+	dash_flame_effect.position = global_position
+	dash_flame_effect.rotate(velocity.angle() + PI)
+	get_parent().add_child(dash_flame_effect)
 
 func _handle_movement_inputs() -> void:
 	if Input.is_action_pressed("move_right"):
@@ -167,7 +185,7 @@ func _handle_movement_inputs() -> void:
 		velocity.y += 1
 	if Input.is_action_pressed("move_up"):
 		velocity.y -= 1
-	if (Input.is_action_just_pressed("action_dash") and can_dash == true):
+	if (Input.is_action_just_pressed("action_dash") and can_dash == true and velocity != Vector2.ZERO):
 		_dash()
 
 	if (is_dashing):
@@ -178,8 +196,12 @@ func _handle_movement_inputs() -> void:
 func _handle_spells_inputs() -> void:
 	if (Input.is_action_just_pressed("action_spell_01")):
 		_basic_attack()
-	_handle_portal_spear_attack_inputs()
-	if (Input.is_action_just_pressed("action_spêll_03")):
+		emit_signal("spell", 1, BASIC_ATTACK_COOLDOWN);
+	if (Input.is_action_just_pressed("action_spell_02")):
+		_portal_spear_attack()
+		emit_signal("spell", 2, PORTAL_SPEAR_ATTACK_COOLDOWN);
+#	_handle_portal_spear_attack_inputs()
+	if (Input.is_action_just_pressed("action_spell_03")):
 		_lightning_attack()
 
 func _basic_attack() -> void:
@@ -190,44 +212,28 @@ func _basic_attack() -> void:
 	var attack_dir: Vector2 = (mouse_pos - global_position).normalized()
 	var new_axe = basic_attack.instance()
 	
-	new_axe.init_params(BASIC_ATTACK_DAMAGE, BASIC_ATTACK_SPEED, mouse_pos, global_position)
+	new_axe.init_params(BASIC_ATTACK_DAMAGE, BASIC_ATTACK_SPEED, mouse_pos, global_position, BASIC_ATTACK_CURRENT_LEVEL)
 	get_parent().add_child(new_axe)
 	can_basic_attack = false
 	basic_attack_timer.start()
 	$ThrowAxe.play()
 
-func _handle_portal_spear_attack_inputs() -> void:
+func _portal_spear_attack() -> void:
 	if (!can_portal_spear_attack):
 		return
-	if (Input.is_action_just_pressed("action_spell_02")):
-		_portal_spear_placing()
-	if (Input.is_action_pressed("action_spell_02") and current_portal_spear_attack != null):
-		_portal_spear_orientating()
-	if (Input.is_action_just_released("action_spell_02") and current_portal_spear_attack != null):
-		_portal_spear_attacking()
-
-func _portal_spear_placing() -> void :
+	
+	var player_pos: Vector2 = global_position
 	var mouse_pos: Vector2 = get_global_mouse_position()
+	var portal_direction: Vector2 = (mouse_pos - global_position).normalized()
+	var portal_position: Vector2 = player_pos + (portal_direction * 50)
 	
 	current_portal_spear_attack = portal_spear_attack.instance()
-	current_portal_spear_attack.init_params(PORTAL_SPEAR_ATTACK_DAMAGE, mouse_pos)
+	current_portal_spear_attack.init_params(PORTAL_SPEAR_ATTACK_DAMAGE, portal_position, portal_direction, PORTAL_SPEAR_ATTACK_CURRENT_LEVEL)
 	
-	get_parent().add_child(current_portal_spear_attack)
-
-func _portal_spear_orientating():
-	var mouse_pos: Vector2 = get_global_mouse_position()
-	var direction: Vector2 = mouse_pos - current_portal_spear_attack.position
-	
-	direction = direction.normalized()
-	
-	current_portal_spear_attack.rotation = direction.angle()
-	current_portal_spear_attack.direction = direction
-
-func _portal_spear_attacking():
-	current_portal_spear_attack.attack()
 	can_portal_spear_attack = false
 	portal_spear_attack_timer.start()
-	current_portal_spear_attack = null
+	
+	get_parent().add_child(current_portal_spear_attack)
 
 func _lightning_attack():
 	if (!can_lightning_attack):
@@ -237,12 +243,11 @@ func _lightning_attack():
 	var lightning_dir: Vector2 = (mouse_pos - global_position).normalized()
 	var new_lightning = lightning_attack.instance()
 	
-	new_lightning.init_params(LIGHTNING_ATTACK_DAMAGE, Vector2.ZERO, lightning_dir)
+	new_lightning.init_params(LIGHTNING_ATTACK_DAMAGE, Vector2.ZERO, lightning_dir, LIGHTNING_ATTACK_CURRENT_LEVEL)
 	add_child(new_lightning)
 	
 	can_lightning_attack = false
 	lightning_attack_timer.start()
-	
 
 func _handle_inputs() -> void:
 	velocity = Vector2()
@@ -301,9 +306,16 @@ func _handle_invicibility() -> void:
 func _handle_damage_sound() -> void:
 	damage_sound.play()
 
+func _input(event):
+	if event is InputEventKey and event.pressed:
+		if event.scancode == KEY_E:
+			emit_signal("spell", 3, 10);
+		if event.scancode == KEY_R:
+			emit_signal("spell", 4, 5);
+
 ### PUBLIC ###
 func damage(damage_amount: int, damage_dir: Vector2) -> bool: 
-	if (is_invicible or !is_alive or is_falling):
+	if (is_invicible or is_dashing or !is_alive or is_falling):
 		return false
 	
 	_handle_damage_animation(damage_amount, damage_dir)
@@ -350,6 +362,7 @@ func _set_hp(newHpValue: int) -> void:
 			emit_signal("killed")
 
 ### SIGNALS ###
+### SIGNALS ###
 func _on_DashDuration_timeout() -> void:
 	is_dashing = false
 	dash_cooldown_timer.start()
@@ -385,3 +398,11 @@ func _on_Skin_animation_finished():
 	if (skin.animation == "death"):
 		skin.frame = 5
 		skin.stop()
+
+func _on_skill_upgrade(skill_to_upgrade: String) -> void:
+	if (skill_to_upgrade == "basic_attack"):
+		BASIC_ATTACK_CURRENT_LEVEL = 1
+	if (skill_to_upgrade == "portal_spear"):
+		PORTAL_SPEAR_ATTACK_CURRENT_LEVEL = 1
+	if (skill_to_upgrade == "lightning"):
+		LIGHTNING_ATTACK_CURRENT_LEVEL = 1

@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scenes/UI/button_timer_font.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Scenes/UI/CooldownButton.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/UI/Assets/icons/boot-stomp.png" type="Texture" id=4]
+
+[node name="CooldownButton" type="TextureButton"]
+margin_right = 64.0
+margin_bottom = 64.0
+texture_normal = ExtResource( 4 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+cooldown = 2.5
+
+[node name="CooldownDisplay" type="TextureProgress" parent="."]
+modulate = Color( 0.352941, 0.352941, 0.352941, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+rounded = true
+fill_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Label" type="Label" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -19.0
+grow_horizontal = 0
+custom_fonts/font = ExtResource( 1 )
+text = "0.0"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="." to="." method="_on_CooldownButton_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

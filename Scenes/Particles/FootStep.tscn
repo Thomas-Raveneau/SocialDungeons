@@ -1,37 +1,45 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scenes/Particles/FootStep.gd" type="Script" id=1]
 
-[sub_resource type="Curve" id=1]
-_data = [ Vector2( 0, 0.815322 ), 0.0, 3.66885, 0, 0, Vector2( 1, 0.0289773 ), -3.77369, 0.0, 0, 0 ]
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0.228261, 0.527174, 0.793478 )
+colors = PoolColorArray( 0.156863, 0.141176, 0.137255, 1, 0.207843, 0.180392, 0.180392, 1, 0.282353, 0.231373, 0.227451, 0.666667 )
 
-[sub_resource type="CurveTexture" id=2]
-curve = SubResource( 1 )
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
 
-[sub_resource type="ParticlesMaterial" id=3]
-emission_shape = 1
-emission_sphere_radius = 1.0
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0, 0.815322 ), 0.0, 3.66885, 0, 0, Vector2( 0.917874, 0.0112215 ), -3.77369, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=5]
 flag_disable_z = true
 direction = Vector3( 0, -1, 0 )
-spread = 70.0
+spread = 60.0
 gravity = Vector3( 0, 0, 0 )
-initial_velocity = 10.0
+initial_velocity = 12.0
 initial_velocity_random = 1.0
 angular_velocity_random = 1.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale = 3.0
-scale_curve = SubResource( 2 )
-color = Color( 0.203922, 0.145098, 0.145098, 1 )
+scale_curve = SubResource( 4 )
+color_ramp = SubResource( 2 )
 
-[node name="Particles2D" type="Particles2D"]
+[node name="FootStepParticles" type="Particles2D"]
 scale = Vector2( 3, 3 )
 emitting = false
-amount = 20
-lifetime = 1.8
+amount = 15
+lifetime = 2.0
 one_shot = true
-speed_scale = 10.0
+speed_scale = 5.0
 explosiveness = 1.0
-visibility_rect = Rect2( -15, -20, 30, 30 )
-process_material = SubResource( 3 )
+visibility_rect = Rect2( -20, -20, 40, 40 )
+process_material = SubResource( 5 )
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}

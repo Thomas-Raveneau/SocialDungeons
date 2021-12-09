@@ -47,6 +47,9 @@ func get_player():
 func get_player_pos() -> Vector2:
 	return player.position
 
+func get_skill_upgrade_node(): 
+	return $CanvasLayer.get_node("UpgradeSkill")
+
 ### SIGNALS ###
 func _on_AnimationPlayer_animation_finished(anim_name):
 	if (anim_name == "fade_to_black" and going_next_room == true):
