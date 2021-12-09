@@ -54,7 +54,6 @@ KNOCKBACK_FORCE = 100.0
 position = Vector2( 0, -6 )
 frames = SubResource( 1 )
 animation = "idle"
-frame = 1
 playing = true
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
@@ -72,7 +71,6 @@ shape = SubResource( 3 )
 
 [node name="UnSplitArea" type="Area2D" parent="."]
 visible = false
-scale = Vector2( 1, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="UnSplitArea"]
 position = Vector2( -0.11225, -1.90819 )

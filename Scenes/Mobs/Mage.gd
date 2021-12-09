@@ -112,6 +112,7 @@ func _handle_damage_animation(damage_orientation : Vector2) -> void:
 #	$DamageTimer.start()
 	animation.play("hurt")
 	animation.self_modulate = Color(235/255.0, 70/255.0, 70/255.0)
+#	knockback = damage_orientation.normalized()
 	knockback = Vector2.ZERO
 	is_taking_damage = true
 	print("BLABLA")
