@@ -109,6 +109,21 @@ animations = [ {
 "name": "idle",
 "speed": 11.0
 }, {
+"frames": [ ExtResource( 51 ), ExtResource( 42 ), ExtResource( 32 ), ExtResource( 56 ), ExtResource( 43 ), ExtResource( 55 ), ExtResource( 45 ), ExtResource( 33 ), ExtResource( 57 ), ExtResource( 46 ), ExtResource( 47 ), ExtResource( 29 ), ExtResource( 48 ), ExtResource( 35 ), ExtResource( 49 ), ExtResource( 50 ), ExtResource( 53 ), ExtResource( 28 ) ],
+"loop": true,
+"name": "taunt",
+"speed": 17.0
+}, {
+"frames": [ ExtResource( 87 ), ExtResource( 83 ), ExtResource( 84 ), ExtResource( 85 ), ExtResource( 82 ), ExtResource( 86 ), ExtResource( 89 ), ExtResource( 81 ), ExtResource( 88 ), ExtResource( 78 ), ExtResource( 79 ), ExtResource( 80 ), ExtResource( 74 ), ExtResource( 72 ), ExtResource( 73 ), ExtResource( 75 ), ExtResource( 76 ), ExtResource( 77 ) ],
+"loop": true,
+"name": "cast",
+"speed": 17.0
+}, {
+"frames": [ ExtResource( 90 ), ExtResource( 91 ), ExtResource( 94 ), ExtResource( 97 ), ExtResource( 93 ), ExtResource( 92 ), ExtResource( 95 ), ExtResource( 96 ), ExtResource( 100 ), ExtResource( 98 ), ExtResource( 99 ), ExtResource( 101 ) ],
+"loop": false,
+"name": "hurt",
+"speed": 11.0
+}, {
 "frames": [ ExtResource( 68 ), ExtResource( 63 ), ExtResource( 64 ), ExtResource( 65 ), ExtResource( 66 ), ExtResource( 67 ), ExtResource( 69 ), ExtResource( 59 ), ExtResource( 60 ), ExtResource( 61 ), ExtResource( 58 ), ExtResource( 62 ) ],
 "loop": true,
 "name": "walk",
@@ -123,21 +138,6 @@ animations = [ {
 "loop": false,
 "name": "death",
 "speed": 14.0
-}, {
-"frames": [ ExtResource( 90 ), ExtResource( 91 ), ExtResource( 94 ), ExtResource( 97 ), ExtResource( 93 ), ExtResource( 92 ), ExtResource( 95 ), ExtResource( 96 ), ExtResource( 100 ), ExtResource( 98 ), ExtResource( 99 ), ExtResource( 101 ) ],
-"loop": false,
-"name": "hurt",
-"speed": 11.0
-}, {
-"frames": [ ExtResource( 87 ), ExtResource( 83 ), ExtResource( 84 ), ExtResource( 85 ), ExtResource( 82 ), ExtResource( 86 ), ExtResource( 89 ), ExtResource( 81 ), ExtResource( 88 ), ExtResource( 78 ), ExtResource( 79 ), ExtResource( 80 ), ExtResource( 74 ), ExtResource( 72 ), ExtResource( 73 ), ExtResource( 75 ), ExtResource( 76 ), ExtResource( 77 ) ],
-"loop": true,
-"name": "cast",
-"speed": 17.0
-}, {
-"frames": [ ExtResource( 51 ), ExtResource( 42 ), ExtResource( 32 ), ExtResource( 56 ), ExtResource( 43 ), ExtResource( 55 ), ExtResource( 45 ), ExtResource( 33 ), ExtResource( 57 ), ExtResource( 46 ), ExtResource( 47 ), ExtResource( 29 ), ExtResource( 48 ), ExtResource( 35 ), ExtResource( 49 ), ExtResource( 50 ), ExtResource( 53 ), ExtResource( 28 ) ],
-"loop": true,
-"name": "taunt",
-"speed": 17.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=2]

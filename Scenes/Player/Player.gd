@@ -24,11 +24,11 @@ export var BASIC_ATTACK_COOLDOWN: float = 0.5
 
 export var PORTAL_SPEAR_ATTACK_CURRENT_LEVEL: int = 0
 export var PORTAL_SPEAR_ATTACK_DAMAGE: float = 5.0
-export var PORTAL_SPEAR_ATTACK_COOLDOWN: float = 0.5
+export var PORTAL_SPEAR_ATTACK_COOLDOWN: float = 2.0
 
 export var LIGHTNING_ATTACK_CURRENT_LEVEL: int = 0
 export var LIGHTNING_ATTACK_DAMAGE: float = 20.0
-export var LIGHTNING_ATTACK_COOLDOWN: float = 1.0
+export var LIGHTNING_ATTACK_COOLDOWN: float = 1.5
 
 # SPELLS TIMERS
 onready var basic_attack_timer: Timer = $BasicAttackTimer
@@ -219,6 +219,9 @@ func _basic_attack() -> void:
 	$ThrowAxe.play()
 
 func _portal_spear_attack() -> void:
+	if (!can_portal_spear_attack):
+		return
+	
 	var player_pos: Vector2 = global_position
 	var mouse_pos: Vector2 = get_global_mouse_position()
 	var portal_direction: Vector2 = (mouse_pos - global_position).normalized()
@@ -226,6 +229,9 @@ func _portal_spear_attack() -> void:
 	
 	current_portal_spear_attack = portal_spear_attack.instance()
 	current_portal_spear_attack.init_params(PORTAL_SPEAR_ATTACK_DAMAGE, portal_position, portal_direction, PORTAL_SPEAR_ATTACK_CURRENT_LEVEL)
+	
+	can_portal_spear_attack = false
+	portal_spear_attack_timer.start()
 	
 	get_parent().add_child(current_portal_spear_attack)
 

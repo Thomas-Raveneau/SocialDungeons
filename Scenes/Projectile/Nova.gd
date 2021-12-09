@@ -1,9 +1,9 @@
-extends "res://Scenes/Mobs/Projectile/AProjectile.gd"
+extends "res://Scenes/Projectile/AProjectile.gd"
 
 ### VARIABLES ###
 
 # FIREBALL
-onready var FIREBALL = preload("res://Scenes/Mobs/Projectile/FireBall.tscn")
+onready var FIREBALL = preload("res://Scenes/Projectile/FireBall.tscn")
 
 # TIMER
 onready var attack_timer : Timer = $AttackTimer
