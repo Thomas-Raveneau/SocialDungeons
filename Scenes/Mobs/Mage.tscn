@@ -108,7 +108,7 @@ height = 104.308
 radius = 604.859
 
 [sub_resource type="CircleShape2D" id=4]
-radius = 2125.77
+radius = 5902.67
 
 [sub_resource type="CircleShape2D" id=5]
 radius = 3618.67
@@ -123,9 +123,6 @@ scale = Vector2( 0.25, 0.25 )
 collision_layer = 2
 collision_mask = 37
 script = ExtResource( 43 )
-__meta__ = {
-"_edit_group_": true
-}
 SPEED = 200.0
 DODGE_SPEED = 250
 KNOCKBACK_FORCE = 100
@@ -133,8 +130,8 @@ ATTACK_COOLDOWN = 1
 
 [node name="Animation" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
-animation = "hurt"
-frame = 11
+animation = "idle"
+frame = 3
 playing = true
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]

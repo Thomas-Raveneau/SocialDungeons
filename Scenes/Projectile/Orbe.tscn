@@ -10,7 +10,6 @@
 [ext_resource path="res://Scenes/Projectile/Assets/Orbe/Orb-sprite1.png" type="Texture" id=8]
 [ext_resource path="res://Scenes/Projectile/Orbe.gd" type="Script" id=9]
 
-
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 8 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 5 ) ],
@@ -20,7 +19,7 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 8 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 5 ), ExtResource( 6 ) ],
 "loop": false,
-"name": "attack",
+"name": "death",
 "speed": 7.0
 } ]
 
@@ -28,6 +27,7 @@ animations = [ {
 radius = 47.8165
 
 [node name="Orbe" type="KinematicBody2D"]
+scale = Vector2( 0.8, 0.8 )
 collision_layer = 8
 collision_mask = 0
 script = ExtResource( 9 )
@@ -35,9 +35,11 @@ script = ExtResource( 9 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 3.07807, -4.26733 )
 frames = SubResource( 1 )
-animation = "idle"
-frame = 5
+animation = "death"
+frame = 7
 playing = true
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 shape = SubResource( 2 )
+
+[connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]

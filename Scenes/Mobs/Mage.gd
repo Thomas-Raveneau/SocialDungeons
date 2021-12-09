@@ -115,7 +115,6 @@ func _handle_damage_animation(damage_orientation : Vector2) -> void:
 #	knockback = damage_orientation.normalized()
 	knockback = Vector2.ZERO
 	is_taking_damage = true
-	print("BLABLA")
 
 ####################### PUBLIC METHODS #########################################
 
@@ -160,11 +159,9 @@ func _on_AttackTimer_timeout():
 	can_attack = true
 
 func _on_Animation_animation_finished():
-	print("ANIMATION END " + animation.get_animation())
 	if animation.get_animation() == "hurt":
 		animation.self_modulate = Color(1, 1, 1)
 		is_taking_damage = false
-		print("END DAMAGE")
 	elif animation.get_animation() == "attack":
 		is_attacking = false
 		_shoot_fireball()

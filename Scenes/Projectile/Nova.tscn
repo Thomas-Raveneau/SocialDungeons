@@ -1,12 +1,28 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scenes/Mobs/Effect/Sphere.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Projectile/Nova.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/Projectile/Assets/Orbe/Orb-sprite2.png" type="Texture" id=3]
+[ext_resource path="res://Scenes/Projectile/Assets/Orbe/Orb-sprite7.png" type="Texture" id=4]
+[ext_resource path="res://Scenes/Projectile/Assets/Orbe/Orb-sprite3.png" type="Texture" id=5]
+[ext_resource path="res://Scenes/Projectile/Assets/Orbe/Orb-sprite1.png" type="Texture" id=6]
+[ext_resource path="res://Scenes/Projectile/Assets/Orbe/Orb-sprite5.png" type="Texture" id=7]
+[ext_resource path="res://Scenes/Projectile/Assets/Orbe/Orb-sprite6.png" type="Texture" id=8]
+[ext_resource path="res://Scenes/Projectile/Assets/Orbe/Orb-sprite4.png" type="Texture" id=9]
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 6 ), ExtResource( 3 ), ExtResource( 5 ), ExtResource( 9 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "default",
+"speed": 7.0
+} ]
+
+[sub_resource type="CircleShape2D" id=2]
 radius = 49.7772
 
 [node name="Nova" type="KinematicBody2D"]
+scale = Vector2( 0.8, 0.8 )
 collision_layer = 8
 collision_mask = 0
 script = ExtResource( 2 )
@@ -15,13 +31,21 @@ __meta__ = {
 }
 SPEED = 90
 
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 3.1748, -3.57165 )
+scale = Vector2( 1.04961, 1.05581 )
+frames = SubResource( 1 )
+frame = 5
+playing = true
+
 [node name="Sphere" type="Node2D" parent="."]
+visible = false
 script = ExtResource( 1 )
 SIZE = 25
 OUTLINE_COLOR = Color( 1, 0, 0, 1 )
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="AttackTimer" type="Timer" parent="."]
 
