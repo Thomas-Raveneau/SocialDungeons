@@ -153,7 +153,7 @@ func _handle_damage_animation(damage_orientation : Vector2) -> void:
 
 ##################### PUBLIC METHODS ##########################################
 
-func take_damage(damage_amount : int, damage_orientation : Vector2) -> void:
+func take_damage(damage_amount : int, damage_orientation : Vector2, knockback_force : int, spell_state : String) -> void:
 	health = health - damage_amount
 	if (health <= 0):
 		is_alive = false

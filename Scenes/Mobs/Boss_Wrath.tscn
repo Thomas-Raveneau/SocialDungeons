@@ -110,6 +110,16 @@ animations = [ {
 "name": "idle",
 "speed": 11.0
 }, {
+"frames": [ ExtResource( 68 ), ExtResource( 63 ), ExtResource( 64 ), ExtResource( 65 ), ExtResource( 66 ), ExtResource( 67 ), ExtResource( 69 ), ExtResource( 59 ), ExtResource( 60 ), ExtResource( 61 ), ExtResource( 58 ), ExtResource( 62 ) ],
+"loop": true,
+"name": "walk",
+"speed": 11.0
+}, {
+"frames": [ ExtResource( 90 ), ExtResource( 91 ), ExtResource( 94 ), ExtResource( 97 ), ExtResource( 93 ), ExtResource( 92 ), ExtResource( 95 ), ExtResource( 96 ), ExtResource( 100 ), ExtResource( 98 ), ExtResource( 99 ), ExtResource( 101 ) ],
+"loop": false,
+"name": "hurt",
+"speed": 11.0
+}, {
 "frames": [ ExtResource( 3 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 8 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 12 ), ExtResource( 11 ) ],
 "loop": false,
 "name": "attack",
@@ -119,16 +129,6 @@ animations = [ {
 "loop": false,
 "name": "death",
 "speed": 14.0
-}, {
-"frames": [ ExtResource( 90 ), ExtResource( 91 ), ExtResource( 94 ), ExtResource( 97 ), ExtResource( 93 ), ExtResource( 92 ), ExtResource( 95 ), ExtResource( 96 ), ExtResource( 100 ), ExtResource( 98 ), ExtResource( 99 ), ExtResource( 101 ) ],
-"loop": false,
-"name": "hurt",
-"speed": 11.0
-}, {
-"frames": [ ExtResource( 68 ), ExtResource( 63 ), ExtResource( 64 ), ExtResource( 65 ), ExtResource( 66 ), ExtResource( 67 ), ExtResource( 69 ), ExtResource( 59 ), ExtResource( 60 ), ExtResource( 61 ), ExtResource( 58 ), ExtResource( 62 ) ],
-"loop": true,
-"name": "walk",
-"speed": 11.0
 }, {
 "frames": [ ExtResource( 51 ), ExtResource( 42 ), ExtResource( 32 ), ExtResource( 56 ), ExtResource( 43 ), ExtResource( 55 ), ExtResource( 45 ), ExtResource( 33 ), ExtResource( 57 ), ExtResource( 46 ), ExtResource( 47 ), ExtResource( 29 ), ExtResource( 48 ), ExtResource( 35 ), ExtResource( 49 ), ExtResource( 50 ), ExtResource( 53 ), ExtResource( 28 ) ],
 "loop": true,
@@ -162,12 +162,12 @@ __meta__ = {
 }
 COOLDOWN_VALUE_1 = 0.3
 COOLDOWN_VALUE_2 = 7.0
-MAX_HEALTH = 1000.0
+MAX_HEALTH = 200.0
 
 [node name="Animated" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "idle"
-frame = 7
+frame = 6
 playing = true
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
