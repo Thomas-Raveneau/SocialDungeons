@@ -196,9 +196,6 @@ tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 
 
 [node name="Traps" type="Node2D" parent="."]
 
-[node name="FloorSpikes" parent="Traps" instance=ExtResource( 5 )]
-position = Vector2( 800, 352 )
-
 [node name="FloorSpikes2" parent="Traps" instance=ExtResource( 5 )]
 position = Vector2( 800, 416 )
 
@@ -216,12 +213,6 @@ position = Vector2( 800, 672 )
 
 [node name="FloorSpikes7" parent="Traps" instance=ExtResource( 5 )]
 position = Vector2( 800, 736 )
-
-[node name="FloorSpikes8" parent="Traps" instance=ExtResource( 5 )]
-position = Vector2( 800, 800 )
-
-[node name="FloorSpikes9" parent="Traps" instance=ExtResource( 5 )]
-position = Vector2( 1120, 800 )
 
 [node name="FloorSpikes10" parent="Traps" instance=ExtResource( 5 )]
 position = Vector2( 1120, 736 )
@@ -241,44 +232,29 @@ position = Vector2( 1120, 480 )
 [node name="FloorSpikes15" parent="Traps" instance=ExtResource( 5 )]
 position = Vector2( 1120, 416 )
 
-[node name="FloorSpikes16" parent="Traps" instance=ExtResource( 5 )]
-position = Vector2( 1120, 352 )
-
-[node name="FloorSpikes17" parent="Traps" instance=ExtResource( 5 )]
-position = Vector2( 1312, 288 )
-
 [node name="FloorSpikes18" parent="Traps" instance=ExtResource( 5 )]
-position = Vector2( 1440, 288 )
+position = Vector2( 1442, 352 )
 
 [node name="FloorSpikes19" parent="Traps" instance=ExtResource( 5 )]
-position = Vector2( 1568, 288 )
+position = Vector2( 1570, 352 )
 
 [node name="FloorSpikes20" parent="Traps" instance=ExtResource( 5 )]
-position = Vector2( 1568, 864 )
+position = Vector2( 1570, 800 )
 
 [node name="FloorSpikes21" parent="Traps" instance=ExtResource( 5 )]
-position = Vector2( 1440, 864 )
-
-[node name="FloorSpikes22" parent="Traps" instance=ExtResource( 5 )]
-position = Vector2( 1312, 864 )
-
-[node name="FloorSpikes23" parent="Traps" instance=ExtResource( 5 )]
-position = Vector2( 608, 864 )
+position = Vector2( 1442, 800 )
 
 [node name="FloorSpikes24" parent="Traps" instance=ExtResource( 5 )]
-position = Vector2( 480, 864 )
+position = Vector2( 482, 800 )
 
 [node name="FloorSpikes25" parent="Traps" instance=ExtResource( 5 )]
-position = Vector2( 352, 864 )
+position = Vector2( 354, 800 )
 
 [node name="FloorSpikes26" parent="Traps" instance=ExtResource( 5 )]
-position = Vector2( 352, 288 )
+position = Vector2( 354, 352 )
 
 [node name="FloorSpikes27" parent="Traps" instance=ExtResource( 5 )]
-position = Vector2( 480, 288 )
-
-[node name="FloorSpikes28" parent="Traps" instance=ExtResource( 5 )]
-position = Vector2( 608, 288 )
+position = Vector2( 482, 352 )
 
 [node name="MobsSpawns" type="Node2D" parent="."]
 

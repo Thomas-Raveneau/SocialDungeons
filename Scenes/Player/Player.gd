@@ -19,15 +19,15 @@ export var KNOCKBACK_FORCE = 3
 # SPELLS STATS
 export var BASIC_ATTACK_CURRENT_LEVEL: int = 0
 export var BASIC_ATTACK_SPEED: float = 15.0
-export var BASIC_ATTACK_DAMAGE: float = 5.0
+export var BASIC_ATTACK_DAMAGE: float = 8.0
 export var BASIC_ATTACK_COOLDOWN: float = 0.5
 
 export var PORTAL_SPEAR_ATTACK_CURRENT_LEVEL: int = 0
-export var PORTAL_SPEAR_ATTACK_DAMAGE: float = 5.0
+export var PORTAL_SPEAR_ATTACK_DAMAGE: float = 10.0
 export var PORTAL_SPEAR_ATTACK_COOLDOWN: float = 2.0
 
 export var LIGHTNING_ATTACK_CURRENT_LEVEL: int = 0
-export var LIGHTNING_ATTACK_DAMAGE: float = 20.0
+export var LIGHTNING_ATTACK_DAMAGE: float = 25.0
 export var LIGHTNING_ATTACK_COOLDOWN: float = 1.5
 
 # SPELLS TIMERS
